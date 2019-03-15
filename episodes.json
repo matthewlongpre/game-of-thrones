@@ -1,0 +1,41 @@
+{
+  "episode1": {
+    "id": "episode1",
+    "deaths": [
+      {
+        "id": "astark",
+        "points": "10"
+      },
+      {
+        "id": "tlannister",
+        "points": "10"
+      }
+    ]
+  },
+  "episode2": {
+    "id": "episode2",
+    "deaths": [
+      {
+        "id": "jsnow",
+        "points": "10"
+      },
+      {
+        "id": "egreyjoy",
+        "points": "3"
+      }
+    ]
+  },
+  "episode3": {
+    "id": "episode3",
+    "deaths": [
+      {
+        "id": "bdondarrion",
+        "points": "5"
+      },
+      {
+        "id": "dedd",
+        "points": "5"
+      }
+    ]
+  }
+}

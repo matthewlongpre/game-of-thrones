@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Matt Longpre",
+    "characterDeathChoices": [
+      {
+        "id": "0",
+        "name": "Jon Snow",
+        "deathEpisode": "6"
+      }
+    ]
+  }
+]

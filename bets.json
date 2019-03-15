@@ -1,0 +1,50 @@
+{
+  "jonIsAegon": {
+    "id": "jonIsAegon",
+    "description": "Jon learns he is Aegon Targaryen"
+  },
+  "cleganeBowl": {
+    "id": "cleganeBowl",
+    "description": "Clegane Bowl - The Hound vs. The Mountain"
+  },
+  "nightKingDefeated": {
+    "id": "nightKingDefeated",
+    "description": "The Night King is defeated"
+  },
+  "nymeriaReappears": {
+    "id": "nymeriaReappears",
+    "description": "Nymeria reappears"
+  },
+  "goldenCompanyArrives": {
+    "id": "goldenCompanyArrives",
+    "description": "The Golden Company arrives at King's Landing"
+  },
+  "danyPregnant": {
+    "id": "danyPregnant",
+    "description": "Daenerys is revealed to be pregnant"
+  },
+  "brienneJaime": {
+    "id": "brienneJaime",
+    "description": "Brienne and Jaime have an intimate moment"
+  },
+  "tyrionBronn": {
+    "id": "tyrionBronn",
+    "description": "Tyrion reunites with Bronn"
+  },
+  "jonDragon": {
+    "id": "jonDragon",
+    "description": "Jon rides a dragon"
+  },
+  "tridentBattle": {
+    "id": "tridentBattle",
+    "description": "The Battle of the Trident (Rhaegar vs. Robert) is shown"
+  },
+  "jonArya": {
+    "id": "jonArya",
+    "description": "Jon and Arya reunite"
+  },
+  "branJaime": {
+    "id": "branJaime",
+    "description": "Bran and Jaime address the window incident"
+  }
+}
