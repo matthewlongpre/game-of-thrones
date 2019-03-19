@@ -1,14 +1,16 @@
 {
   "episode1": {
     "id": "episode1",
-    "deaths": [
+    "deaths": [],
+    "bets": [
       {
-        "id": "astark",
-        "points": "10"
+        "id": "jonIsAegon"
       },
       {
-        "id": "tlannister",
-        "points": "10"
+        "id": "goldenCompanyArrives"
+      },
+      {
+        "id": "branJamie"
       }
     ]
   },
@@ -16,25 +18,97 @@
     "id": "episode2",
     "deaths": [
       {
-        "id": "jsnow",
-        "points": "10"
+        "id": "melisandre"
       },
       {
-        "id": "egreyjoy",
-        "points": "3"
+        "id": "varys"
       }
     ]
   },
   "episode3": {
     "id": "episode3",
-    "deaths": [
+    "bets": [
       {
-        "id": "bdondarrion",
-        "points": "5"
+        "id": "nymeriaReappears"
       },
       {
-        "id": "dedd",
-        "points": "5"
+        "id": "jonDragon"
+      }
+    ],
+    "deaths": [
+      {
+        "id": "jmormont"
+      },
+      {
+        "id": "tgiantsbane"
+      },
+      {
+        "id": "bdondarrion"
+      },
+      {
+        "id": "etully"
+      },
+      {
+        "id": "gendry"
+      }
+    ]
+  },
+  "episode4": {
+    "id": "episode4",
+    "bets": [
+      {
+        "id": "cleganeBowl"
+      },
+      {
+        "id:": "danyPregnant"
+      }
+    ],
+    "deaths": [
+      {
+        "id": "gclegane"
+      },
+      {
+        "id": "sclegane"
+      }
+    ]
+  },
+  "episode5": {
+    "id": "episode5",
+    "deaths": [
+      {
+        "id": "clannister"
+      },
+      {
+        "id": "jlannister"
+      },
+      {
+        "id": "btarth"
+      },
+      {
+        "id": "bronn"
+      },
+      {
+        "id": "qyburn"
+      },
+      {
+        "id": "greyworm"
+      },
+      {
+        "id": "egreyjoy"
+      }
+    ]
+  },
+  "episode6": {
+    "id": "episode6",
+    "bets": [{
+      "id": "nightKingDefeated"
+    }],
+    "deaths": [
+      {
+        "id": "nightking"
+      },
+      {
+        "id": "jsnow"
       }
     ]
   }

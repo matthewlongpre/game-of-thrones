@@ -25,7 +25,7 @@
   },
   "brienneJaime": {
     "id": "brienneJaime",
-    "description": "Brienne and Jaime have an intimate moment"
+    "description": "Brienne and Jaime share an intimate moment"
   },
   "tyrionBronn": {
     "id": "tyrionBronn",
@@ -46,5 +46,9 @@
   "branJaime": {
     "id": "branJaime",
     "description": "Bran and Jaime address the window incident"
+  },
+  "brienneTormond": {
+    "id": "brienneTormond",
+    "description": "Brienne and Tormond share an intimate moment"
   }
 }

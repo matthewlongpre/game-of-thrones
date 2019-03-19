@@ -1,49 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lora";
+  color: "#131312";
+  min-width: 300px;
+  padding: 20px;
+}
+
+.logo {
+  max-width: 100%;
+}
+
+header {
+  padding: 20px 0;
+}
+
 .container {
-  max-width: 600px;
+  max-width: 480px;
   margin: 0 auto;
+}
+
+.container-form {
+  padding-bottom: 160px;
+}
+
+.your-name {
+  margin-bottom: 60px;
 }
 
 .character {
   padding: 20px 0;
+  margin-bottom: 60px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.character-data {
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.character-input {
+  width: 100%;
 }
 
 .character-name {
-  min-width: 200px;
-  width: 33%;
   display: flex;
   align-items: center;
-  padding-right: 40px;
+}
+
+.character-avatar-container {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.character-avatar {
+  max-width: 100%;
+  flex-shrink: 0;
+}
+
+.dead-character {
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.dead-character .badge {
+  margin: auto;
+}
+
+.dead-character-avatar {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  margin: auto auto 5px;
 }
 
 .bet {
   padding: 20px 0;
   display: flex;
+  flex-direction: column;
+  margin-bottom: 40px;
 }
 
 .bet-name {
   min-width: 200px;
-  width: 33%;
   display: flex;
   align-items: center;
   padding-right: 40px;
 }
 
 .badge {
-  background: #ddd;
+  background: #e1f4ff;
   padding: 2px 10px;
   border-radius: 5px;
   margin: 0 15px 0 0;
   text-transform: uppercase;
   font-size: 0.75em;
-  min-width: 40px;
+  min-width: 60px;
   text-align: center;
 }
 
 .possible-points {
   text-transform: uppercase;
-  font-size: 75%;
-  opacity: .66;
+  font-size: 66%;
+  opacity: 0.66;
 }
 
 .possible-points td {
@@ -52,10 +124,11 @@
 
 .heading--episodes {
   text-transform: uppercase;
-  font-size: 75%;
-  opacity: .66;
+  font-size: 66%;
+  opacity: 0.66;
   text-align: center;
   background: #e8e8e8;
+  padding: 5px;
 }
 
 th {
@@ -68,6 +141,11 @@ th.heading--episode-number {
   font-size: 1em;
 }
 
+.headings th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .rank {
   width: 50px;
 }
@@ -75,4 +153,202 @@ th.heading--episode-number {
 .heading--airdates th {
   font-weight: normal;
   font-size: 66%;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .scoreboard {
+    font-size: 0.75rem;
+  }
+}
+
+.scoreboard-container {
+  overflow-x: auto;
+  max-width: 1080px;
+  margin: auto;
+}
+
+.scoreboard {
+  width: 100%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  .sticky-left {
+    position: sticky;
+    left: 0;
+    box-shadow: 5px 0px 9px -4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  }
+
+  .sticky-right {
+    position: sticky;
+    right: 0;
+    box-shadow: -5px 0px 9px -4px rgba(0, 0, 0, 0.1);
+    background: #fff;
+  }
+}
+
+.player-name {
+  white-space: nowrap;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.avatar-placeholder {
+  background: #f1f1f1;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+.select-divider-label {
+  text-transform: uppercase;
+  font-size: 66%;
+}
+
+.submit-button {
+  margin-top: 60px !important;
+}
+
+th,
+td {
+  padding-left: 4px;
+  padding-right: 4px;
+  vertical-align: top;
+}
+
+th.shaded {
+  background: #f7f7f7;
+}
+
+.spinner-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 12;
+}
+
+.points-description ul {
+  margin-bottom: 80px;
+}
+
+.points-description li {
+  margin-bottom: 10px;
+}
+
+.header-title {
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 10px;
+}
+
+.submission-success {
+  display: flex;
+  margin: auto;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.form-confirm ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.form-confirm li {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.form-confirm .prediction {
+  text-transform: uppercase;
+  font-size: 75%;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.form-confirm .prediction .survive {
+  color: #308e30;
+}
+
+.form-confirm .prediction .die {
+  color: #d42a2a;
+}
+
+.form-confirm .character-name {
+  display: block;
+}
+
+.form-confirm .prediction .survive svg {
+  fill: #308e30;
+}
+
+.form-confirm .prediction .die svg {
+  position: relative;
+  top: 3.5px;
+}
+
+.form-confirm .character-avatar-container {
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-confirm .character-avatar-container {
+  width: 40px;
+  height: 40px;
+}
+
+.form-confirm .character-avatar,
+.form-confirm .avatar-placeholder {
+  width: 32px;
+  height: 32px;
+}
+
+.flex-direction-column {
+  flex-direction: column;
+}
+
+.form-confirm .bet-prediction {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #7ca8c2;
+}
+
+.form-confirm .bet-prediction svg {
+  fill: #7ca8c2;
+}
+
+.sticky-controls {
+  position: sticky;
+  bottom: 20px;
+  display: flex;
+  margin-top: 40px; 
+  /* padding: 20px 5px;
+  margin: 0 -20px;
+  box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.07); */
+}
+
+.sticky-controls .confirm-fix,
+.sticky-controls .confirm-button {
+  width: 50%;
+  margin: auto 5px 0;
+  white-space: nowrap;
 }

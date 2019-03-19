@@ -10,8 +10,7 @@
       "4": "5",
       "5": "5",
       "6": "4"
-    },
-    "deathEpisode": ""
+    }
   },
   "dtargaryen": {
     "id": "dtargaryen",
@@ -24,8 +23,7 @@
       "4": "8",
       "5": "6",
       "6": "4"
-    },
-    "deathEpisode": ""
+    }
   },
   "tlannister": {
     "id": "tlannister",
@@ -38,36 +36,33 @@
       "4": "9",
       "5": "6",
       "6": "5"
-    },
-    "deathEpisode": ""
+    }
   },
   "jlannister": {
     "id": "jlannister",
     "name": "Jamie Lannister",
     "pointsPerEpisode": {
-      "0": "3",
+      "0": "1",
       "1": "10",
       "2": "10",
       "3": "10",
       "4": "5",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "clannister": {
     "id": "clannister",
     "name": "Cersei Lannister",
     "pointsPerEpisode": {
-      "0": "7",
+      "0": "5",
       "1": "10",
       "2": "10",
       "3": "10",
       "4": "5",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "astark": {
     "id": "astark",
@@ -80,8 +75,7 @@
       "4": "10",
       "5": "10",
       "6": "9"
-    },
-    "deathEpisode": ""
+    }
   },
   "bstark": {
     "id": "bstark",
@@ -94,8 +88,7 @@
       "4": "5",
       "5": "5",
       "6": "4"
-    },
-    "deathEpisode": ""
+    }
   },
   "sstark": {
     "id": "sstark",
@@ -108,8 +101,7 @@
       "4": "8",
       "5": "8",
       "6": "7"
-    },
-    "deathEpisode": ""
+    }
   },
   "starly": {
     "id": "starly",
@@ -122,8 +114,7 @@
       "4": "10",
       "5": "9",
       "6": "9"
-    },
-    "deathEpisode": ""
+    }
   },
   "gilly": {
     "id": "gilly",
@@ -136,8 +127,7 @@
       "4": "9",
       "5": "8",
       "6": "8"
-    },
-    "deathEpisode": ""
+    }
   },
   "babysam": {
     "id": "babysam",
@@ -150,12 +140,11 @@
       "4": "10",
       "5": "10",
       "6": "10"
-    },
-    "deathEpisode": ""
+    }
   },
-  "lvarys": {
-    "id": "lvarys",
-    "name": "Lord Varys",
+  "varys": {
+    "id": "varys",
+    "name": "Varys",
     "pointsPerEpisode": {
       "0": "1",
       "1": "7",
@@ -164,8 +153,7 @@
       "4": "4",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "nightking": {
     "id": "nightking",
@@ -178,8 +166,7 @@
       "4": "4",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "btarth": {
     "id": "btarth",
@@ -192,8 +179,7 @@
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "dseaworth": {
     "id": "dseaworth",
@@ -206,50 +192,46 @@
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "jmormont": {
     "id": "jmormont",
     "name": "Jorah Mormont",
     "pointsPerEpisode": {
-      "0": "3",
+      "0": "1",
       "1": "4",
       "2": "4",
       "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "gendry": {
     "id": "gendry",
     "name": "Gendry",
     "pointsPerEpisode": {
       "0": "1",
-      "1": "8",
+      "1": "7",
       "2": "7",
-      "3": "6",
+      "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "sclegane": {
     "id": "sclegane",
     "name": "Sandor (The Hound) Clegane",
     "pointsPerEpisode": {
-      "0": "3",
+      "0": "1",
       "1": "10",
       "2": "10",
       "3": "8",
       "4": "7",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "gclegane": {
     "id": "gclegane",
@@ -262,8 +244,7 @@
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "bronn": {
     "id": "bronn",
@@ -276,50 +257,46 @@
       "4": "5",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "tgiantsbane": {
     "id": "tgiantsbane",
     "name": "Tormund Giantsbane",
     "pointsPerEpisode": {
-      "0": "2",
+      "0": "1",
       "1": "5",
       "2": "5",
       "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "egreyjoy": {
     "id": "egreyjoy",
     "name": "Euron Greyjoy",
     "pointsPerEpisode": {
-      "0": "10",
+      "0": "3",
       "1": "3",
       "2": "3",
       "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "tgreyjoy": {
     "id": "tgreyjoy",
     "name": "Theon Greyjoy",
     "pointsPerEpisode": {
-      "0": "3",
+      "0": "1",
       "1": "5",
       "2": "5",
       "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "ygreyjoy": {
     "id": "ygreyjoy",
@@ -332,8 +309,7 @@
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "ghost": {
     "id": "ghost",
@@ -346,22 +322,33 @@
       "4": "5",
       "5": "5",
       "6": "4"
-    },
-    "deathEpisode": ""
+    }
+  },
+  "nymeria": {
+    "id": "nymeria",
+    "name": "Nymeria",
+    "pointsPerEpisode": {
+      "0": "1",
+      "1": "10",
+      "2": "9",
+      "3": "9",
+      "4": "5",
+      "5": "5",
+      "6": "4"
+    }
   },
   "melisandre": {
     "id": "melisandre",
     "name": "Melisandre",
     "pointsPerEpisode": {
-      "0": "7",
+      "0": "2",
       "1": "6",
       "2": "6",
       "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "drogon": {
     "id": "drogon",
@@ -374,8 +361,7 @@
       "4": "8",
       "5": "6",
       "6": "4"
-    },
-    "deathEpisode": ""
+    }
   },
   "rhaegal": {
     "id": "rhaegal",
@@ -388,64 +374,59 @@
       "4": "6",
       "5": "4",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "qyburn": {
     "id": "qyburn",
     "name": "Qyburn",
     "pointsPerEpisode": {
-      "0": "7",
+      "0": "2",
       "1": "10",
       "2": "10",
       "3": "9",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "bdondarrion": {
     "id": "bdondarrion",
     "name": "Beric Dondarrion",
     "pointsPerEpisode": {
-      "0": "8",
+      "0": "3",
       "1": "5",
       "2": "5",
-      "3": "5",
+      "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "greyworm": {
     "id": "greyworm",
     "name": "Grey Worm",
     "pointsPerEpisode": {
-      "0": "6",
-      "1": "7",
-      "2": "7",
-      "3": "7",
+      "0": "3",
+      "1": "5",
+      "2": "5",
+      "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "dedd": {
     "id": "dedd",
     "name": "Dolorous Edd",
     "pointsPerEpisode": {
       "0": "3",
-      "1": "7",
-      "2": "7",
-      "3": "5",
+      "1": "5",
+      "2": "5",
+      "3": "3",
       "4": "3",
       "5": "3",
       "6": "3"
-    },
-    "deathEpisode": ""
+    }
   },
   "missandei": {
     "id": "missandei",
@@ -458,8 +439,7 @@
       "4": "10",
       "5": "8",
       "6": "8"
-    },
-    "deathEpisode": ""
+    }
   },
   "dnaharis": {
     "id": "dnaharis",
@@ -472,7 +452,58 @@
       "4": "7",
       "5": "7",
       "6": "7"
-    },
-    "deathEpisode": ""
+    }
+  },
+  "ppayne": {
+    "id": "ppayne",
+    "name": "Podrick Payne",
+    "pointsPerEpisode": {
+      "0": "1",
+      "1": "7",
+      "2": "7",
+      "3": "3",
+      "4": "3",
+      "5": "3",
+      "6": "3"
+    }
+  },
+  "etully": {
+    "id": "etully",
+    "name": "Edmure Tully",
+    "pointsPerEpisode": {
+      "0": "1",
+      "1": "4",
+      "2": "4",
+      "3": "3",
+      "4": "3",
+      "5": "3",
+      "6": "3"
+    }
+  },
+  "rarryn": {
+    "id": "rarryn",
+    "name": "Robin Arryn",
+    "pointsPerEpisode": {
+      "0": "1",
+      "1": "7",
+      "2": "7",
+      "3": "6",
+      "4": "6",
+      "5": "5",
+      "6": "5"
+    }
+  },
+  "lyanna": {
+    "id": "lyanna",
+    "name": "Lyanna Mormont",
+    "pointsPerEpisode": {
+      "0": "1",
+      "1": "7",
+      "2": "7",
+      "3": "6",
+      "4": "6",
+      "5": "5",
+      "6": "5"
+    }
   }
 }
