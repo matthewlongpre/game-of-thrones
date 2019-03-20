@@ -72,8 +72,7 @@ const MOCK_ENTRY = {
     "tlannister": "0",
     "varys": "5",
     "ygreyjoy": "5"
-  },
-  "name": "Another Risk taker"
+  }
 };
 
 class Submission extends Component {
@@ -187,7 +186,14 @@ class Submission extends Component {
   handleSubmit = (values, setSubmitting) => {
     setSubmitting(true);
 
-    const newEntryRef = this.entriesRef.push();
+    values.userId = this.props.user.uid;
+    values.name = this.props.user.displayName;
+
+    // const newEntryRef = this.entriesRef.push();
+    const newEntryRef = this.entriesRef.child(this.props.user.uid);
+
+
+
     newEntryRef.set(values, (error) => {
       if (error) {
         alert(error)
@@ -238,61 +244,50 @@ class Submission extends Component {
 
             const characterFields = this.buildCharacterForm(values, handleChange, handleBlur, touched, errors);
             const betFields = this.buildBetForm(values, handleChange, handleBlur, touched, errors);
-            return (
-              <>
-                {!showConfirm && <>
-                  <div className="your-name">
-                    <TextField
-                      label="Your name"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      name="name"
-                      value={values.name}
-                      fullWidth
-                      required
-                      error={touched.name && Boolean(errors.name)}
-                    />
-                  </div>
-                  <div className="points-description">
-                    <h2>Getting started</h2>
-                    <p>Make a prediction for each character, and receive the assigned points value if it comes true.</p>
-                    <ul>
-                      <li>Points for predictions are weighted for each character based on how likely they are to occur.</li>
-                      <li>If you choose an <strong>Expert Level</strong> prediction, and it turns out the character does die but in a different episode than you chose, you'll receive <strong>1 point</strong>.</li>
-                      <li><strong>Dies (Sometime in Series)</strong> is always worth <strong>2 points</strong>.</li>
-                    </ul>
-                  </div>
-                  <h2>Choose their fates</h2>
-                </>}
 
-                {!showConfirm && characterFields}
-
-                {!showConfirm && <><div className="points-description">
-                  <h2>Bonus predictions</h2>
-                  <p>Pick up some extra points by guessing when some key story beats will take place.</p>
-                  <p></p>
-                </div></>}
-
-                {!showConfirm && betFields}
-
-
-                {showConfirm && <>
+            if (showConfirm) {
+              return (
+                <>
                   <Confirm {...values} characters={characters} bets={bets} handleGoBack={this.handleGoBack} />
-
                   <div className="sticky-controls">
                     <Button className="confirm-fix" variant="contained" color="secondary" onClick={this.handleGoBack}>Go Back &amp; Fix</Button>
                     <Button className="submit-button" variant="contained" color="primary" fullWidth onClick={handleSubmit} disabled={isSubmitting}>
                       Submit
-                   </Button>
+                    </Button>
                   </div>
-                </>}
+                </>
+              );
+            }
 
-                {!showConfirm &&
+            return (
+              <>
+                <div className="your-name">
+                </div>
+                <div className="points-description">
+                  <h2>Getting started</h2>
+                  <p>Make a prediction for each character, and receive the assigned points value if it comes true.</p>
+                  <ul>
+                    <li>Points for predictions are weighted for each character based on how likely they are to occur.</li>
+                    <li>If you choose an <strong>Expert Level</strong> prediction, and it turns out the character does die but in a different episode than you chose, you'll receive <strong>1 point</strong>.</li>
+                    <li><strong>Dies (Sometime in Series)</strong> is always worth <strong>2 points</strong>.</li>
+                  </ul>
+                </div>
+                <h2>Choose their fates</h2>
 
-                  <Button className="confirm-button" variant="contained" color="primary" fullWidth onClick={this.handleConfirm}>
-                    Confirm
-                  </Button>
-                }
+                {characterFields}
+
+                <div className="points-description">
+                  <h2>Bonus predictions</h2>
+                  <p>Pick up some extra points by guessing when some key story beats will take place.</p>
+                  <p></p>
+                </div>
+
+                {betFields}
+
+                <Button className="confirm-button" variant="contained" color="primary" fullWidth onClick={this.handleConfirm}>
+                  Confirm
+                </Button>
+
               </>
             );
           }}

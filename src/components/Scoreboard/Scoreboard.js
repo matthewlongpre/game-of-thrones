@@ -18,7 +18,7 @@ class Scoreboard extends React.Component {
     this.entriesRef.on('value', item => {
       const entries = Object.values(item.val());
       this.setState({
-        entries: entries
+        entries
       });
     });
 
