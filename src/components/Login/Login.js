@@ -1,9 +1,9 @@
 import React from "react";
+import { firebase } from "./../../shared/firebase";
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-const Login = () => (
-  <div>
-    Login
+export const Login = ({ user, uiConfig }) => (
+  <div className="login-page">
+    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
   </div>
 );
-
-export default Login;

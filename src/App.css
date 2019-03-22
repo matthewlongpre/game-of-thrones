@@ -2,11 +2,24 @@
   box-sizing: border-box;
 }
 
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: "Lora";
   color: "#131312";
   min-width: 300px;
   padding: 20px;
+}
+
+button {
+  font-family: "Lora";
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .logo {
@@ -340,7 +353,7 @@ th.shaded {
   position: sticky;
   bottom: 20px;
   display: flex;
-  margin-top: 40px; 
+  margin-top: 40px;
   /* padding: 20px 5px;
   margin: 0 -20px;
   box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.07); */
@@ -351,4 +364,43 @@ th.shaded {
   width: 50%;
   margin: auto 5px 0;
   white-space: nowrap;
+}
+
+.facebook-button {
+  background: #4267b2;
+  color: #fff;
+  border: 0;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  padding: 10px;
+  border-radius: 2px;
+  max-width: 280px;
+  min-width: initial;
+  width: 100%;
+}
+
+.facebook-button svg {
+  margin-right: 10px;
+}
+
+.facebook-button span {
+  margin: 0 10px;
+}
+
+.login-page {
+  width: 280px;
+  margin: auto;
+}
+
+.login-page p {
+  margin-bottom: 40px;
+}
+
+.firebaseui-callback-indicator-container {
+  display: none;
+}
+
+.mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-callback {
+  display: none;
 }

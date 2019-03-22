@@ -2,24 +2,32 @@ import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 import { navigate, Router } from "@reach/router";
 import React, { Component } from 'react';
 import './App.css';
-import * as logo from "./assets/got-logo.jpg";
-import Login from "./components/Login/Login";
+import { Header } from "./components/Header/Header";
+import { Login } from "./components/Login/Login";
+import { LoginSuccess } from "./components/Login/LoginSucess";
 import { Scoreboard } from "./components/Scoreboard/index";
-import Spinner from "./components/Spinner/Spinner";
-import Submission from "./components/Submission/Submission";
-import Success from "./components/Submission/Success";
-import firebase from "./shared/firebase";
-
-const provider = new firebase.auth.FacebookAuthProvider();
+import { Spinner } from "./components/Spinner/Spinner";
+import { Submission } from "./components/Submission/Submission";
+import { Success } from "./components/Submission/Success";
+import { firebase } from "./shared/firebase";
 
 const muiTheme = createMuiTheme({
+  overrides: {
+    MuiButton: {
+      text: {
+        background: "#131312",
+        color: "#fff"
+      }
+    }
+  },
   typography: {
     fontFamily: "Lora",
     useNextVariants: true,
   },
   palette: {
     primary: {
-      main: "#98d8fd",
+      main: "#131312",
+      // main: "#98d8fd",
     },
     secondary: {
       main: "#eaf7ff",
@@ -31,49 +39,33 @@ const muiTheme = createMuiTheme({
 class App extends Component {
   state = {
     user: null,
-    loading: true
+    // loading: true
   }
 
-  login = () => {
-    firebase.auth().signInWithRedirect(provider);
+  uiConfig = {
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      firebase.auth.FacebookAuthProvider.PROVIDER_ID
+    ],
+    signInSuccessUrl: "/login-success",
+    callbacks: {
+      signInSuccessWithAuthResult: () => false,
+    }
+  };
+
+  setLoading = (loading) => {
+    console.log("setLoading")
+    this.setState({
+      loading: loading
+    });
   }
 
   componentDidMount() {
-    firebase.auth().getRedirectResult().then((result) => {
-      if (result.credential) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        var token = result.credential.accessToken;
-        // ...
-      }
-      // The signed-in user info.
-      const user = result.user;
-
-
-
-      this.setState({
-        user,
-        loading: false
-      });
-      // navigate("/submission");
-
-
-
-    }).catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // The email of the user's account used.
-      var email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
-
-      console.log(errorCode)
-      console.log(email)
-      console.log(errorMessage)
-      // ...
-    });
+    console.log("componentDidMount")
 
     firebase.auth().onAuthStateChanged((user) => {
+      console.log("authStateChanged", user);
+
       if (user) {
         // User is signed in.
         this.setState({
@@ -82,46 +74,60 @@ class App extends Component {
 
         const databaseRef = firebase.database();
         const entriesRef = databaseRef.ref('entries');
-  
+
         entriesRef.on('value', item => {
+
           const entryKeys = Object.keys(item.val());
           if (entryKeys.includes(user.uid)) {
             // user has an entry
             navigate("/scoreboard");
+
           } else {
+            // user does not have an entry
             navigate("/submission");
+
           }
         });
 
       } else {
-        // No user is signed in.
-        console.log("no user")
+        // no user is signed in.
+
         navigate("/login");
+        // this.setState({
+        //   loading: false
+        // });
       }
     });
+  }
+
+  handleLogout = () => {
+    firebase.auth().signOut();
   }
 
   render() {
     const { user, loading } = this.state;
 
-    if (loading) return <Spinner />
+    if (loading) {
+      return (
+        <MuiThemeProvider theme={muiTheme}>
+          <Spinner />
+        </MuiThemeProvider>
+      );
+    }
 
     return (
       <MuiThemeProvider theme={muiTheme}>
-        <header>
-          {user ? user.displayName :
-          <button onClick={this.login}>Login</button>}
-          <div className="container">
-            <img alt="Game of Thrones" className="logo" src={logo} />
-            <h3 className="header-title">Prediction Pool</h3>
-          </div>
-        </header>
+        <button onClick={this.handleLogout}>Sign-out</button>
+
+        <Header />
         <Router>
-          <Login path="login" />
+          <Login path="login" user={user} uiConfig={this.uiConfig} />
           <Submission path="submission" user={user} />
-          <Scoreboard path="scoreboard" />
+          <Scoreboard path="scoreboard" user={user} />
           <Success path="success" user={user} />
+          <LoginSuccess path="login-success" user={user} />
         </Router>
+
       </MuiThemeProvider>
     );
   }

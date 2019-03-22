@@ -3,17 +3,13 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
+import { navigate } from "@reach/router";
 import { Formik } from "formik";
 import React, { Component } from 'react';
 import { episodes } from "../../shared/constants";
-import firebase from "../../shared/firebase";
-import Spinner from "../Spinner/Spinner";
-import './../../App.css';
+import { firebase } from "../../shared/firebase";
 import avatars from "./../../assets/avatars/index";
-import formSchema from "./FormSchema";
-import Confirm from "./Confirm";
-import { navigate } from "@reach/router"
+import { Confirm } from "./Confirm";
 
 
 const MOCK_ENTRY = {
@@ -75,7 +71,7 @@ const MOCK_ENTRY = {
   }
 };
 
-class Submission extends Component {
+export class Submission extends Component {
 
   databaseRef = firebase.database();
   charactersRef = this.databaseRef.ref('characters');
@@ -223,7 +219,7 @@ class Submission extends Component {
 
     const { characters, bets, showConfirm } = this.state;
 
-    if (!characters || !bets) return <Spinner />;
+    if (!characters || !bets) return <></>;
 
     return (
       <div className="container container-form">
@@ -251,7 +247,7 @@ class Submission extends Component {
                   <Confirm {...values} characters={characters} bets={bets} handleGoBack={this.handleGoBack} />
                   <div className="sticky-controls">
                     <Button className="confirm-fix" variant="contained" color="secondary" onClick={this.handleGoBack}>Go Back &amp; Fix</Button>
-                    <Button className="submit-button" variant="contained" color="primary" fullWidth onClick={handleSubmit} disabled={isSubmitting}>
+                    <Button className="submit-button" variant="contained" color="primary" onClick={handleSubmit} disabled={isSubmitting}>
                       Submit
                     </Button>
                   </div>
@@ -296,5 +292,3 @@ class Submission extends Component {
     );
   }
 }
-
-export default Submission;

@@ -41,16 +41,7 @@ const Bet = ({ description, prediction, id }) => (
   </li>
 );
 
-const StickyControls = ({handleSubmit, handleGoBack}) => (
-  <div className="sticky-controls">
-    <Button className="confirm-fix" variant="contained" color="secondary" onClick={handleGoBack}>Go Back &amp; Fix</Button>
-    <Button className="confirm-button" variant="contained" color="primary" fullWidth onClick={handleSubmit}>
-      Confirm
-    </Button>
-  </div>
-);
-
-const Confirm = ({ characters, characterDeathChoices, betChoices, bets }) => {
+export const Confirm = ({ characters, characterDeathChoices, betChoices, bets }) => {
 
   const characterRows = characters.map(character => {
     const predictionEpisode = characterDeathChoices[character.id];
@@ -73,9 +64,6 @@ const Confirm = ({ characters, characterDeathChoices, betChoices, bets }) => {
       <ul>
         {betRows}
       </ul>
-      {/* <StickyControls handleSubmit={handleSubmit} handleGoBack={handleGoBack} /> */}
     </div>
   );
 };
-
-export default Confirm;

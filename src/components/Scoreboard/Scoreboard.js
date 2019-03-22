@@ -1,8 +1,7 @@
 import React from "react";
-import firebase from "../../shared/firebase";
-import { episodes, airdates, POINTS } from "../../shared/constants";
+import { airdates, episodes, POINTS } from "../../shared/constants";
+import {firebase} from "../../shared/firebase";
 import avatars from "./../../assets/avatars/index";
-import Spinner from "./../../components/Spinner/Spinner";
 
 class Scoreboard extends React.Component {
   databaseRef = firebase.database();
@@ -66,7 +65,7 @@ class Scoreboard extends React.Component {
     }
     return actualBetsThisEpisode;
   }
-  
+
   getCorrectBetsByEpisode = (actualBetsThisEpisode, betChoicesByEpisode) => {
     let correctBets = [];
     if (actualBetsThisEpisode.length !== 0) {
@@ -81,7 +80,7 @@ class Scoreboard extends React.Component {
     }
     return correctBets;
   }
-  
+
   getCorrectBetPoints = correctBet => {
     const correctBetPoints = correctBet.map(() => POINTS.BONUS_PREDICTION_VALUE);
     return correctBetPoints.reduce(this.sumPoints, 0);
@@ -214,7 +213,7 @@ class Scoreboard extends React.Component {
     const points = survivers.map(item => item.pointsPerEpisode[0]);
     return points.reduce(this.sumPoints, 0);
   }
-  
+
   getAllActualCharacterSurvivers = (characters, deadCharacters) => {
     const survivers = characters.filter(item => {
       return !deadCharacters.find(deadCharacter => deadCharacter.id === item.id);
@@ -231,7 +230,7 @@ class Scoreboard extends React.Component {
 
     const { entries, episodeResults, characters } = this.state;
 
-    if (!entries || !episodeResults || !characters) return <Spinner />;
+    if (!entries || !episodeResults || !characters) return <></>;
 
     const seriesFinished = episodeResults.length === 6;
     let deadCharacters;
@@ -264,7 +263,7 @@ class Scoreboard extends React.Component {
         const deathChoicesByEpisode = this.getDeathChoicesByEpisode(playerDeathChoices, episode);
 
         const betChoicesByEpisode = this.getBetChoicesByEpisode(playerBetChoices, episode);
-        
+
         const actualBetsThisEpisode = this.getActualBetsThisEpisode(episode, episodeResults);
 
         const correctBets = this.getCorrectBetsByEpisode(actualBetsThisEpisode, betChoicesByEpisode);
@@ -370,7 +369,7 @@ class Scoreboard extends React.Component {
           .map(character =>
             <div key={character.id} className="dead-character">
               <div title={character.name} className="dead-character-avatar">{avatars[character.id] && <img className="character-avatar" alt={character.name} src={avatars[character.id]} />}</div>
-              <div title={character.name}  className="badge">{character.pointsPerEpisode[episode]}</div>
+              <div title={character.name} className="badge">{character.pointsPerEpisode[episode]}</div>
             </div>
           );
         return <td key={episode} className="text-center">{characters}</td>;
