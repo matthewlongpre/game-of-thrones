@@ -1,20 +1,34 @@
 import React from "react";
 import { airdates, episodes, POINTS } from "../../shared/constants";
-import {firebase} from "../../shared/firebase";
+import { firebase } from "../../shared/firebase";
 import avatars from "./../../assets/avatars/index";
+import { Link } from "@reach/router"
+import { Avatar } from "./../Character/Avatar";
 
 class Scoreboard extends React.Component {
-  databaseRef = firebase.database();
-  entriesRef = this.databaseRef.ref('entries');
-  episodesRef = this.databaseRef.ref('episodes');
-  charactersRef = this.databaseRef.ref('characters');
 
-  state = {
-    entries: null
+  constructor(props) {
+    super(props);
+    this.databaseRef = firebase.database();
+    this.entriesRef = this.databaseRef.ref(`games/${props.gameId}/entries`);
+    this.episodesRef = this.databaseRef.ref('episodes');
+    this.charactersRef = this.databaseRef.ref('characters');
+
+    this.state = {
+      entries: null
+    }
   }
 
   componentDidMount() {
     this.entriesRef.on('value', item => {
+
+      if (!item.val()) {
+        this.setState({
+          entries: []
+        });
+        return;
+      }
+
       const entries = Object.values(item.val());
       this.setState({
         entries
@@ -33,14 +47,14 @@ class Scoreboard extends React.Component {
         return episode;
       });
       this.setState({
-        episodeResults: episodeResults
+        episodeResults
       });
     });
 
     this.charactersRef.on('value', item => {
       const characters = Object.values(item.val());
       this.setState({
-        characters: characters
+        characters
       });
     });
   }
@@ -305,18 +319,17 @@ class Scoreboard extends React.Component {
         name: entry.name,
         pointsPerEpisode: pointsPerEpisode,
         survivingCharacterPoints: survivingCharacterPoints,
-        overallTotal: overallTotal
+        overallTotal: overallTotal,
+        userId: entry.userId
       }
 
     });
 
     const sortedPlayers = players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
-
     const playerRows = sortedPlayers.map((player, index) => {
       const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}</td>)
-      return <tr key={player.name}><td className="text-center rank">{index + 1}</td><td className="player-name sticky-left">{player.name}</td>{playerCells}{seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}<td className="text-center sticky-right">{player.overallTotal}</td></tr>
+      return <tr key={player.name}><td className="text-center rank">{index + 1}</td><td className="player-name sticky-left"><Link to={`/games/chadding-tatum/player/${player.userId}`}>{player.name}</Link></td>{playerCells}{seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}<td className="text-center sticky-right">{player.overallTotal}</td></tr>
     });
-
 
     const possiblePointsPerEpisode = episodes.map(episode => {
 
@@ -368,8 +381,10 @@ class Scoreboard extends React.Component {
         const characters = deadCharactersForDisplay[episode - 1]
           .map(character =>
             <div key={character.id} className="dead-character">
-              <div title={character.name} className="dead-character-avatar">{avatars[character.id] && <img className="character-avatar" alt={character.name} src={avatars[character.id]} />}</div>
-              <div title={character.name} className="badge">{character.pointsPerEpisode[episode]}</div>
+              <div className="dead-character-avatar">
+                <Avatar size="small" name={character.name} id={character.id} />
+              </div>
+              <div className="badge">{character.pointsPerEpisode[episode]}</div>
             </div>
           );
         return <td key={episode} className="text-center">{characters}</td>;

@@ -1,9 +1,17 @@
 import React from "react";
-import { firebase } from "./../../shared/firebase";
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { FacebookButton } from "./FacebookButton";
+import { GoogleButton } from "./GoogleButton";
 
-export const Login = ({ user, uiConfig }) => (
-  <div className="login-page">
-    <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-  </div>
-);
+export const Login = ({ user, handleLoginWithGoogleClick, handleLoginWithFacebookClick }) => {
+
+  if (user) {
+    return <div>Signed in as {user.displayName}.</div>
+  }
+
+  return (
+    <div className="login-page">
+      <GoogleButton handleClick={handleLoginWithGoogleClick}>Sign in with Google</GoogleButton>
+      <FacebookButton handleClick={handleLoginWithFacebookClick}>Sign in with Facebook</FacebookButton>
+    </div>
+  );
+}

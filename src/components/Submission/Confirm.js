@@ -1,7 +1,5 @@
 import React from "react";
 import avatars from "./../../assets/avatars/index";
-import { Button } from "@material-ui/core";
-
 
 const CheckMark = () => (
   <svg width="8" height="8" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"

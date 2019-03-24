@@ -8,38 +8,39 @@ import { Formik } from "formik";
 import React, { Component } from 'react';
 import { episodes } from "../../shared/constants";
 import { firebase } from "../../shared/firebase";
-import avatars from "./../../assets/avatars/index";
+import { Spinner } from '../Spinner/Spinner';
 import { Confirm } from "./Confirm";
+import { Avatar} from "./../Character/Avatar";
 
 
 const MOCK_ENTRY = {
   "betChoices": {
-    "branJaime": "2",
-    "brienneJaime": "3",
-    "brienneTormond": "5",
-    "cleganeBowl": "5",
-    "danyPregnant": "2",
-    "goldenCompanyArrives": "1",
-    "jonArya": "2",
-    "jonDragon": "5",
-    "jonIsAegon": "2",
-    "nightKingDefeated": "6",
+    "branJaime": "1",
+    "brienneJaime": "2",
+    "brienneTormond": "6",
+    "cleganeBowl": "4",
+    "danyPregnant": "5",
+    "goldenCompanyArrives": "4",
+    "jonArya": "1",
+    "jonDragon": "3",
+    "jonIsAegon": "1",
+    "nightKingDefeated": "5",
     "nymeriaReappears": "5",
-    "tridentBattle": "5",
-    "tyrionBronn": "4"
+    "tridentBattle": "3",
+    "tyrionBronn": "2"
   },
   "characterDeathChoices": {
     "astark": "0",
     "babysam": "0",
-    "bdondarrion": "3",
+    "bdondarrion": "5",
     "bronn": "5",
-    "bstark": "6",
-    "btarth": "5",
+    "bstark": "0",
+    "btarth": "0",
     "clannister": "6",
     "dedd": "3",
     "dnaharis": "0",
     "drogon": "0",
-    "dseaworth": "3",
+    "dseaworth": "0",
     "dtargaryen": "0",
     "egreyjoy": "5",
     "etully": "3",
@@ -48,10 +49,10 @@ const MOCK_ENTRY = {
     "ghost": "0",
     "gilly": "0",
     "greyworm": "3",
-    "jlannister": "6",
+    "jlannister": "0",
     "jmormont": "3",
     "jsnow": "0",
-    "lyanna": "3",
+    "lyanna": "0",
     "melisandre": "4",
     "missandei": "0",
     "nightking": "3",
@@ -73,40 +74,51 @@ const MOCK_ENTRY = {
 
 export class Submission extends Component {
 
-  databaseRef = firebase.database();
-  charactersRef = this.databaseRef.ref('characters');
-  entriesRef = this.databaseRef.ref('entries');
-  betsRef = this.databaseRef.ref('bets');
+  constructor(props) {
+    super(props);
+    this.databaseRef = firebase.database();
+    this.charactersRef = this.databaseRef.ref('characters');
+    this.entriesRef = this.databaseRef.ref(`games/${props.gameId}/entries`);
+    this.betsRef = this.databaseRef.ref('bets');
+    this.usersRef = this.databaseRef.ref('users');
 
-  initialCharacterDeathChoices = {};
-  initialBetChoices = {};
+    this.initialCharacterDeathChoices = {};
+    this.initialBetChoices = {};
 
-  state = {
-    characters: null,
-    bets: null,
-    loading: true,
+    this.state = {
+      characters: null,
+      bets: null,
+      loading: true
+    }
   }
 
-  componentDidMount() {
-    this.charactersRef.on('value', item => {
-      const characterKeys = Object.keys(item.val());
-      characterKeys.forEach(item => this.initialCharacterDeathChoices[item] = ``)
-      let characters = Object.values(item.val());
-      characters = characters.sort((a, b) => a.name < b.name ? -1 : 1);
+  async componentDidMount() {
 
-      this.setState({
-        characters
-      });
-    });
+    const charactersPromise = this.charactersRef.once('value');
+    const betsPromise = this.betsRef.once('value');
 
-    this.betsRef.on('value', item => {
-      const betKeys = Object.keys(item.val());
-      betKeys.forEach(item => this.initialBetChoices[item] = ``);
-      const bets = Object.values(item.val());
-      this.setState({
-        bets
+    Promise.all([charactersPromise, betsPromise])
+      .then((results) => {
+        const characterResults = results[0];
+
+        const characterKeys = Object.keys(characterResults.val());
+        characterKeys.forEach(item => this.initialCharacterDeathChoices[item] = ``)
+        let characters = Object.values(characterResults.val());
+        characters = characters.sort((a, b) => a.name < b.name ? -1 : 1);
+
+        const betsResults = results[1];
+
+        const betKeys = Object.keys(betsResults.val());
+        betKeys.forEach(item => this.initialBetChoices[item] = ``);
+        const bets = Object.values(betsResults.val());
+
+        this.setState({
+          bets,
+          characters,
+          loading: false
+        });
+
       });
-    });
   }
 
   buildCharacterForm = (values, handleChange, handleBlur, touched, errors) => {
@@ -116,9 +128,7 @@ export class Submission extends Component {
       return (
         <div className="character" key={character.id}>
           <div className="character-data">
-            <div className="character-avatar-container">
-              {avatars[character.id] ? <img className="character-avatar" alt={character.name} src={avatars[character.id]} /> : <div className="avatar-placeholder"></div>}
-            </div>
+              <Avatar {...character} />
             <div className="character-name">{character.name}</div>
           </div>
           <div className="character-input">
@@ -184,13 +194,46 @@ export class Submission extends Component {
 
     values.userId = this.props.user.uid;
     values.name = this.props.user.displayName;
+    values.photoURL = this.props.user.photoURL;
 
-    // const newEntryRef = this.entriesRef.push();
+    // game ID for submission
+    const gameIdForSubmission = {};
+    gameIdForSubmission[this.props.gameId] = true;
+
+    if (this.usersRef.child(this.props.user.uid)) {
+      // check if user is a returning user
+      const userRef = this.usersRef.child(this.props.user.uid);
+      const userGamesRef = userRef.child("games")
+      userGamesRef.update(gameIdForSubmission, error => {
+        if (error) {
+          alert(error)
+          console.error('Failed', error);
+        }
+      });
+    } else {
+      // if user is new
+      const userData = {};
+      userData.games = gameIdForSubmission;
+
+      const newUserRef = this.usersRef.child(this.props.user.uid);
+      newUserRef.update(userData, error => {
+        if (error) {
+          alert(error)
+          console.error('Failed', error);
+        }
+      });
+    }
+
+
+
+
+
+
+    localStorage.setItem("game-state", `/games/${this.props.gameId}`);
+
     const newEntryRef = this.entriesRef.child(this.props.user.uid);
 
-
-
-    newEntryRef.set(values, (error) => {
+    newEntryRef.set(values, error => {
       if (error) {
         alert(error)
         console.error('Failed', error);
@@ -217,12 +260,12 @@ export class Submission extends Component {
 
   render() {
 
-    const { characters, bets, showConfirm } = this.state;
+    const { loading, characters, bets, showConfirm } = this.state;
 
-    if (!characters || !bets) return <></>;
+    if (loading) return <Spinner />;
 
     return (
-      <div className="container container-form">
+      <div className="">
         <Formik
           // validationSchema={formSchema}
           enableReinitialize={false}
@@ -256,7 +299,7 @@ export class Submission extends Component {
             }
 
             return (
-              <>
+              <div className="container container-form">
                 <div className="your-name">
                 </div>
                 <div className="points-description">
@@ -284,7 +327,7 @@ export class Submission extends Component {
                   Confirm
                 </Button>
 
-              </>
+              </div>
             );
           }}
         </Formik>

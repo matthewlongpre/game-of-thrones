@@ -12,6 +12,12 @@ body {
   color: "#131312";
   min-width: 300px;
   padding: 20px;
+  overflow-y: scroll;
+}
+
+a {
+  color: #4876b5;
+  text-decoration: none;
 }
 
 button {
@@ -32,6 +38,11 @@ header {
 
 .container {
   max-width: 480px;
+  margin: 0 auto;
+}
+
+.container-lg {
+  max-width: 1080px;
   margin: 0 auto;
 }
 
@@ -67,18 +78,6 @@ header {
 .character-name {
   display: flex;
   align-items: center;
-}
-
-.character-avatar-container {
-  width: 64px;
-  height: 64px;
-  flex-shrink: 0;
-  margin-bottom: 10px;
-}
-
-.character-avatar {
-  max-width: 100%;
-  flex-shrink: 0;
 }
 
 .dead-character {
@@ -224,10 +223,6 @@ th.heading--episode-number {
   font-size: 66%;
 }
 
-.submit-button {
-  margin-top: 60px !important;
-}
-
 th,
 td {
   padding-left: 4px;
@@ -271,7 +266,6 @@ th.shaded {
 .submission-success {
   display: flex;
   margin: auto;
-  padding: 20px;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -350,42 +344,23 @@ th.shaded {
 }
 
 .sticky-controls {
-  position: sticky;
-  bottom: 20px;
+  bottom: 0;
   display: flex;
-  margin-top: 40px;
-  /* padding: 20px 5px;
+  position: sticky;
   margin: 0 -20px;
-  box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.07); */
+  width: calc(100% + 40px);
+  left: 0;
+  right: 0;
+  padding: 40px 20px;
+  background: #fff;
+  box-shadow: 0px 0px 25px -1px rgba(0, 0, 0, 0.07);
 }
 
 .sticky-controls .confirm-fix,
-.sticky-controls .confirm-button {
+.sticky-controls .submit-button {
   width: 50%;
   margin: auto 5px 0;
   white-space: nowrap;
-}
-
-.facebook-button {
-  background: #4267b2;
-  color: #fff;
-  border: 0;
-  display: flex;
-  align-items: center;
-  margin: auto;
-  padding: 10px;
-  border-radius: 2px;
-  max-width: 280px;
-  min-width: initial;
-  width: 100%;
-}
-
-.facebook-button svg {
-  margin-right: 10px;
-}
-
-.facebook-button span {
-  margin: 0 10px;
 }
 
 .login-page {
@@ -403,4 +378,29 @@ th.shaded {
 
 .mdl-card.mdl-shadow--2dp.firebaseui-container.firebaseui-id-page-callback {
   display: none;
+}
+
+.player-character-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.player-character-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.player-character-list-item .badge {
+  margin: 10px 0 0;
+}
+
+.player-character-name {
+  display: none;
+  white-space: nowrap;
 }
