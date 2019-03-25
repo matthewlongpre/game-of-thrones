@@ -2,7 +2,9 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
 }
@@ -11,8 +13,8 @@ body {
   font-family: "Lora";
   color: "#131312";
   min-width: 300px;
-  padding: 20px;
   overflow-y: scroll;
+  background: #f6f6f6;
 }
 
 a {
@@ -33,7 +35,8 @@ button:hover {
 }
 
 header {
-  padding: 20px 0;
+  padding: 20px;
+  background: #fff;
 }
 
 .container {
@@ -48,6 +51,14 @@ header {
 
 .container-form {
   padding-bottom: 160px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.w-100 {
+  width: 100%;
 }
 
 .your-name {
@@ -88,7 +99,9 @@ header {
 }
 
 .dead-character .badge {
-  margin: auto;
+  margin: 12px auto 0;
+  max-width: 40px;
+  min-width: 30px;
 }
 
 .dead-character-avatar {
@@ -111,17 +124,7 @@ header {
   display: flex;
   align-items: center;
   padding-right: 40px;
-}
-
-.badge {
-  background: #e1f4ff;
-  padding: 2px 10px;
-  border-radius: 5px;
-  margin: 0 15px 0 0;
-  text-transform: uppercase;
-  font-size: 0.75em;
-  min-width: 60px;
-  text-align: center;
+  margin-bottom: 20px;
 }
 
 .possible-points {
@@ -249,12 +252,19 @@ th.shaded {
   z-index: 12;
 }
 
-.points-description ul {
+@media (max-width: 767px) {
+  .form-prose {
+    padding: 0 20px;
+  }
+}
+
+.form-prose ul {
   margin-bottom: 80px;
 }
 
-.points-description li {
-  margin-bottom: 10px;
+.form-prose li {
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
 .header-title {
@@ -280,7 +290,7 @@ th.shaded {
 
 .form-confirm li {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .form-confirm .prediction {
@@ -327,6 +337,12 @@ th.shaded {
 .form-confirm .avatar-placeholder {
   width: 32px;
   height: 32px;
+}
+
+.form-confirm .character-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .flex-direction-column {
@@ -396,11 +412,4 @@ th.shaded {
   margin-bottom: 20px;
 }
 
-.player-character-list-item .badge {
-  margin: 10px 0 0;
-}
 
-.player-character-name {
-  display: none;
-  white-space: nowrap;
-}

@@ -1,5 +1,5 @@
 import React from "react";
-import avatars from "./../../assets/avatars/index";
+import { Avatar } from "../Character/Avatar";
 
 const CheckMark = () => (
   <svg width="8" height="8" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -16,7 +16,7 @@ const Skull = () => (
 const Character = ({ id, name, prediction }) => (
   <li>
     <div className="character-avatar-container">
-      {avatars[id] ? <img className="character-avatar" alt={name} src={avatars[id]} /> : <div className="avatar-placeholder"></div>}
+      <Avatar size="small" name={name} id={id} />
     </div>
     <div className="character-info">
       <span className="character-name">{name}</span>
@@ -39,7 +39,25 @@ const Bet = ({ description, prediction, id }) => (
   </li>
 );
 
-export const Confirm = ({ characters, characterDeathChoices, betChoices, bets }) => {
+const Throne = ({ throneChoice, characters }) => {
+  
+  // TODO:
+  // Handle the "nobody" choices
+
+  const throneChoiceCharacter = characters.find(item => item.id === throneChoice);
+  return (
+    <li>
+      <div className="character-avatar-container">
+        <Avatar size="small" name={throneChoiceCharacter.name} id={throneChoiceCharacter.id} />
+      </div>
+      <div className="character-info">
+        {throneChoiceCharacter.name} will sit the Iron Throne.
+      </div>
+    </li>
+  );
+}
+
+export const Confirm = ({ bets, characters, characterDeathChoices, betChoices, throneChoice }) => {
 
   const characterRows = characters.map(character => {
     const predictionEpisode = characterDeathChoices[character.id];
@@ -58,10 +76,12 @@ export const Confirm = ({ characters, characterDeathChoices, betChoices, bets })
       <ul>
         {characterRows}
       </ul>
-      <h2>Bonus predictions</h2>
+      <h2>Plot predictions</h2>
       <ul>
         {betRows}
       </ul>
+      <h2>Throne prediction</h2>
+      <Throne throneChoice={throneChoice} characters={characters}/>
     </div>
   );
 };

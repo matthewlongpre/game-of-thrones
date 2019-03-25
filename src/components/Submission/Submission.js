@@ -10,7 +10,10 @@ import { episodes } from "../../shared/constants";
 import { firebase } from "../../shared/firebase";
 import { Spinner } from '../Spinner/Spinner';
 import { Confirm } from "./Confirm";
-import { Avatar} from "./../Character/Avatar";
+import { Avatar } from "./../Character/Avatar";
+import { POINTS } from '../../shared/constants';
+import { PointsBadge } from '../Character/PointsBadge';
+import { CardStyle } from '../Player/Card';
 
 
 const MOCK_ENTRY = {
@@ -123,12 +126,12 @@ export class Submission extends Component {
 
   buildCharacterForm = (values, handleChange, handleBlur, touched, errors) => {
     const { characters } = this.state;
-    const choices = characters.map(character => {
-      const predictionsByEpisode = episodes.map(episode => <MenuItem key={`${character.id}--episode-${episode}`} value={episode}><span className="badge">{character.pointsPerEpisode[episode]} {`${character.pointsPerEpisode[episode] !== "1" ? `pts` : `pt`}`}</span> Dies in Episode {episode}</MenuItem>);
+    return characters.map(character => {
+      const predictionsByEpisode = episodes.map(episode => <MenuItem key={`${character.id}--episode-${episode}`} value={episode}><PointsBadge marginRight points={character.pointsPerEpisode[episode]} /> Dies in Episode {episode}</MenuItem>);
       return (
-        <div className="character" key={character.id}>
+        <CardStyle key={character.id}>
           <div className="character-data">
-              <Avatar {...character} />
+            <Avatar {...character} />
             <div className="character-name">{character.name}</div>
           </div>
           <div className="character-input">
@@ -145,26 +148,25 @@ export class Submission extends Component {
                   id: `characterDeathChoices.${character.id}`
                 }}
               >
-                <MenuItem value={"0"}><span className="badge">{character.pointsPerEpisode[0]} {`${character.pointsPerEpisode[0] !== "1" ? `pts` : `pt`}`}</span>Survives Series</MenuItem>
-                <MenuItem value={"7"}><span className="badge">2 pts</span> Dies (Sometime in Series)</MenuItem>
+                <MenuItem value={"0"}><PointsBadge marginRight points={character.pointsPerEpisode[0]} /> Survives Series</MenuItem>
+                <MenuItem value={"7"}><PointsBadge marginRight points={2} /> Dies (Sometime in Series)</MenuItem>
                 <MenuItem disabled><div className="select-divider-label">Expert Level</div></MenuItem>
                 {predictionsByEpisode}
               </Select>
             </FormControl>
           </div>
-        </div>
+        </CardStyle>
       );
     });
-    return choices;
   }
 
   buildBetForm = (values, handleChange, handleBlur, touched, errors) => {
     const { bets } = this.state;
-    const choices = bets.map(bet => {
-      const predictionsByEpisode = episodes.map(episode => <MenuItem key={`${bet.id}--episode-${episode}`} value={episode}><span className="badge">1 pt</span> Episode {episode}</MenuItem>);
+    return bets.map(bet => {
+      const predictionsByEpisode = episodes.map(episode => <MenuItem key={`${bet.id}--episode-${episode}`} value={episode}><PointsBadge marginRight points={1} /> Episode {episode}</MenuItem>);
 
       return (
-        <div className="bet" key={bet.id}>
+        <CardStyle key={bet.id}>
           <div className="bet-name">{bet.description}</div>
           <FormControl required margin="dense" fullWidth>
             <InputLabel htmlFor={`betChoices.${bet.id}`}>Prediction</InputLabel>
@@ -179,14 +181,42 @@ export class Submission extends Component {
                 id: `betChoices.${bet.id}`
               }}
             >
-              <MenuItem value={0}><span className="badge">1 pts</span> Will not occur</MenuItem>
+              <MenuItem value={0}><PointsBadge points={1} /> Will not occur</MenuItem>
               {predictionsByEpisode}
             </Select>
           </FormControl>
-        </div>
+        </CardStyle>
       );
     });
-    return choices;
+  }
+
+  buildThroneForm = (values, handleChange, handleBlur, touched, errors) => {
+    const { characters } = this.state;
+    const throneChoices = characters.map(choice =>
+      <MenuItem key={choice.id} value={choice.id}><PointsBadge marginRight points={choice.pointsForThrone} /> {choice.name}</MenuItem>
+    );
+    return (
+      <CardStyle>
+        <FormControl required margin="dense" fullWidth>
+          <InputLabel htmlFor={`throneChoice`}>Prediction</InputLabel>
+          <Select
+            value={(values.throneChoice ? values.throneChoice : ``)}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.throneChoice ? (touched.throneChoice && (errors.throneChoice ? Boolean(errors.throneChoice) : null)) : null}
+            fullWidth
+            inputProps={{
+              name: `throneChoice`,
+              id: `throneChoice`
+            }}
+          >
+            <MenuItem value="nobodyInList"><PointsBadge marginRight points={POINTS.THRONE_NOBODY_LIST} /> Nobody in this list</MenuItem>
+            <MenuItem value="nobodyAtAll"><PointsBadge marginRight points={POINTS.THRONE_NOBODY_ALL} /> Nobody at all</MenuItem>
+            {throneChoices}
+          </Select>
+        </FormControl>
+      </CardStyle>
+    );
   }
 
   handleSubmit = (values, setSubmitting) => {
@@ -223,11 +253,6 @@ export class Submission extends Component {
         }
       });
     }
-
-
-
-
-
 
     localStorage.setItem("game-state", `/games/${this.props.gameId}`);
 
@@ -283,16 +308,19 @@ export class Submission extends Component {
 
             const characterFields = this.buildCharacterForm(values, handleChange, handleBlur, touched, errors);
             const betFields = this.buildBetForm(values, handleChange, handleBlur, touched, errors);
+            const throneFields = this.buildThroneForm(values, handleChange, handleBlur, touched, errors);
 
             if (showConfirm) {
               return (
                 <>
                   <Confirm {...values} characters={characters} bets={bets} handleGoBack={this.handleGoBack} />
                   <div className="sticky-controls">
-                    <Button className="confirm-fix" variant="contained" color="secondary" onClick={this.handleGoBack}>Go Back &amp; Fix</Button>
-                    <Button className="submit-button" variant="contained" color="primary" onClick={handleSubmit} disabled={isSubmitting}>
-                      Submit
-                    </Button>
+                    <div className="container d-flex w-100">
+                      <Button className="confirm-fix" variant="contained" color="secondary" onClick={this.handleGoBack}>Go Back &amp; Fix</Button>
+                      <Button className="submit-button" variant="contained" color="primary" onClick={handleSubmit} disabled={isSubmitting}>
+                        Submit
+                      </Button>
+                    </div>
                   </div>
                 </>
               );
@@ -302,7 +330,7 @@ export class Submission extends Component {
               <div className="container container-form">
                 <div className="your-name">
                 </div>
-                <div className="points-description">
+                <div className="form-prose">
                   <h2>Getting started</h2>
                   <p>Make a prediction for each character, and receive the assigned points value if it comes true.</p>
                   <ul>
@@ -310,18 +338,30 @@ export class Submission extends Component {
                     <li>If you choose an <strong>Expert Level</strong> prediction, and it turns out the character does die but in a different episode than you chose, you'll receive <strong>1 point</strong>.</li>
                     <li><strong>Dies (Sometime in Series)</strong> is always worth <strong>2 points</strong>.</li>
                   </ul>
+
                 </div>
-                <h2>Choose their fates</h2>
+
+                <div className="form-prose">
+                  <h2>Choose their fates</h2>
+                </div>
 
                 {characterFields}
 
-                <div className="points-description">
-                  <h2>Bonus predictions</h2>
+                <div className="form-prose">
+                  <h2>Plot predictions</h2>
                   <p>Pick up some extra points by guessing when some key story beats will take place.</p>
                   <p></p>
                 </div>
 
                 {betFields}
+
+
+                <div className="form-prose">
+                  <h2>Throne prediction</h2>
+                  <p>Who will sit the Iron Throne when the series wraps?</p>
+                </div>
+
+                {throneFields}
 
                 <Button className="confirm-button" variant="contained" color="primary" fullWidth onClick={this.handleConfirm}>
                   Confirm

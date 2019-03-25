@@ -1,10 +1,8 @@
 import React from "react";
-import { Avatar } from "./../Character/Avatar";
 import styled from "styled-components";
-
-const EpisodeStyle = styled.div`
-  margin-bottom: 60px;
-`;
+import { CharacterBadge } from "../Character/CharacterBadge";
+import { PointsBadge } from "../Character/PointsBadge";
+import { CardStyle } from "./Card";
 
 const AirDate = styled.span`
   text-transform: uppercase;
@@ -33,6 +31,7 @@ const BetsStyle = styled.ul`
 `;
 
 const BetStyle = styled.li`
+  display: flex;
   padding: 10px;
 `;
 
@@ -46,6 +45,8 @@ const ListLabel = styled.h3`
 const NoPredictions = styled.p`
   margin: 0 0 40px;
   padding: 10px;
+  background: #e1f4ff;
+  border-radius: 5px;
 `;
 
 export const Episode = ({ episode, airdate, characterChoices, betChoices }) => {
@@ -53,9 +54,7 @@ export const Episode = ({ episode, airdate, characterChoices, betChoices }) => {
   if (characterChoices.length !== 0) {
     characters = characterChoices.map(choice => (
       <li key={choice.id} className="player-character-list-item">
-        <Avatar name={choice.name} id={choice.id} />
-        <span className="player-character-name">{choice.name}</span>
-        <span className="badge">{choice.pointsPerEpisode[episode]}</span>
+        <CharacterBadge name={choice.name} id={choice.id} points={choice.pointsPerEpisode[episode]} />
       </li>
     ));
   }
@@ -64,22 +63,27 @@ export const Episode = ({ episode, airdate, characterChoices, betChoices }) => {
   if (betChoices.length !== 0) {
     bets = betChoices.map(bet => (
       <BetStyle key={bet.id} className="">
-        <span className="badge">1</span>
+        <PointsBadge marginRight points={1} />
         <span className="">{bet.description}</span>
       </BetStyle>
     ));
   }
   return (
-    <EpisodeStyle>
+    <CardStyle>
       <h2>Episode {episode} <AirDate>{airdate}</AirDate></h2>
 
       <ListLabel>Death Predictions</ListLabel>
-      <CharactersStyle className="player-character-list">{characters}</CharactersStyle>
+      <CharactersStyle className="player-character-list">
+        {characters}
+      </CharactersStyle>
       {characterChoices.length === 0 && <NoPredictions>No deaths predicted for this episode.</NoPredictions>}
 
-      <ListLabel>Bonus Predictions</ListLabel>
-      <BetsStyle className="">{bets}</BetsStyle>
-      {betChoices.length === 0 && <NoPredictions>No bonus predictions for this episode.</NoPredictions>}
-    </EpisodeStyle>
+      <ListLabel>Plot Predictions</ListLabel>
+      <BetsStyle className="">
+        {bets}
+      </BetsStyle>
+      {betChoices.length === 0 && <NoPredictions>No plot predictions for this episode.</NoPredictions>}
+
+    </CardStyle>
   );
 }

@@ -2,12 +2,16 @@ import React from "react";
 import { Link } from "@reach/router";
 import styled from "styled-components";
 
+const GameNavBackgroundStyle = styled.div`
+  background: #fff;
+  margin-bottom: 60px;
+`;
+
 const GameNavStyle = styled.ul`
   list-style-type: none;
-  margin: 0 0 20px;
+  margin: 0 auto;
   padding: 0;
   display: flex;
-  background: #f7f7f7;
 
   li a {
     display: block;
@@ -35,22 +39,24 @@ export class Game extends React.Component {
 
     if (location.pathname.includes("/submission")) {
       return (
-        <div className="container-lg">
+        <div>
           {this.props.children}
         </div>
       );
     }
 
     return (
-      <div className="container-lg">
-        <GameNavStyle>
-          <li>
-            <NavLink to={`scoreboard`}>Scoreboard</NavLink>
-          </li>
-          <li>
-            <NavLink to={`player/${user.uid}`}>My Entry</NavLink>
-          </li>
-        </GameNavStyle>
+      <div>
+        <GameNavBackgroundStyle>
+          <GameNavStyle className="container-lg">
+            <li>
+              <NavLink to={`scoreboard`}>Scoreboard</NavLink>
+            </li>
+            <li>
+              <NavLink to={`player/${user.uid}`}>My Entry</NavLink>
+            </li>
+          </GameNavStyle>
+        </GameNavBackgroundStyle>
         {this.props.children}
       </div>
     );

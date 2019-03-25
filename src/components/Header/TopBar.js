@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const TopBarStyle = styled.div`
-  background: #f3f3f3;
+  background: #fff;
   height: 30px;
-  margin: -20px -20px 0;
   display: flex;
   justify-content: flex-end;
 

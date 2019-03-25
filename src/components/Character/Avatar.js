@@ -11,7 +11,6 @@ const AvatarStyle = styled.div`
   width: 64px;
   height: 64px;
   flex-shrink: 0;
-  margin-bottom: 10px;
 
   img {
     max-width: 100%;
@@ -22,9 +21,6 @@ const AvatarStyle = styled.div`
   ${props => props.size === `small` && `height: 40px;` }
 
 `;
-
-
-
 
 export class Avatar extends React.Component {
   state = {

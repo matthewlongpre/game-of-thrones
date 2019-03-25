@@ -93,7 +93,7 @@ class App extends Component {
                         this.checkIfUserHasEntry(user, game.id)
                           .then((hasEntry) => {
                             if (hasEntry) {
-                              navigate(`/games/${game.id}`);
+                              navigate(`/games/${game.id}/scoreboard`);
                             } else {
                               navigate(`/games/${game.id}/submission`);
                             }
@@ -102,12 +102,9 @@ class App extends Component {
                         navigate(`/games`);
                       }
                     };
-
                   }
                 )
               )
-
-
           });
 
       } else {
@@ -135,15 +132,15 @@ class App extends Component {
       return usersRef.once('value')
         .then(item => {
 
-        // if user has not signed up yet
-        if (!item.val()) return false;
+          // if user has not signed up yet
+          if (!item.val()) return false;
 
-        const user = item.val();
-        const { games } = user;
-        return games;
-      }).then((games) => {
-        resolve(games)
-      });
+          const user = item.val();
+          const { games } = user;
+          return games;
+        }).then((games) => {
+          resolve(games)
+        });
     });
   }
 
@@ -153,15 +150,15 @@ class App extends Component {
       return entriesRef.once('value')
         .then(item => {
 
-        // if there are no entries at all, return false
-        if (!item.val()) return false;
+          // if there are no entries at all, return false
+          if (!item.val()) return false;
 
-        const entryKeys = Object.keys(item.val());
-        const hasEntry = entryKeys.includes(user.uid);
-        return hasEntry;
-      }).then((hasEntry) => {
-        resolve(hasEntry);
-      });
+          const entryKeys = Object.keys(item.val());
+          const hasEntry = entryKeys.includes(user.uid);
+          return hasEntry;
+        }).then((hasEntry) => {
+          resolve(hasEntry);
+        });
     });
   }
 

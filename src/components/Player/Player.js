@@ -1,22 +1,23 @@
 import { Link } from "@reach/router";
 import React from "react";
 import styled from "styled-components";
+import { CharacterBadge } from "../Character/CharacterBadge";
 import { airdates, episodes } from "./../../shared/constants";
 import { firebase } from "./../../shared/firebase";
 import { Spinner } from "./../Spinner/Spinner";
 import { Episode } from "./Episode";
 import { PlayerAvatar } from "./PlayerAvatar";
+import { CardStyle } from "./Card";
 
 export class Player extends React.Component {
   state = {
-    player: null,
+    playerId: null,
     loading: true
   }
 
   databaseRef = firebase.database();
   charactersRef = this.databaseRef.ref('characters');
   betsRef = this.databaseRef.ref('bets');
-  entryRef = this.databaseRef.ref(`games/${this.props.gameId}/entries/${this.props.playerId}`);
 
   getChoicesByEpisode = choices => {
     return episodes.map(episode => {
@@ -36,11 +37,25 @@ export class Player extends React.Component {
     });
   }
 
-  async componentDidMount() {
+  componentDidUpdate(nextProps, prevState) {
+    if (this.props.playerId !== prevState.playerId) {
+      this.fetchData();
+    }
+  }
+
+  fetchData = () => {
+
+    if (!this.state.loading) {
+      this.setState({
+        loading: true
+      })
+    }
 
     const charactersPromise = this.charactersRef.once('value');
     const betsPromise = this.betsRef.once('value');
-    const entryPromise = this.entryRef.once('value');
+
+    const entryRef = this.databaseRef.ref(`games/${this.props.gameId}/entries/${this.props.playerId}`);
+    const entryPromise = entryRef.once('value');
 
     Promise.all([
       charactersPromise,
@@ -59,6 +74,7 @@ export class Player extends React.Component {
           return;
         }
 
+        const playerId = this.props.playerId;
         const playerName = entry.name;
         const characterDeathChoices = entry.characterDeathChoices;
         const characterChoicesByEpisode = this.getChoicesByEpisode(characterDeathChoices);
@@ -75,14 +91,19 @@ export class Player extends React.Component {
           charactersByEpisode,
           betsByEpisode,
           playerName,
+          playerId,
           loading: false
         });
 
       });
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
+
   render() {
-    const { loading, charactersByEpisode, betsByEpisode, entry } = this.state;
+    const { loading, charactersByEpisode, betsByEpisode, entry, characters } = this.state;
 
     if (loading) return <Spinner />
 
@@ -104,10 +125,29 @@ export class Player extends React.Component {
           <PlayerAvatar name={entry.name} photoURL={entry.photoURL} />
           <h2>{entry.name}</h2>
         </PlayerHeader>
+
         {episodeCards}
+
+        <CardStyle>
+          <h2>Throne prediction</h2>
+          <ul className="player-character-list">
+            <li className="player-character-list-item">
+              <ThroneChoice throneChoice={entry.throneChoice} characters={characters} />
+            </li>
+          </ul>
+        </CardStyle>
+
       </div>
     );
   }
+}
+
+const ThroneChoice = ({ throneChoice, characters }) => {
+  const throneChoiceCharacter = characters[throneChoice];
+  const { name, id, pointsForThrone } = throneChoiceCharacter;
+  return (
+    <CharacterBadge name={name} id={id} points={pointsForThrone} />
+  );
 }
 
 const PlayerHeader = styled.div`
