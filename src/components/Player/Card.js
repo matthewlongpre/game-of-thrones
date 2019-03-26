@@ -21,6 +21,10 @@ export const CardStyle = styled.div`
     margin-top: 0;
   }
 
+  .character-name {
+    margin-top: 10px;
+  }
+
 `;
 
 export const AirDate = styled.span`
