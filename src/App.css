@@ -282,6 +282,10 @@ th.shaded {
   text-align: center;
 }
 
+.form-confirm.container {
+  padding: 20px;
+}
+
 .form-confirm ul {
   list-style: none;
   margin: 0;
@@ -363,8 +367,8 @@ th.shaded {
   bottom: 0;
   display: flex;
   position: sticky;
-  margin: 0 -20px;
-  width: calc(100% + 40px);
+  margin: 0;
+  width: 100%;
   left: 0;
   right: 0;
   padding: 40px 20px;

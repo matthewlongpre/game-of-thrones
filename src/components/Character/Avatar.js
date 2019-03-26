@@ -39,7 +39,7 @@ export class Avatar extends React.Component {
     const { name, id, size } = this.props;
     return (
       <AvatarStyle size={size}>
-        <Tooltip disableFocusListener title={name}>
+        <Tooltip placement="top" disableFocusListener title={name}>
           <img alt={name} src={avatars[id]} />
         </Tooltip>
       </AvatarStyle>

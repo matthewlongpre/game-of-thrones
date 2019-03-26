@@ -1,9 +1,6 @@
 import * as Yup from "yup";
 
 const formSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Too short!")
-    .required("Required"),
   characterDeathChoices: Yup.object().shape({
     astark: Yup.string().required("Required"),
       bdondarrion: Yup.string().required("Required"),
@@ -59,7 +56,8 @@ const formSchema = Yup.object().shape({
     jonArya: Yup.string().required("Required"),
     branJaime: Yup.string().required("Required"),
     brienneTormond: Yup.string().required("Required"),
-  })
+  }),
+  throneChoice: Yup.string().required("Required")
 });
 
 export default formSchema;

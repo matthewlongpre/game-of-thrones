@@ -14,6 +14,7 @@ import { Avatar } from "./../Character/Avatar";
 import { POINTS } from '../../shared/constants';
 import { PointsBadge } from '../Character/PointsBadge';
 import { CardStyle } from '../Player/Card';
+import formSchema from './FormSchema';
 
 
 const MOCK_ENTRY = {
@@ -72,7 +73,8 @@ const MOCK_ENTRY = {
     "tlannister": "0",
     "varys": "5",
     "ygreyjoy": "5"
-  }
+  },
+  "throneChoice": "nobodyAtAll"
 };
 
 export class Submission extends Component {
@@ -181,7 +183,7 @@ export class Submission extends Component {
                 id: `betChoices.${bet.id}`
               }}
             >
-              <MenuItem value={0}><PointsBadge points={1} /> Will not occur</MenuItem>
+              <MenuItem value={"0"}><PointsBadge marginRight points={1} /> Will not occur</MenuItem>
               {predictionsByEpisode}
             </Select>
           </FormControl>
@@ -210,8 +212,8 @@ export class Submission extends Component {
               id: `throneChoice`
             }}
           >
-            <MenuItem value="nobodyInList"><PointsBadge marginRight points={POINTS.THRONE_NOBODY_LIST} /> Nobody in this list</MenuItem>
-            <MenuItem value="nobodyAtAll"><PointsBadge marginRight points={POINTS.THRONE_NOBODY_ALL} /> Nobody at all</MenuItem>
+            <MenuItem value={`nobodyInList`}><PointsBadge marginRight points={POINTS.THRONE_NOBODY_LIST} /> Nobody in this list</MenuItem>
+            <MenuItem value={`nobodyAtAll`}><PointsBadge marginRight points={POINTS.THRONE_NOBODY_ALL} /> Nobody at all</MenuItem>
             {throneChoices}
           </Select>
         </FormControl>
@@ -292,14 +294,15 @@ export class Submission extends Component {
     return (
       <div className="">
         <Formik
-          // validationSchema={formSchema}
           enableReinitialize={false}
-          // initialValues={{
-          //   name: ``,
-          //   characterDeathChoices: this.initialCharacterDeathChoices,
-          //   betChoices: this.initialBetChoices
-          // }}
-          initialValues={MOCK_ENTRY}
+          validationSchema={formSchema}
+          initialValues={{
+            name: ``,
+            characterDeathChoices: this.initialCharacterDeathChoices,
+            betChoices: this.initialBetChoices,
+            throneChoice: ``
+          }}
+          // initialValues={MOCK_ENTRY}
           onSubmit={(values, { setSubmitting }) => {
             this.handleSubmit(values, setSubmitting);
           }}

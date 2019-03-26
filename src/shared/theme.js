@@ -3,9 +3,14 @@ import { createMuiTheme } from "@material-ui/core";
 export const muiTheme = createMuiTheme({
   overrides: {
     MuiButton: {
-      text: {
-        background: "#131312",
+      containedPrimary: {
+        backgroundColor: "#4f75aa",
         color: "#fff"
+      }
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: "#131312"
       }
     }
   },
@@ -18,7 +23,7 @@ export const muiTheme = createMuiTheme({
       main: "#131312"
     },
     secondary: {
-      main: "#eaf7ff",
+      main: "#eee",
       contrastText: "#131312"
     }
   }

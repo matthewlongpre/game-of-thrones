@@ -40,18 +40,23 @@ const Bet = ({ description, prediction, id }) => (
 );
 
 const Throne = ({ throneChoice, characters }) => {
-  
-  // TODO:
-  // Handle the "nobody" choices
 
-  const throneChoiceCharacter = characters.find(item => item.id === throneChoice);
+  let throneChoiceCharacter;
+  if (throneChoice === "nobodyInList") {
+    throneChoiceCharacter = "Nobody in the list";
+  } else if (throneChoice === "nobodyAtAll") {
+    throneChoiceCharacter = "Nobody at all";
+  } else {
+    throneChoiceCharacter = characters.find(item => item.id === throneChoice);
+  }
+
   return (
     <li>
-      <div className="character-avatar-container">
-        <Avatar size="small" name={throneChoiceCharacter.name} id={throneChoiceCharacter.id} />
-      </div>
+      {throneChoiceCharacter.name &&<div className="character-avatar-container">
+         <Avatar size="small" name={throneChoiceCharacter.name} id={throneChoiceCharacter.id} />
+      </div>}
       <div className="character-info">
-        {throneChoiceCharacter.name} will sit the Iron Throne.
+        {throneChoiceCharacter.name ? throneChoiceCharacter.name : throneChoiceCharacter} will sit the Iron Throne.
       </div>
     </li>
   );

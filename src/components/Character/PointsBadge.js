@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const PointsBadgeStyle = styled.span`
-  background: #e1f4ff;
+  background: #131312;
+  color: #fff;
   padding: 2px 10px;
   border-radius: 5px;
   text-transform: uppercase;
@@ -10,8 +11,12 @@ const PointsBadgeStyle = styled.span`
   min-width: 60px;
   text-align: center;
   display: inline-block;
-  ${props => props.marginRight && `margin: auto 10px auto 0;`}
-  ${props => props.marginTop && `margin: 10px auto auto 0`}
+
+  ${props => props.margin === `auto` && `margin: auto;`}
+  ${props => props.marginLeft === `0` && `margin-left: 0;`}
+  ${props => props.marginRight && `margin-right: 10px;`}
+  ${props => props.marginTop && `margin-top: 10px;`}
+
 `;
 
 export const PointsBadge = props => {

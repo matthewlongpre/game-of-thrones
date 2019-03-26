@@ -5,9 +5,9 @@ import { CharacterBadge } from "../Character/CharacterBadge";
 import { airdates, episodes } from "./../../shared/constants";
 import { firebase } from "./../../shared/firebase";
 import { Spinner } from "./../Spinner/Spinner";
+import { CardStyle, CharactersStyle } from "./Card";
 import { Episode } from "./Episode";
 import { PlayerAvatar } from "./PlayerAvatar";
-import { CardStyle } from "./Card";
 
 export class Player extends React.Component {
   state = {
@@ -35,6 +35,16 @@ export class Player extends React.Component {
     return choicesByEpisode.map(choice => {
       return choice.map(item => characters[item]);
     });
+  }
+
+  getCharacterSurviverChoices = (characterDeathChoices) => {
+    const characterSurviverChoices = [];
+    for (const key in characterDeathChoices) {
+      if (characterDeathChoices[key] === "0") {
+        characterSurviverChoices.push(key);
+      }
+    }
+    return characterSurviverChoices;
   }
 
   componentDidUpdate(nextProps, prevState) {
@@ -77,6 +87,7 @@ export class Player extends React.Component {
         const playerId = this.props.playerId;
         const playerName = entry.name;
         const characterDeathChoices = entry.characterDeathChoices;
+        const characterSurviverChoices = this.getCharacterSurviverChoices(characterDeathChoices);
         const characterChoicesByEpisode = this.getChoicesByEpisode(characterDeathChoices);
         const charactersByEpisode = this.getDataByEpisode(characterChoicesByEpisode, characters);
 
@@ -90,6 +101,7 @@ export class Player extends React.Component {
           entry,
           charactersByEpisode,
           betsByEpisode,
+          characterSurviverChoices,
           playerName,
           playerId,
           loading: false
@@ -103,11 +115,20 @@ export class Player extends React.Component {
   }
 
   render() {
-    const { loading, charactersByEpisode, betsByEpisode, entry, characters } = this.state;
+    const { loading, charactersByEpisode, betsByEpisode, characterSurviverChoices, entry, characters } = this.state;
 
     if (loading) return <Spinner />
 
     if (!entry) return <div>You haven't submitted an entry for this game. <Link to={`/games/${this.props.gameId}/submission`}>Submit your entry</Link></div>
+
+    let survivingCharacters;
+    if (characterSurviverChoices.length !== 0) {
+      survivingCharacters = characterSurviverChoices.map(choice => (
+        <li key={choice} className="player-character-list-item">
+          <CharacterBadge name={characters[choice].name} id={choice} points={characters[choice].pointsPerEpisode[0]} />
+        </li>
+      ));
+    }
 
     const episodeCards = episodes.map(episode => {
       return (
@@ -129,10 +150,18 @@ export class Player extends React.Component {
         {episodeCards}
 
         <CardStyle>
+          <h2>Surviver predictions</h2>
+          <CharactersStyle className="player-character-list">
+            {survivingCharacters}
+          </CharactersStyle>
+        </CardStyle>
+
+        <CardStyle>
           <h2>Throne prediction</h2>
+          <ThroneChoice throneChoice={entry.throneChoice} characters={characters} />
           <ul className="player-character-list">
             <li className="player-character-list-item">
-              <ThroneChoice throneChoice={entry.throneChoice} characters={characters} />
+              {(entry.throneChoice !== "nobodyInList" && entry.throneChoice !== "nobodyAtAll") ? <ThroneChoiceCharacterBadge throneChoice={entry.throneChoice} characters={characters} /> : null}
             </li>
           </ul>
         </CardStyle>
@@ -143,6 +172,22 @@ export class Player extends React.Component {
 }
 
 const ThroneChoice = ({ throneChoice, characters }) => {
+
+  let throneChoiceCharacter;
+
+  if (throneChoice === "nobodyInList") {
+    throneChoiceCharacter = "Nobody in the list";
+  } else if (throneChoice === "nobodyAtAll") {
+    throneChoiceCharacter = "Nobody at all";
+  } else {
+    throneChoiceCharacter = characters[throneChoice].name;
+  }
+
+  return <p><strong>{throneChoiceCharacter}</strong> will sit the Iron Throne.</p>
+}
+
+const ThroneChoiceCharacterBadge = ({ throneChoice, characters }) => {
+
   const throneChoiceCharacter = characters[throneChoice];
   const { name, id, pointsForThrone } = throneChoiceCharacter;
   return (
