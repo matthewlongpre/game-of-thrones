@@ -3,9 +3,8 @@ import React from "react";
 import { airdates, episodes, POINTS } from "../../shared/constants";
 import { firebase } from "../../shared/firebase";
 import { PointsBadge } from "../Character/PointsBadge";
-import { Avatar } from "./../Character/Avatar";
-import { ScoreboardBackground } from "./ScoreboardBackground";
 import { CardStyle } from "../Player/Card";
+import { Avatar } from "./../Character/Avatar";
 
 class Scoreboard extends React.Component {
 
