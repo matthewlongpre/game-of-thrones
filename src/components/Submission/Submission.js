@@ -151,7 +151,7 @@ export class Submission extends Component {
                 }}
               >
                 <MenuItem value={"0"}><PointsBadge marginRight points={character.pointsPerEpisode[0]} /> Survives Series</MenuItem>
-                <MenuItem value={"7"}><PointsBadge marginRight points={2} /> Dies (Sometime in Series)</MenuItem>
+                <MenuItem value={"7"}><PointsBadge marginRight points={POINTS.DIED_SOMETIME_VALUE} /> Dies (Sometime in Series)</MenuItem>
                 <MenuItem disabled><div className="select-divider-label">Expert Level</div></MenuItem>
                 {predictionsByEpisode}
               </Select>
@@ -183,7 +183,7 @@ export class Submission extends Component {
                 id: `betChoices.${bet.id}`
               }}
             >
-              <MenuItem value={"0"}><PointsBadge marginRight points={1} /> Will not occur</MenuItem>
+              <MenuItem value={"0"}><PointsBadge marginRight points={POINTS.BONUS_PREDICTION_VALUE} /> Will not occur</MenuItem>
               {predictionsByEpisode}
             </Select>
           </FormControl>

@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { ScoreService } from "./ScoreService";
 configure({ adapter: new Adapter() });
 
 
@@ -81,8 +82,9 @@ const mockDeathChoicesByEpisodeString = `[{"character":"astark","episode":"1"},{
 const mockDeathChoicesByEpisode = JSON.parse(mockDeathChoicesByEpisodeString);
 
 describe("Scoreboard", () => {
-  const wrapper = shallow(<Scoreboard />)
-  const instance = wrapper.instance();
+  // const wrapper = shallow(<Scoreboard />)
+  // const instance = wrapper.instance();
+  const instance = ScoreService;
   it("points should add up to zero", () => {
     const results = instance.sumPoints(0, 0);
     expect(results).toBe(0);

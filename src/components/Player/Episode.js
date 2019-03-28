@@ -1,15 +1,15 @@
 import React from "react";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { PointsBadge } from "../Character/PointsBadge";
-import { AirDate, BetsStyle, BetStyle, CardStyle, CharactersStyle, ListLabel, NoPredictions } from "./Card";
+import { AirDate, BetsStyle, BetStyle, CardStyle, CharactersStyle, ListLabel, NoPredictions, CharacterStyle } from "./Card";
 
 export const Episode = ({ episode, airdate, characterChoices, betChoices }) => {
   let characters;
   if (characterChoices.length !== 0) {
     characters = characterChoices.map(choice => (
-      <li key={choice.id} className="player-character-list-item">
+      <CharacterStyle key={choice.id}>
         <CharacterBadge name={choice.name} id={choice.id} points={choice.pointsPerEpisode[episode]} />
-      </li>
+      </CharacterStyle>
     ));
   }
 

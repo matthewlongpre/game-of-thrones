@@ -9,9 +9,9 @@ const CharacterBadgeStyle = styled.div`
   align-items: center;
 `;
 
-export const CharacterBadge = ({ name, id, points }) => (
+export const CharacterBadge = ({ name, id, points, size}) => (
   <CharacterBadgeStyle>
-    <Avatar name={name} id={id} />
-    <PointsBadge marginTop points={points} />
+    <Avatar name={name} id={id} size={size} />
+    <PointsBadge size={size} marginTop points={points} />
   </CharacterBadgeStyle>
 );

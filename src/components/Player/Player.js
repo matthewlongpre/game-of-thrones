@@ -5,7 +5,7 @@ import { CharacterBadge } from "../Character/CharacterBadge";
 import { airdates, episodes } from "./../../shared/constants";
 import { firebase } from "./../../shared/firebase";
 import { Spinner } from "./../Spinner/Spinner";
-import { CardStyle, CharactersStyle } from "./Card";
+import { CardStyle, CharactersStyle, CharacterStyle } from "./Card";
 import { Episode } from "./Episode";
 import { PlayerAvatar } from "./PlayerAvatar";
 
@@ -124,9 +124,9 @@ export class Player extends React.Component {
     let survivingCharacters;
     if (characterSurviverChoices.length !== 0) {
       survivingCharacters = characterSurviverChoices.map(choice => (
-        <li key={choice} className="player-character-list-item">
+        <CharacterStyle key={choice}>
           <CharacterBadge name={characters[choice].name} id={choice} points={characters[choice].pointsPerEpisode[0]} />
-        </li>
+        </CharacterStyle>
       ));
     }
 
@@ -159,11 +159,11 @@ export class Player extends React.Component {
         <CardStyle>
           <h2>Throne prediction</h2>
           <ThroneChoice throneChoice={entry.throneChoice} characters={characters} />
-          <ul className="player-character-list">
-            <li className="player-character-list-item">
+          <CharactersStyle>
+            <CharacterStyle>
               {(entry.throneChoice !== "nobodyInList" && entry.throneChoice !== "nobodyAtAll") ? <ThroneChoiceCharacterBadge throneChoice={entry.throneChoice} characters={characters} /> : null}
-            </li>
-          </ul>
+            </CharacterStyle>
+          </CharactersStyle>
         </CardStyle>
 
       </div>

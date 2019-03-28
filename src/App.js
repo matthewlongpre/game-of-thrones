@@ -10,7 +10,7 @@ import { TopBar } from "./components/Header/TopBar";
 import { Login } from "./components/Login/Login";
 import { LoginSuccess } from "./components/Login/LoginSucess";
 import { Player } from "./components/Player/Player";
-import { Scoreboard } from "./components/Scoreboard/index";
+import { Scoreboard } from "./components/Scoreboard/Scoreboard";
 import { Spinner } from "./components/Spinner/Spinner";
 import { Submission } from "./components/Submission/Submission";
 import { Success } from "./components/Submission/Success";

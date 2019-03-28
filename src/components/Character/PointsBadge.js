@@ -17,6 +17,12 @@ const PointsBadgeStyle = styled.span`
   ${props => props.marginRight && `margin-right: 10px;`}
   ${props => props.marginTop && `margin-top: 10px;`}
 
+  ${props => props.size === `small` && `
+    min-width: 40px;
+    padding: 2px 6px;
+    font-size: 0.66em;
+  `}
+
 `;
 
 export const PointsBadge = props => {

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const CardStyle = styled.div`
+  position: relative;
   background: #fff;
   padding: 20px 20px 40px;
 
@@ -25,6 +26,14 @@ export const CardStyle = styled.div`
     margin-top: 10px;
   }
 
+  ${props => props.grid && `
+    margin: 10px;
+    min-width: calc(50% - 20px);
+    width: calc((33em - 100%) * 1000);
+    max-width: calc(100% - 20px);
+  
+  `}
+
 `;
 
 export const AirDate = styled.span`
@@ -47,15 +56,31 @@ export const CharactersStyle = styled.ul`
   flex-wrap: wrap;
 `;
 
+export const CharacterStyle = styled.li`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 20px;
+
+  ${props => props.result === `incorrect` ? `opacity: .33` : `opacity: 1;`}
+
+`;
+
 export const BetsStyle = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 0 0 40px;
   padding: 0;
+
 `;
 
 export const BetStyle = styled.li`
   display: flex;
   padding: 10px;
+
+  ${props => props.result === `incorrect` ? `opacity: .33` : `opacity: 1;`}
+
 `;
 
 export const ListLabel = styled.h3`
