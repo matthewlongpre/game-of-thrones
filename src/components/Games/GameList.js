@@ -1,13 +1,16 @@
 import { Link } from "@reach/router";
 import React from "react";
+import { CardStyle } from "../Player/Card";
+import { PageHeadingRow } from "./../Scoreboard/Styles";
 
 export const GameList = ({ games }) => {
-  const gameRows = games.map(game => <li key={game.id}><Link to={`${game.id}/scoreboard`}>{game.displayName}</Link></li>);
+  const gameRows = games.map(game => <CardStyle key={game.id}><Link to={`${game.id}`}>{game.displayName}</Link></CardStyle>);
   return (
     <div>
-      <ul>
-        {gameRows}
-      </ul>
+      <PageHeadingRow>
+        <h2>Games</h2>
+      </PageHeadingRow>
+      {gameRows}
     </div>
   );
 }

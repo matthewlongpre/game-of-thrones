@@ -1,11 +1,10 @@
 import React from "react";
+import { episodes } from "../../shared/constants";
 import { firebase } from "../../shared/firebase";
+import { ScoreboardTabs } from "./ScoreboardTabs";
+import { ScoresByEpisode } from "./ScoresByEpisode";
 import { ScoreService } from "./ScoreService";
 import { ScoresTable } from "./ScoresTable";
-import { ScoresByEpisode } from "./ScoresByEpisode";
-import { episodes } from "../../shared/constants";
-import { ScoreboardTabs } from "./ScoreboardTabs";
-import { PageHeadingRow } from "./Styles";
 
 export class Scoreboard extends React.Component {
 

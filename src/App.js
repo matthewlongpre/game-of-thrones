@@ -25,7 +25,9 @@ class App extends Component {
     this.state = {
       user: null,
       loading: true,
-      games: []
+      games: [],
+      currentGame: null,
+      userGamesChecked: false
     }
 
     this.databaseRef = firebase.database();
@@ -36,11 +38,6 @@ class App extends Component {
 
   componentDidMount() {
     this.checkLoginState();
-
-    if (window.location.pathname.includes("/submission")) {
-      const gameSubmissionUrl = window.location.pathname;
-      localStorage.setItem("submission-state", gameSubmissionUrl);
-    }
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -56,6 +53,7 @@ class App extends Component {
             if (!games) {
               this.setState({
                 games: [],
+                userGamesChecked: true,
                 loading: false
               });
 
@@ -70,7 +68,25 @@ class App extends Component {
             }
 
             this.fetchGameData(games)
-              .then(gameData =>
+              .then(gameData => {
+
+                let currentGame;
+                if (gameData.length === 1) {
+                  currentGame = gameData[0];
+                  this.checkIfUserHasEntry(user, currentGame.id)
+                    .then((hasEntry) => {
+
+                      if (hasEntry) {
+                        this.setState({
+                          currentGame,
+                          userGamesChecked: true
+                        });
+                      }
+
+                    });
+                }
+
+
                 this.setState({
                   games: gameData,
                   loading: false
@@ -91,34 +107,40 @@ class App extends Component {
                     //   navigate(`/games/${submissionGameId}/submission`);
                     //   return;
                     // }
-                    
 
-                    // if user is logging in, or returning to the submission page
-                    if (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname.includes("/submission")) {
-                      // if user has submitted to a single game, send them straight there
-                      if (gameData.length === 1) {
-                        const game = gameData[0];
-                        console.log(game)
-                        this.checkIfUserHasEntry(user, game.id)
-                          .then((hasEntry) => {
-                            if (hasEntry) {
-                              navigate(`/games/${game.id}/scoreboard`);
-                            } else {
-                              navigate(`/games/${game.id}/submission`);
-                            }
-                          });
-                      } else {
-                        navigate(`/games`);
-                      }
-                    };
+
+
+                    // // if user is logging in, or returning to the submission page
+                    // if (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname.includes("/submission")) {
+                    //   // if user has submitted to a single game, send them straight there
+                    //   if (gameData.length === 1) {
+                    //     const game = gameData[0];
+                    //     console.log(game)
+                    //     this.checkIfUserHasEntry(user, game.id)
+                    //       .then((hasEntry) => {
+                    //         console.log(hasEntry, game)
+                    //         if (hasEntry) {
+                    //           navigate(`/games/${game.id}/`);
+                    //         } else {
+                    //           navigate(`/games/${game.id}/submission`);
+                    //         }
+                    //       });
+                    //   } else {
+                    //     navigate(`/games`);
+                    //   }
+
+                    // };
+
+
                   }
                 )
+              }
               )
           });
 
       } else {
         // no user is signed in.
-        navigate("/login");
+        // navigate("/login");
         this.setState({
           loading: false
         });
@@ -214,8 +236,16 @@ class App extends Component {
     firebase.auth().signInWithRedirect(this.providerFacebook);
   }
 
+  handleSubmissionSuccessClick = gameState => {
+    this.setState({
+      currentGame: gameState
+    },
+      () => navigate(gameState)
+    )
+  }
+
   render() {
-    const { user, loading, games } = this.state;
+    const { user, loading, games, currentGame, userGamesChecked } = this.state;
 
     if (loading) {
       return (
@@ -240,15 +270,13 @@ class App extends Component {
         <Header />
         <Router>
           <Login path="login" user={user} handleLogout={this.handleLogout} handleLoginWithGoogleClick={this.handleLoginWithGoogleClick} handleLoginWithFacebookClick={this.handleLoginWithFacebookClick} />
-          <Success path="success" user={user} />
+          <Success path="success" user={user} handleClick={(gameState) => this.handleSubmissionSuccessClick(gameState)} />
           <LoginSuccess path="login-success" user={user} />
 
           <Games path="games" user={user} games={games}>
             <GameList path="/" user={user} games={games} />
-            <Game path=":gameId" user={user}>
-              <Submission path={`submission`} user={user} />
+            <Game path=":gameId" user={user} currentGame={currentGame} userGamesChecked={userGamesChecked}>
               <Player path={`player/:playerId`} user={user} />
-              <Scoreboard path={`scoreboard`} user={user} gameId=":gameId" />
             </Game>
           </Games>
           <NotFound default />

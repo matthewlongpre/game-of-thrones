@@ -97,7 +97,14 @@ export class Submission extends Component {
     }
   }
 
+  setSubmissionState = () => {
+    const gameSubmissionUrl = window.location.pathname;
+    localStorage.setItem("submission-state", gameSubmissionUrl);
+  }
+
   async componentDidMount() {
+
+    this.setSubmissionState();
 
     const charactersPromise = this.charactersRef.once('value');
     const betsPromise = this.betsRef.once('value');
@@ -286,23 +293,23 @@ export class Submission extends Component {
   }
 
   render() {
-
+    
     const { loading, characters, bets, showConfirm } = this.state;
-
+    console.log("submission render")
     if (loading) return <Spinner />;
 
     return (
       <div className="">
         <Formik
           enableReinitialize={false}
-          validationSchema={formSchema}
-          initialValues={{
-            name: ``,
-            characterDeathChoices: this.initialCharacterDeathChoices,
-            betChoices: this.initialBetChoices,
-            throneChoice: ``
-          }}
-          // initialValues={MOCK_ENTRY}
+          // validationSchema={formSchema}
+          // initialValues={{
+          //   name: ``,
+          //   characterDeathChoices: this.initialCharacterDeathChoices,
+          //   betChoices: this.initialBetChoices,
+          //   throneChoice: ``
+          // }}
+          initialValues={MOCK_ENTRY}
           onSubmit={(values, { setSubmitting }) => {
             this.handleSubmit(values, setSubmitting);
           }}

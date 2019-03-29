@@ -13,8 +13,8 @@ export const CardStyle = styled.div`
 
   ${props => props.fullWidth && `max-width: 100%`}
 
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 60px;
   margin-left: auto;
   margin-right: auto;
   
