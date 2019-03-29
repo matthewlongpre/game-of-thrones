@@ -38,7 +38,7 @@ class App extends Component {
 
     if (window.location.pathname.includes("/submission")) {
       const gameSubmissionUrl = window.location.pathname;
-      localStorage.setItem("game-state", gameSubmissionUrl);
+      localStorage.setItem("submission-state", gameSubmissionUrl);
     }
 
     firebase.auth().onAuthStateChanged((user) => {
@@ -60,9 +60,9 @@ class App extends Component {
 
               // if user is submitting for the first time, route them 
               // back to the submission page after signing in
-              if (localStorage.getItem("game-state")) {
-                const gameStateUrl = localStorage.getItem("game-state");
-                navigate(gameStateUrl);
+              if (localStorage.getItem("submission-state")) {
+                const submissionStateUrl = localStorage.getItem("submission-state");
+                navigate(submissionStateUrl);
               }
 
               return;
@@ -76,7 +76,12 @@ class App extends Component {
                 },
                   () => {
 
-                    let gameIdFromUrl = localStorage.getItem("game-state");
+                    let gameIdFromUrl = localStorage.getItem("submission-state");
+                    if (!gameIdFromUrl) {
+                      navigate(`/games`);
+                      return;
+                    }
+
                     gameIdFromUrl = gameIdFromUrl.split("/")[2];
 
                     // check if the user has submitted to this game

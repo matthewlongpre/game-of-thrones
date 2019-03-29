@@ -3,7 +3,7 @@ import { Link } from "@reach/router";
 import { Button } from "@material-ui/core";
 
 export const Success = ({ user }) => {
-  const gameState = localStorage.getItem("game-state");
+  const gameState = localStorage.getItem("submission-state");
   return (
   <div className="submission-success">
     <h2>Thanks {user && user.displayName}, your choices are locked in.</h2>
