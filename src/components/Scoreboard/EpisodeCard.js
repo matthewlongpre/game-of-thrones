@@ -4,21 +4,12 @@ import { episodes } from "../../shared/constants";
 import { CharacterStyle, ListLabel, CharactersStyle, NoPredictions } from "../Player/Card";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { PlayerCard } from "./PlayerCard";
-
-const EpisodeContainerStyled = styled.div`
-  .episode-heading {
-    text-align: center;
-  }
-`;
+import { PageContainerStyled, PageHeadingRow } from "./Styles";
 
 const EpisodeRowStyled = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: -10px;
-`;
-
-const EpisodeHeadingRow = styled.div`
-  padding: 40px 20px 20px;
 `;
 
 const EpisodeResultsRow = styled.div`
@@ -84,11 +75,11 @@ export const EpisodeCard = ({ episode, entries, characters, bets, deadCharacters
   });
 
   return (
-    <EpisodeContainerStyled>
+    <PageContainerStyled>
 
-      <EpisodeHeadingRow>
-        <h2 className="episode-heading">Episode {episode}</h2>
-      </EpisodeHeadingRow>
+      <PageHeadingRow>
+        <h2>Episode {episode}</h2>
+      </PageHeadingRow>
 
       <EpisodeResultsRow>
         <ListLabel>Confirmed dead</ListLabel>
@@ -101,6 +92,7 @@ export const EpisodeCard = ({ episode, entries, characters, bets, deadCharacters
       <EpisodeRowStyled>
         {playerCards}
       </EpisodeRowStyled>
-    </EpisodeContainerStyled>
+
+    </PageContainerStyled>
   );
 };

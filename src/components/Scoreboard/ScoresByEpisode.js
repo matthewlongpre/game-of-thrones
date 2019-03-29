@@ -1,7 +1,7 @@
 import React from "react";
 import { episodes } from "../../shared/constants";
 import { EpisodeCard } from "./EpisodeCard";
-import { SimpleTabs } from "./Tabs";
+import { EpisodeTabs } from "./EpisodeTabs";
 
 export const ScoresByEpisode = props => {
   const { entries, characters, bets, players, deadCharactersForDisplay } = props;
@@ -12,8 +12,6 @@ export const ScoresByEpisode = props => {
     );
   });
   return (
-    <div style={{ maxWidth: `1080px`, margin: `auto` }}>
-      <SimpleTabs episodeCards={episodeCards} />
-    </div>
+    <EpisodeTabs episodeCards={episodeCards} />
   )
 }

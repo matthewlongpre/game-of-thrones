@@ -17,6 +17,10 @@ body {
   background: #f6f6f6;
 }
 
+p, li {
+  line-height: 1.6;
+}
+
 a {
   color: #4876b5;
   text-decoration: none;
@@ -280,10 +284,15 @@ th.shaded {
   align-items: center;
   flex-direction: column;
   text-align: center;
+  padding: 60px;
 }
 
 .form-confirm.container {
   padding: 20px;
+}
+
+.form-confirm.container > p {
+  margin-bottom: 40px;
 }
 
 .form-confirm ul {

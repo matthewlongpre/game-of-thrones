@@ -366,7 +366,7 @@ export class Submission extends Component {
 
                 {throneFields}
 
-                <Button className="confirm-button" variant="contained" color="primary" fullWidth onClick={this.handleConfirm}>
+                <Button disabled={Object.keys(errors).length !== 0} className="confirm-button" variant="contained" color="primary" fullWidth onClick={this.handleConfirm}>
                   Confirm
                 </Button>
 

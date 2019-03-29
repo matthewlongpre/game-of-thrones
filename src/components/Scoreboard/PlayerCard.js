@@ -68,23 +68,25 @@ export const PlayerCard = ({ name, episode, characters, characterDeathChoices, b
     <CardStyle grid>
       <h2>{name}</h2> <PointsBadgeLarge topRight points={pointsThisEpisode} />
 
-      <ListLabel>Expert Level Predictions for Episode {episode}</ListLabel>
+      <ListLabel>Expert Level Predictions</ListLabel>
       <CharactersStyle>
         {characterItems}
       </CharactersStyle>
       {characterDeathChoices.length === 0 && <NoPredictions>No deaths predicted for this episode.</NoPredictions>}
 
-      <ListLabel>Expert Level (Wrong Episode)</ListLabel>
-      <CharactersStyle>
-        {diedInDifferentEpisodeItems}
-      </CharactersStyle>
-      {diedInDifferentEpisodeThisEpisode.length === 0 && <NoPredictions>None.</NoPredictions>}
+      {diedInDifferentEpisodeThisEpisode.length !== 0 && <>
+        <ListLabel>Right Death, Wrong Episode</ListLabel>
+        <CharactersStyle>
+          {diedInDifferentEpisodeItems}
+        </CharactersStyle>
+      </>}
 
-      <ListLabel>Died (Sometime in Series)</ListLabel>
-      <CharactersStyle>
-        {diedSometimeItems}
-      </CharactersStyle>
-      {correctDiedSometimeThisEpisode.length === 0 && <NoPredictions>None.</NoPredictions>}
+      {correctDiedSometimeThisEpisode.length !== 0 && <>
+        <ListLabel>Died (Sometime in Series)</ListLabel>
+        <CharactersStyle>
+          {diedSometimeItems}
+        </CharactersStyle>
+      </>}
 
       <ListLabel>Plot Predictions</ListLabel>
       <BetsStyle>

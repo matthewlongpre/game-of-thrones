@@ -1,12 +1,19 @@
 import React from "react";
+import styled from "styled-components";
+import { CardStyle } from "./../Player/Card";
 import { FacebookButton } from "./FacebookButton";
 import { GoogleButton } from "./GoogleButton";
-import { CardStyle } from "./../Player/Card";
+
+const LoginStyled = styled.div`
+  display: flex;
+  padding: 40px;
+  justify-content: center;
+`;
 
 export const Login = ({ user, handleLoginWithGoogleClick, handleLoginWithFacebookClick }) => {
 
   if (user) {
-    return <div>Signed in as {user.displayName}.</div>
+    return <LoginStyled>Signed in as {user.displayName}.</LoginStyled>
   }
 
   return (

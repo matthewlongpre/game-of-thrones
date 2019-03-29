@@ -8,7 +8,7 @@ const PointsBadgeLargeStyle = styled.span`
   font-weight: 700;
   font-size: 32px;
 
-  padding: 14px 40px;
+  padding: 14px 20px;
 
   @media (min-width: 768px) {
     padding: 30px 40px;

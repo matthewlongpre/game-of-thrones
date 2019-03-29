@@ -1,5 +1,5 @@
-import React from "react";
 import { Link } from "@reach/router";
+import React from "react";
 import styled from "styled-components";
 
 const GameNavBackgroundStyle = styled.div`
@@ -46,19 +46,7 @@ export class Game extends React.Component {
     }
 
     return (
-      <div>
-        <GameNavBackgroundStyle>
-          <GameNavStyle className="container-lg">
-            <li>
-              <NavLink to={`scoreboard`}>Scoreboard</NavLink>
-            </li>
-            <li>
-              <NavLink to={`player/${user.uid}`}>My Entry</NavLink>
-            </li>
-          </GameNavStyle>
-        </GameNavBackgroundStyle>
-        {this.props.children}
-      </div>
+      <>{this.props.children}</>
     );
   }
 }

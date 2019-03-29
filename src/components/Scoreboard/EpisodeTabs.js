@@ -1,6 +1,7 @@
 import { AppBar, Tab, Tabs, Typography } from "@material-ui/core";
 import React, { Fragment } from "react";
 import { episodes } from "../../shared/constants";
+import { PageContainerStyled } from "./Styles";
 
 const TabContainer = props => {
   return (
@@ -10,7 +11,7 @@ const TabContainer = props => {
   );
 }
 
-export class SimpleTabs extends React.Component {
+export class EpisodeTabs extends React.Component {
   state = {
     value: 0,
   };
@@ -28,16 +29,18 @@ export class SimpleTabs extends React.Component {
     const tabContent = episodes.map(episode => <Fragment key={episode}>{value === episode - 1 && <TabContainer>{episodeCards[episode - 1]}</TabContainer>}</Fragment>)
 
     return (
-      <>
+      <div style={{ overflow: `hidden` }}>
         <AppBar position="static">
-          <Tabs value={value} onChange={this.handleChange}>
-            {tabs}
-          </Tabs>
+          <PageContainerStyled noPadding>
+            <Tabs variant="scrollable" value={value} onChange={this.handleChange}>
+              {tabs}
+            </Tabs>
+          </PageContainerStyled>
         </AppBar>
 
         {tabContent}
 
-      </>
+      </div>
     );
   }
 }

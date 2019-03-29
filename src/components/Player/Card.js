@@ -11,9 +11,13 @@ export const CardStyle = styled.div`
 
   max-width: 600px;
 
-  ${props => props.fullWidth && `max-width: 1080px`}
+  ${props => props.fullWidth && `max-width: 100%`}
 
-  margin: 60px auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  
   border-radius: 8px;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.01);
   border: 1px solid #eee;

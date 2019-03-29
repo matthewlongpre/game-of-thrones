@@ -16,6 +16,7 @@ import { Submission } from "./components/Submission/Submission";
 import { Success } from "./components/Submission/Success";
 import { firebase } from "./shared/firebase";
 import { muiTheme } from "./shared/theme";
+import { NotFound } from "./components/Error/NotFound";
 
 class App extends Component {
   constructor(props) {
@@ -76,25 +77,28 @@ class App extends Component {
                 },
                   () => {
 
-                    let gameIdFromUrl = localStorage.getItem("submission-state");
-                    if (!gameIdFromUrl) {
-                      navigate(`/games`);
-                      return;
-                    }
+                    // let submissionGameId = localStorage.getItem("submission-state");
+                    // if (!submissionGameId) {
+                    //   navigate(`/games`);
+                    //   return;
+                    // }
 
-                    gameIdFromUrl = gameIdFromUrl.split("/")[2];
+                    // submissionGameId = submissionGameId.split("/")[2];
 
-                    // check if the user has submitted to this game
-                    const game = gameData.find(item => item.id === gameIdFromUrl);
-                    if (!game) {
-                      navigate(`/games/${gameIdFromUrl}/submission`);
-                      return;
-                    }
+                    // // check if the user has submitted to this game
+                    // const game = gameData.find(item => item.id === submissionGameId);
+                    // if (!game) {
+                    //   navigate(`/games/${submissionGameId}/submission`);
+                    //   return;
+                    // }
+                    
 
                     // if user is logging in, or returning to the submission page
-                    if (window.location.pathname === "/login" || window.location.pathname.includes("/submission")) {
+                    if (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname.includes("/submission")) {
                       // if user has submitted to a single game, send them straight there
                       if (gameData.length === 1) {
+                        const game = gameData[0];
+                        console.log(game)
                         this.checkIfUserHasEntry(user, game.id)
                           .then((hasEntry) => {
                             if (hasEntry) {
@@ -244,7 +248,7 @@ class App extends Component {
             <Game path=":gameId" user={user}>
               <Submission path={`submission`} user={user} />
               <Player path={`player/:playerId`} user={user} />
-              <Scoreboard path={`scoreboard`} user={user} />
+              <Scoreboard path={`scoreboard`} user={user} gameId=":gameId" />
             </Game>
           </Games>
           <NotFound default />
@@ -256,8 +260,3 @@ class App extends Component {
 }
 
 export default App;
-
-const NotFound = () => (
-  <div>Sorry, nothing here.</div>
-);
-
