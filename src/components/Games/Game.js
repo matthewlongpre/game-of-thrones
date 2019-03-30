@@ -4,15 +4,14 @@ import { Submission } from "../Submission/Submission";
 
 export class Game extends React.Component {
   render() {
-    const { user, gameId, currentGame, userGamesChecked } = this.props;
+    const { user, gameId, currentGame, userGamesChecked, isInvite } = this.props;
 
     if (!userGamesChecked) return <></>
 
-    if (currentGame) {
+    if (currentGame && !isInvite) {
       return <Scoreboard user={user} gameId={gameId} />
     }
 
-    console.log("no current game", currentGame)
     return <Submission user={user} gameId={gameId} />
 
   }

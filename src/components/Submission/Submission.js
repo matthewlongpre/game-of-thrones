@@ -295,7 +295,7 @@ export class Submission extends Component {
   render() {
     
     const { loading, characters, bets, showConfirm } = this.state;
-    console.log("submission render")
+
     if (loading) return <Spinner />;
 
     return (

@@ -2,21 +2,18 @@ import { MuiThemeProvider } from "@material-ui/core";
 import { navigate, Router } from "@reach/router";
 import React, { Component } from 'react';
 import './App.css';
+import { NotFound } from "./components/Error/NotFound";
 import { Game } from "./components/Games/Game";
 import { GameList } from "./components/Games/GameList";
 import { Games } from "./components/Games/Games";
 import { Header } from "./components/Header/Header";
 import { TopBar } from "./components/Header/TopBar";
 import { Login } from "./components/Login/Login";
-import { LoginSuccess } from "./components/Login/LoginSucess";
 import { Player } from "./components/Player/Player";
-import { Scoreboard } from "./components/Scoreboard/Scoreboard";
 import { Spinner } from "./components/Spinner/Spinner";
-import { Submission } from "./components/Submission/Submission";
 import { Success } from "./components/Submission/Success";
 import { firebase } from "./shared/firebase";
 import { muiTheme } from "./shared/theme";
-import { NotFound } from "./components/Error/NotFound";
 
 class App extends Component {
   constructor(props) {
@@ -38,6 +35,17 @@ class App extends Component {
 
   handleAuthSuccess = async (user) => {
     this.resetLoginState();
+
+    const inviteGameId = await this.checkForInvite(user);
+
+    if (inviteGameId) {
+      const userHasEntry = await this.checkIfUserHasEntry(user, inviteGameId);
+      if (!userHasEntry) {
+        this.handleInvite(inviteGameId);
+        return;
+      }
+    }
+
     const userGames = await this.checkIfUserHasGames(user);
 
     if (userGames) {
@@ -52,6 +60,26 @@ class App extends Component {
     }
   }
 
+  checkForInvite = async (user) => {
+    return new Promise((resolve, reject) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const inviteGameId = urlParams.get("invite");
+      resolve(inviteGameId);
+    });
+  }
+
+  handleInvite = (inviteGameId) => {
+    navigate(`/${inviteGameId}`)
+      .then(
+        this.setState({
+          isInvite: true,
+          currentGame: inviteGameId,
+          userGamesChecked: true,
+          loading: false
+        })
+      );
+  }
+
   handleSingleGame = async (user, game) => {
     const userHasEntry = await this.checkIfUserHasEntry(user, game);
     if (userHasEntry) {
@@ -61,12 +89,17 @@ class App extends Component {
         currentGame: { id: game },
         userGamesChecked: true,
         loading: false
+      }, () => {
+        if (window.location.pathname === `/`) {
+          navigate(`/${game}`)
+        }
       });
     }
   }
 
   handleMultipleGames = () => {
     console.log("handleMultipleGames");
+    navigate("/games");
   }
 
   handleNoGames = () => {
@@ -82,7 +115,7 @@ class App extends Component {
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        
+
         this.setState({
           user
         });
@@ -195,7 +228,7 @@ class App extends Component {
   }
 
   render() {
-    const { user, loading, games, currentGame, userGamesChecked } = this.state;
+    const { user, loading, games, currentGame, userGamesChecked, isInvite } = this.state;
 
     if (loading) {
       return (
@@ -220,12 +253,14 @@ class App extends Component {
         <Header />
         <Router>
           <Success path="success" user={user} handleClick={(gameState) => this.handleSubmissionSuccessClick(gameState)} />
+
           <Games path="/" user={user} games={games}>
-            <GameList path="/" user={user} games={games} />
-            <Game path=":gameId" user={user} currentGame={currentGame} userGamesChecked={userGamesChecked}>
+            <GameList path="/games" user={user} games={games} />
+            <Game path=":gameId" user={user} currentGame={currentGame} userGamesChecked={userGamesChecked} isInvite={isInvite}>
               <Player path={`player/:playerId`} user={user} />
             </Game>
           </Games>
+
           <NotFound default />
         </Router>
 
