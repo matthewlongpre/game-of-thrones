@@ -302,14 +302,14 @@ export class Submission extends Component {
       <div className="">
         <Formik
           enableReinitialize={false}
-          // validationSchema={formSchema}
-          // initialValues={{
-          //   name: ``,
-          //   characterDeathChoices: this.initialCharacterDeathChoices,
-          //   betChoices: this.initialBetChoices,
-          //   throneChoice: ``
-          // }}
-          initialValues={MOCK_ENTRY}
+          validationSchema={formSchema}
+          initialValues={{
+            name: ``,
+            characterDeathChoices: this.initialCharacterDeathChoices,
+            betChoices: this.initialBetChoices,
+            throneChoice: ``
+          }}
+          // initialValues={MOCK_ENTRY}
           onSubmit={(values, { setSubmitting }) => {
             this.handleSubmit(values, setSubmitting);
           }}

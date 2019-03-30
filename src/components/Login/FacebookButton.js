@@ -5,21 +5,30 @@ const FacebookButtonStyled = styled.button`
   background: #4267b2;
   color: #fff;
   border: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   margin: auto;
   padding: 10px;
   border-radius: 2px;
-  max-width: 280px;
-  min-width: initial;
-  width: 100%;
+  width: 185px;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 
   svg {
-    margin-right: 10px;
+    margin-right: 9px;
   }
   
   span {
-    margin: 0 10px;
+    display: block;
+    white-space: nowrap;
+    margin: 0 0 0 3px;
+    font-size: 13px;
   }
 
 `;

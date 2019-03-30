@@ -11,14 +11,15 @@ const AvatarStyle = styled.div`
   width: 64px;
   height: 64px;
   flex-shrink: 0;
-
+  position: relative;
+  
   img {
     max-width: 100%;
     flex-shrink: 0;
   }
-
-  ${props => props.size === `small` && `width: 40px;` }
-  ${props => props.size === `small` && `height: 40px;` }
+  
+  ${props => props.size === `small` && `width: 40px;`}
+  ${props => props.size === `small` && `height: 40px;`}
 
 `;
 
@@ -36,9 +37,9 @@ export class Avatar extends React.Component {
   };
 
   render() {
-    const { name, id, size } = this.props;
+    const { name, id, size, result } = this.props;
     return (
-      <AvatarStyle size={size}>
+      <AvatarStyle size={size} result={result}>
         <Tooltip placement="top" disableFocusListener title={name}>
           <img alt={name} src={avatars[id]} />
         </Tooltip>

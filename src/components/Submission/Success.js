@@ -1,5 +1,4 @@
 import { Button } from "@material-ui/core";
-import { Link } from "@reach/router";
 import React from "react";
 
 export const Success = ({ user, handleClick }) => {
@@ -8,9 +7,7 @@ export const Success = ({ user, handleClick }) => {
     <div className="submission-success">
       <h2>Thanks {user && user.displayName}, your choices are locked in.</h2>
       <h3>Good luck!</h3>
-      {/* <Link to={`${gameState}`}> */}
       <Button onClick={() => handleClick(gameState)} variant="contained" color="primary" style={{ marginTop: `20px` }}>Go to Scoreboard</Button>
-      {/* </Link> */}
     </div>
   );
 }

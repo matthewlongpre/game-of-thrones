@@ -5,17 +5,21 @@ import { POINTS } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
 
-export const PlayerCard = ({ name, episode, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode }) => {
+export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode }) => {
 
   let characterItems;
   if (characterDeathChoices.length !== 0) {
     characterItems = characterDeathChoices.map(choice => {
 
-      const isDeathCorrect = correctDeathsThisEpisode.some(correctDeath => correctDeath.character === choice.id);
+      let deathResults = `undetermined`;
+      if (episodeHasResults) {
+        const isDeathCorrect = correctDeathsThisEpisode.some(correctDeath => correctDeath.character === choice.id);
+        deathResults = isDeathCorrect ? `correct` : `incorrect`
+      }
 
       return (
-        <CharacterStyle key={choice.id} result={isDeathCorrect ? `correct` : `incorrect`}>
-          <CharacterBadge name={choice.name} id={choice.id} points={choice.pointsPerEpisode[episode]} />
+        <CharacterStyle key={choice.id} result={deathResults}>
+          <CharacterBadge result={deathResults} name={choice.name} id={choice.id} points={choice.pointsPerEpisode[episode]} />
         </CharacterStyle>
       )
     });
@@ -28,7 +32,7 @@ export const PlayerCard = ({ name, episode, characters, characterDeathChoices, b
       const deadCharacter = characters.find(character => character.id === died.id);
 
       return (
-        <CharacterStyle key={deadCharacter.id}>
+        <CharacterStyle key={deadCharacter.id} result="correct">
           <CharacterBadge size="small" name={deadCharacter.name} id={deadCharacter.id} points={POINTS.DIED_DIFFERENT_EPISODE_VALUE.toString()} />
         </CharacterStyle>
       )
@@ -53,10 +57,14 @@ export const PlayerCard = ({ name, episode, characters, characterDeathChoices, b
   if (betChoices.length !== 0) {
     betItems = betChoices.map(bet => {
 
-      const isBetCorrect = correctBetsThisEpisode.some(correctBet => correctBet.bet === bet.id);
+      let betResults = `undetermined`;
+      if (episodeHasResults) {
+        const isBetCorrect = correctBetsThisEpisode.some(correctBet => correctBet.bet === bet.id);
+        betResults = isBetCorrect ? `correct` : `incorrect`
+      }
 
       return (
-        <BetStyle key={bet.id} result={isBetCorrect ? `correct` : `incorrect`}>
+        <BetStyle key={bet.id} result={betResults}>
           <PointsBadge margin="auto" marginLeft="0" marginRight points="1" />
           <span>{bet.description}</span>
         </BetStyle>

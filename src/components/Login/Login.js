@@ -21,9 +21,9 @@ export const Login = ({ user, handleLoginWithGoogleClick, handleLoginWithFaceboo
       <div style={{ textAlign: `center` }}>
         <h2>Welcome</h2>
         <p style={{ marginBottom: `40px` }}>Please sign in to get started.</p>
+        <GoogleButton handleClick={handleLoginWithGoogleClick}>Sign in with Google</GoogleButton>
+        <FacebookButton handleClick={handleLoginWithFacebookClick}>Sign in with Facebook</FacebookButton>
       </div>
-      <GoogleButton handleClick={handleLoginWithGoogleClick}>Sign in with Google</GoogleButton>
-      <FacebookButton handleClick={handleLoginWithFacebookClick}>Sign in with Facebook</FacebookButton>
     </CardStyle>
   );
 }

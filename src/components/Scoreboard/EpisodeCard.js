@@ -40,16 +40,18 @@ const getDataByEpisode = (choicesByEpisode, characters) => {
   });
 }
 
-export const EpisodeCard = ({ episode, entries, characters, bets, deadCharactersForDisplay, players }) => {
+export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets, deadCharactersForDisplay, players }) => {
 
   let deadCharacterItems;
-  if (deadCharactersForDisplay.length !== 0) {
+  if (deadCharactersForDisplay && deadCharactersForDisplay.length !== 0) {
     deadCharacterItems = deadCharactersForDisplay.map(choice => (
       <CharacterStyle key={choice.id}>
         <CharacterBadge name={choice.name} id={choice.id} points={choice.pointsPerEpisode[episode]} />
       </CharacterStyle>
     ));
   }
+
+  const episodeHasResults = episodeResults[episode - 1];
 
   const playerCards = entries.map(entry => {
 
@@ -70,7 +72,7 @@ export const EpisodeCard = ({ episode, entries, characters, bets, deadCharacters
     const playerCorrectDiedSometimePerEpisode = playerPoints.correctDiedSometimePerEpisode[episode - 1];
 
     return (
-      <PlayerCard key={entry.userId} {...entry} episode={episode} pointsThisEpisode={playerPointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
+      <PlayerCard key={entry.userId} {...entry} episode={episode} episodeHasResults={episodeHasResults} pointsThisEpisode={playerPointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
     );
   });
 
@@ -81,13 +83,13 @@ export const EpisodeCard = ({ episode, entries, characters, bets, deadCharacters
         <h2>Episode {episode}</h2>
       </PageHeadingRow>
 
-      <EpisodeResultsRow>
+      {episodeHasResults && <EpisodeResultsRow>
         <ListLabel>Confirmed dead</ListLabel>
         <CharactersStyle className="player-character-list">
           {deadCharacterItems}
         </CharactersStyle>
         {deadCharactersForDisplay.length === 0 && <NoPredictions>No deaths this episode.</NoPredictions>}
-      </EpisodeResultsRow>
+      </EpisodeResultsRow>}
 
       <EpisodeRowStyled>
         {playerCards}
