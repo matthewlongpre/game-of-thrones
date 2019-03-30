@@ -263,7 +263,7 @@ export class Submission extends Component {
       });
     }
 
-    localStorage.setItem("submission-state", `/games/${this.props.gameId}`);
+    localStorage.setItem("submission-state", `/${this.props.gameId}`);
 
     const newEntryRef = this.entriesRef.child(this.props.user.uid);
 

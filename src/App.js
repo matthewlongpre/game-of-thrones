@@ -36,114 +36,65 @@ class App extends Component {
 
   }
 
+  handleAuthSuccess = async (user) => {
+    this.resetLoginState();
+    const userGames = await this.checkIfUserHasGames(user);
+
+    if (userGames) {
+      const gameIds = Object.keys(userGames);
+      if (gameIds.length === 1) {
+        this.handleSingleGame(user, gameIds[0]);
+      } else {
+        this.handleMultipleGames(user, gameIds);
+      }
+    } else {
+      this.handleNoGames();
+    }
+  }
+
+  handleSingleGame = async (user, game) => {
+    const userHasEntry = await this.checkIfUserHasEntry(user, game);
+    if (userHasEntry) {
+      const gameData = await this.fetchGameData([game]);
+      this.setState({
+        games: gameData,
+        currentGame: { id: game },
+        userGamesChecked: true,
+        loading: false
+      });
+    }
+  }
+
+  handleMultipleGames = () => {
+    console.log("handleMultipleGames");
+  }
+
+  handleNoGames = () => {
+    this.setState({
+      games: [],
+      userGamesChecked: true,
+      loading: false
+    });
+  }
+
   componentDidMount() {
     this.checkLoginState();
 
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        // user is signed in.
+        
         this.setState({
           user
         });
 
-        this.resetLoginState();
-
-        this.checkIfUserHasGames(user)
-          .then((games) => {
-            if (!games) {
-              this.setState({
-                games: [],
-                userGamesChecked: true,
-                loading: false
-              });
-
-              // if user is submitting for the first time, route them 
-              // back to the submission page after signing in
-              if (localStorage.getItem("submission-state")) {
-                const submissionStateUrl = localStorage.getItem("submission-state");
-                navigate(submissionStateUrl);
-              }
-
-              return;
-            }
-
-            this.fetchGameData(games)
-              .then(gameData => {
-
-                let currentGame;
-                if (gameData.length === 1) {
-                  currentGame = gameData[0];
-                  this.checkIfUserHasEntry(user, currentGame.id)
-                    .then((hasEntry) => {
-
-                      if (hasEntry) {
-                        this.setState({
-                          currentGame,
-                          userGamesChecked: true
-                        });
-                      }
-
-                    });
-                }
-
-
-                this.setState({
-                  games: gameData,
-                  loading: false
-                },
-                  () => {
-
-                    // let submissionGameId = localStorage.getItem("submission-state");
-                    // if (!submissionGameId) {
-                    //   navigate(`/games`);
-                    //   return;
-                    // }
-
-                    // submissionGameId = submissionGameId.split("/")[2];
-
-                    // // check if the user has submitted to this game
-                    // const game = gameData.find(item => item.id === submissionGameId);
-                    // if (!game) {
-                    //   navigate(`/games/${submissionGameId}/submission`);
-                    //   return;
-                    // }
-
-
-
-                    // // if user is logging in, or returning to the submission page
-                    // if (window.location.pathname === "/" || window.location.pathname === "/login" || window.location.pathname.includes("/submission")) {
-                    //   // if user has submitted to a single game, send them straight there
-                    //   if (gameData.length === 1) {
-                    //     const game = gameData[0];
-                    //     console.log(game)
-                    //     this.checkIfUserHasEntry(user, game.id)
-                    //       .then((hasEntry) => {
-                    //         console.log(hasEntry, game)
-                    //         if (hasEntry) {
-                    //           navigate(`/games/${game.id}/`);
-                    //         } else {
-                    //           navigate(`/games/${game.id}/submission`);
-                    //         }
-                    //       });
-                    //   } else {
-                    //     navigate(`/games`);
-                    //   }
-
-                    // };
-
-
-                  }
-                )
-              }
-              )
-          });
+        this.handleAuthSuccess(user);
 
       } else {
-        // no user is signed in.
-        // navigate("/login");
+
         this.setState({
           loading: false
         });
+
       }
     });
   }
@@ -195,9 +146,8 @@ class App extends Component {
 
   fetchGameData = games => {
     const gamesRef = this.databaseRef.ref(`games`);
-    const gameKeys = Object.keys(games);
     const gamePromises = [];
-    gameKeys.forEach(game => {
+    games.forEach(game => {
       const gameData = gamesRef.child(game);
       gamePromises.push(gameData.once("value"));
     });
@@ -269,11 +219,8 @@ class App extends Component {
         <TopBar handleLogout={this.handleLogout} />
         <Header />
         <Router>
-          <Login path="login" user={user} handleLogout={this.handleLogout} handleLoginWithGoogleClick={this.handleLoginWithGoogleClick} handleLoginWithFacebookClick={this.handleLoginWithFacebookClick} />
           <Success path="success" user={user} handleClick={(gameState) => this.handleSubmissionSuccessClick(gameState)} />
-          <LoginSuccess path="login-success" user={user} />
-
-          <Games path="games" user={user} games={games}>
+          <Games path="/" user={user} games={games}>
             <GameList path="/" user={user} games={games} />
             <Game path=":gameId" user={user} currentGame={currentGame} userGamesChecked={userGamesChecked}>
               <Player path={`player/:playerId`} user={user} />
