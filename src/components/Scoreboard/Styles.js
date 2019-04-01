@@ -4,6 +4,7 @@ export const PageContainerStyled = styled.div`
   overflow: hidden;
   padding-left: 10px;
   padding-right: 10px;
+  padding-bottom: 60px;
 
   @media (min-width: 1200px) {
     max-width: 1080px;

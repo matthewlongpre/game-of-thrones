@@ -5,6 +5,8 @@ import { ScoreboardTabs } from "./ScoreboardTabs";
 import { ScoresByEpisode } from "./ScoresByEpisode";
 import { ScoreService } from "./ScoreService";
 import { ScoresTable } from "./ScoresTable";
+import { Survivers } from "./Survivers";
+import { Throne } from "./Throne";
 
 export class Scoreboard extends React.Component {
 
@@ -79,24 +81,42 @@ export class Scoreboard extends React.Component {
     const seriesFinished = episodeResults.length === 6;
     let deadCharacters;
     let allActualCharacterSurviversPoints;
+    let actualThronePoints;
+    let allSurvivers;
+    let actualThroneCharacter;
 
     if (seriesFinished) {
       deadCharacters = this.scoreService.getDeadCharacters(episodeResults);
-      const allSurvivers = this.scoreService.getAllActualCharacterSurvivers(characters, deadCharacters);
+      allSurvivers = this.scoreService.getAllActualCharacterSurvivers(characters, deadCharacters);
       allActualCharacterSurviversPoints = this.scoreService.getAllActualCharacterSurviversPoints(allSurvivers);
+      actualThronePoints = this.scoreService.getActualThronePoints(episodeResults, characters);
+      actualThroneCharacter = episodeResults[5].throne;
     }
 
     const players = entries.map(entry => {
 
       const playerDeathChoices = entry.characterDeathChoices;
       const playerBetChoices = entry.betChoices;
+      const throneChoice = entry.throneChoice;
 
       let survivingCharacterPoints = 0;
+      let throneChoicePoints = 0;
+
+      let actualCharacterSurvivers;
+      let incorrectCharacterSurvivers;
+      const playerSurviverChoices = this.scoreService.getCharacterSurviverChoices(playerDeathChoices);
+      const playerDieSometimeChoices = this.scoreService.getDieSometimeChoices(playerDeathChoices);
 
       if (seriesFinished) {
-        const playerSurviverChoices = this.scoreService.getCharacterSurviverChoices(playerDeathChoices);
-        const actualCharacterSurvivers = this.scoreService.getActualCharacterSurvivers(playerSurviverChoices, deadCharacters);
+        actualCharacterSurvivers = this.scoreService.getActualCharacterSurvivers(playerSurviverChoices, deadCharacters);
+        incorrectCharacterSurvivers = this.scoreService.getIncorrectCharacterSurvivers(playerSurviverChoices, deadCharacters);
         survivingCharacterPoints = this.scoreService.getSurvivingCharacterPoints(actualCharacterSurvivers, characters);
+
+        const throneChoiceCorrect = this.scoreService.checkIfThroneChoiceCorrect(episodeResults, throneChoice);
+        if (throneChoiceCorrect) {
+          throneChoicePoints = this.scoreService.getThroneChoicePoints(throneChoice, characters);
+        }
+  
       }
 
       let overallTotal = 0;
@@ -150,20 +170,26 @@ export class Scoreboard extends React.Component {
 
       if (seriesFinished) {
         overallTotals.push(survivingCharacterPoints);
+        overallTotals.push(throneChoicePoints);
       }
 
       overallTotal = overallTotals.reduce(this.scoreService.sumPoints, 0);
 
       return {
         name: entry.name,
-        pointsPerEpisode: pointsPerEpisode,
+        pointsPerEpisode,
         correctDeathsPerEpisode,
-        correctBetsPerEpisode: correctBetsPerEpisode,
-        correctDiedSometimePerEpisode: correctDiedSometimePerEpisode,
-        diedInDifferentEpisodePerEpisode: diedInDifferentEpisodePerEpisode,
-        survivingCharacterPoints: survivingCharacterPoints,
-        overallTotal: overallTotal,
-        userId: entry.userId
+        correctBetsPerEpisode,
+        playerDieSometimeChoices,
+        correctDiedSometimePerEpisode,
+        diedInDifferentEpisodePerEpisode,
+        actualCharacterSurvivers,
+        incorrectCharacterSurvivers,
+        survivingCharacterPoints,
+        throneChoicePoints,
+        overallTotal,
+        userId: entry.userId,
+        playerSurviverChoices
       }
 
     });
@@ -215,22 +241,32 @@ export class Scoreboard extends React.Component {
       characters,
       bets,
       seriesFinished,
+      allSurvivers,
       allActualCharacterSurviversPoints,
       deadCharacters,
       possiblePointsPerEpisode,
       deadCharacterByEpisode,
       deadCharactersForDisplay,
+      actualThroneCharacter,
+      actualThronePoints,
       gameId: this.props.gameId
     };
 
     const scoresTable = <ScoresTable {...scoreProps} />
-    const scoresByEpisode = <ScoresByEpisode {...scoreProps}
-
-    />
+    const scoresByEpisode = <ScoresByEpisode {...scoreProps} />
+    const surviversList = <Survivers {...scoreProps} />
+    const throneList = <Throne {...scoreProps} />
+    
+    const scoreboardTabs = {
+      scoresTable,
+      scoresByEpisode,
+      surviversList,
+      throneList
+    };
 
     return (
       <>
-        <ScoreboardTabs scoresTable={scoresTable} scoresByEpisode={scoresByEpisode} />
+        <ScoreboardTabs {...scoreboardTabs} />
       </>
     );
   }

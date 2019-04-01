@@ -87,6 +87,17 @@ const getEpisodeExactDeathPoints = (correctDeaths, characters, episode) => {
   return episodeExactDeathPoints.reduce(sumPoints, 0);
 }
 
+const getDieSometimeChoices = (playerDeathChoices) => {
+  const dieSometimeChoices = [];
+  for (const key in playerDeathChoices) {
+    if (playerDeathChoices[key] === "7") {
+      dieSometimeChoices.push(key);
+    }
+  }
+  console.log(dieSometimeChoices);
+  return dieSometimeChoices;
+}
+
 const getCorrectDiedSometime = (actualDeathsThisEpisode, playerDeathChoices) => {
   const correctDiedSometime = [];
   actualDeathsThisEpisode.forEach(character => {
@@ -161,6 +172,13 @@ const getActualCharacterSurvivers = (playerSurviverChoices, deadCharacters) => {
   return survivers;
 }
 
+const getIncorrectCharacterSurvivers = (playerSurviverChoices, deadCharacters) => {
+  const incorrectSurvivers = playerSurviverChoices.filter(item => {
+    return deadCharacters.find(deadCharacter => deadCharacter.id === item);
+  });
+  return incorrectSurvivers;
+}
+
 const getSurvivingCharacterPoints = (actualCharacterSurvivers, characters) => {
   const survivers = actualCharacterSurvivers.map(surviver => {
     const result = characters.find(character => character.id === surviver);
@@ -180,6 +198,28 @@ const getAllActualCharacterSurvivers = (characters, deadCharacters) => {
 const getAllActualCharacterSurviversPoints = (allSurvivers) => {
   const points = allSurvivers.map(item => item.pointsPerEpisode[0]);
   return points.reduce(sumPoints, 0);
+}
+
+const getThroneChoicePoints = (throneChoice, characters) => {
+  let points;
+  if (throneChoice === "nobodyAtAll") {
+    return points = POINTS.THRONE_NOBODY_ALL;
+  }
+  if (throneChoice === "nobodyInList") {
+    return points = POINTS.THRONE_NOBODY_LIST;
+  }
+  const character = characters.find(character => character.id === throneChoice);
+  points = character.pointsForThrone;
+  points = parseInt(points, 10);
+  return points;
+}
+
+const checkIfThroneChoiceCorrect = (episodeResults, throneChoice) => {
+  return episodeResults[5].throne === throneChoice;
+}
+
+const getActualThronePoints = (episodeResults, characters) => {
+  return getThroneChoicePoints(episodeResults[5].throne, characters);
 }
 
 const ScoreService = {};
@@ -204,5 +244,10 @@ ScoreService.getActualCharacterSurvivers = getActualCharacterSurvivers;
 ScoreService.getSurvivingCharacterPoints = getSurvivingCharacterPoints;
 ScoreService.getAllActualCharacterSurvivers = getAllActualCharacterSurvivers;
 ScoreService.getAllActualCharacterSurviversPoints = getAllActualCharacterSurviversPoints;
+ScoreService.getThroneChoicePoints = getThroneChoicePoints;
+ScoreService.checkIfThroneChoiceCorrect = checkIfThroneChoiceCorrect;
+ScoreService.getActualThronePoints = getActualThronePoints;
+ScoreService.getIncorrectCharacterSurvivers = getIncorrectCharacterSurvivers;
+ScoreService.getDieSometimeChoices = getDieSometimeChoices;
 
 export { ScoreService };

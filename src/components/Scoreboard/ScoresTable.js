@@ -1,16 +1,44 @@
-import { Link } from "@reach/router";
 import React from "react";
 import { airdates, episodes } from "../../shared/constants";
 import { CardStyle } from "../Player/Card";
 import { PageContainerStyled, PageHeadingRow } from "./Styles";
 
 export const ScoresTable = props => {
-  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, players } = props;
+  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players } = props;
 
   const sortedPlayers = players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
-  const playerRows = sortedPlayers.map((player, index) => {
+
+  let currentRank = 0;
+  let currentHighScore = 0;
+  
+  const rankedResults = sortedPlayers.map(result => {
+    if (currentRank === 0) {
+      currentRank++;
+      result.rank = currentRank;
+      currentHighScore = result.overallTotal;
+      return result;
+    } else if (result.overallTotal === currentHighScore) {
+      result.rank = currentRank;
+      return result;
+    } else {
+      currentRank++;
+      result.rank = currentRank;
+      return result;
+    }
+  });
+
+  const playerRows = rankedResults.map((player, index) => {
     const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}</td>)
-    return <tr key={player.userId}><td className="text-center rank">{index + 1}</td><td className="player-name sticky-left"><Link to={`/games/${props.gameId}/player/${player.userId}`}>{player.name}</Link></td>{playerCells}{seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}<td className="text-center sticky-right">{player.overallTotal}</td></tr>
+    return (
+      <tr key={player.userId}>
+        <td className="text-center rank">{player.rank}</td>
+        <td className="player-name sticky-left">{player.name}</td>
+        {playerCells}
+        {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}
+        {seriesFinished && <td className="text-center">{player.throneChoicePoints}</td>}
+        <td className="text-center sticky-right">{player.overallTotal}</td>
+      </tr>
+    );
   });
 
   const possiblePointsForTotal = possiblePointsPerEpisode.map(points => points === `--` ? 0 : points);
@@ -36,7 +64,7 @@ export const ScoresTable = props => {
               <tr>
                 <th colSpan="2" className="shaded"></th>
                 <th colSpan="6" className="heading--episodes">Episodes</th>
-                <th colSpan="2" className="shaded"></th>
+                <th colSpan="3" className="shaded"></th>
               </tr>
               <tr className="heading--airdates">
                 <th className="rank"></th>
@@ -49,6 +77,7 @@ export const ScoresTable = props => {
                 <th className="sticky-left">Player</th>
                 {headings}
                 {seriesFinished && <th className="text-center">Surviver Pts</th>}
+                {seriesFinished && <th className="text-center">Throne Pts</th>}
                 <th className="text-center sticky-right">Total</th>
               </tr>
             </thead>
@@ -56,9 +85,10 @@ export const ScoresTable = props => {
               {playerRows}
               <tr className="possible-points">
                 <td></td>
-                <td>Possible Points</td>
+                <td className="sticky-left">Possible Points</td>
                 {possiblePointsRows}
                 {seriesFinished && <td className="text-center">{allActualCharacterSurviversPoints}</td>}
+                {seriesFinished && <td className="text-center">{actualThronePoints}</td>}
                 <td className="text-center sticky-right">{overallPossiblePointsTotal}</td>
               </tr>
             </tbody>

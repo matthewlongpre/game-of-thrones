@@ -21,21 +21,27 @@ export class ScoreboardTabs extends React.Component {
 
   render() {
     const { value } = this.state;
-    const { scoresTable, scoresByEpisode } = this.props;
+    const { scoresTable, scoresByEpisode, surviversList, throneList } = this.props;
 
     return (
       <>
-        <AppBar position="static">
-          <PageContainerStyled noPadding style={{ marginLeft: `auto`, marginRight: `auto` }}>
-            <Tabs variant="scrollable" value={value} onChange={this.handleChange}>
-              <Tab label="Scoreboard" />
-              <Tab label="By Episode" />
-            </Tabs>
-          </PageContainerStyled>
-        </AppBar>
+        <div style={{ maxWidth: `100%`, overflow: `hidden` }}>
+          <AppBar position="static">
+            <PageContainerStyled noPadding style={{ marginLeft: `auto`, marginRight: `auto` }}>
+              <Tabs variant="scrollable" value={value} onChange={this.handleChange}>
+                <Tab label="Scoreboard" />
+                <Tab label="By Episode" />
+                <Tab label="Survivers" />
+                <Tab label="Throne" />
+              </Tabs>
+            </PageContainerStyled>
+          </AppBar>
+        </div>
 
         {value === 0 && scoresTable}
         {value === 1 && scoresByEpisode}
+        {value === 2 && surviversList}
+        {value === 3 && throneList}
 
       </>
     );
