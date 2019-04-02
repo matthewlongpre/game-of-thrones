@@ -2,15 +2,17 @@ import React from "react";
 import { CharacterStyle, CardStyle, ListLabel, CharactersStyle } from "../Player/Card";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
+import { POINTS } from "../../shared/constants";
+import { PointsBadge } from "../Character/PointsBadge";
 
 export const PlayerCardThrone = ({ name, throneChoice, seriesFinished, characters, throneChoicePoints }) => {
 
   let throneChoiceCharacter;
 
   if (throneChoice === "nobodyInList") {
-    throneChoiceCharacter = "Nobody in the list";
+    throneChoiceCharacter = <div style={{marginTop: `40px`}}><PointsBadge marginRight points={POINTS.THRONE_NOBODY_LIST} /><strong>Nobody in the list</strong></div>;
   } else if (throneChoice === "nobodyAtAll") {
-    throneChoiceCharacter = "Nobody at all";
+    throneChoiceCharacter = <div style={{marginTop: `40px`}}><PointsBadge marginRight points={POINTS.THRONE_NOBODY_ALL} /><strong>Nobody at all</strong></div>;
   } else {
     const throneCharacterData = characters.find(character => character.id === throneChoice);
     throneChoiceCharacter = <CharacterStyle key={throneCharacterData.id}>

@@ -1,14 +1,6 @@
-import { AppBar, Tab, Tabs, Typography } from "@material-ui/core";
+import { AppBar, Tab, Tabs } from "@material-ui/core";
 import React from "react";
 import { PageContainerStyled } from "./Styles";
-
-const TabContainer = props => {
-  return (
-    <Typography component="div">
-      {props.children}
-    </Typography>
-  );
-}
 
 export class ScoreboardTabs extends React.Component {
   state = {

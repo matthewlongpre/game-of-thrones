@@ -94,7 +94,6 @@ const getDieSometimeChoices = (playerDeathChoices) => {
       dieSometimeChoices.push(key);
     }
   }
-  console.log(dieSometimeChoices);
   return dieSometimeChoices;
 }
 
