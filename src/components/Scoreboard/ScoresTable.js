@@ -68,9 +68,9 @@ export const ScoresTable = props => {
               </tr>
               <tr className="heading--airdates">
                 <th className="rank"></th>
-                <th></th>
+                <th className="sticky-left"></th>
                 {airdatesRow}
-                <th></th>
+                <th className="sticky-right"></th>
               </tr>
               <tr className="headings">
                 <th className="rank">Rank</th>
