@@ -52,6 +52,8 @@ class App extends Component {
       const gameIds = Object.keys(userGames);
       if (gameIds.length === 1) {
         this.handleSingleGame(user, gameIds[0]);
+      } else if (this.checkForGameUrl(gameIds)) {
+        this.handleSingleGame(user, this.checkForGameUrl(gameIds));
       } else {
         this.handleMultipleGames(user, gameIds);
       }
@@ -97,9 +99,23 @@ class App extends Component {
     }
   }
 
-  handleMultipleGames = () => {
-    console.log("handleMultipleGames");
-    navigate("/games");
+  handleMultipleGames = async (user, games) => {
+    const gameData = await this.fetchGameData(games);
+
+    this.setState({
+      games: gameData,
+      userGamesChecked: false,
+      loading: false
+    },
+      () => navigate(`/games`)
+    );
+  }
+
+  checkForGameUrl = (games) => {
+    const gameUrl = window.location.pathname.replace(/\//g, '');
+    if (games.includes(gameUrl)) {
+      return gameUrl;
+    };
   }
 
   handleNoGames = () => {
@@ -227,6 +243,15 @@ class App extends Component {
     )
   }
 
+  handleGameChange = (game) => {
+    this.setState({
+      currentGame: { id: game },
+      userGamesChecked: true
+    },
+      () => navigate(`/${game}`)
+    );
+  }
+
   render() {
     const { user, loading, games, currentGame, userGamesChecked, isInvite } = this.state;
 
@@ -255,7 +280,7 @@ class App extends Component {
           <Success path="success" user={user} handleClick={(gameState) => this.handleSubmissionSuccessClick(gameState)} />
 
           <Games path="/" user={user} games={games}>
-            <GameList path="/games" user={user} games={games} />
+            <GameList path="/games" user={user} games={games} handleGameChange={(game) => this.handleGameChange(game)} />
             <Game path=":gameId" user={user} currentGame={currentGame} userGamesChecked={userGamesChecked} isInvite={isInvite}>
               <Player path={`player/:playerId`} user={user} />
             </Game>

@@ -1,10 +1,9 @@
-import { Link } from "@reach/router";
 import React from "react";
 import { CardStyle } from "../Player/Card";
 import { PageHeadingRow } from "./../Scoreboard/Styles";
 
-export const GameList = ({ games }) => {
-  const gameRows = games.map(game => <CardStyle key={game.id}><Link to={`/${game.id}`}>{game.displayName}</Link></CardStyle>);
+export const GameList = ({ games, handleGameChange }) => {
+  const gameRows = games.map(game => <CardStyle key={game.id}><button onClick={() => handleGameChange(game.id)}>{game.displayName}</button></CardStyle>);
   return (
     <div>
       <PageHeadingRow>

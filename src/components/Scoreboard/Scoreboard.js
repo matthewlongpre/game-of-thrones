@@ -116,7 +116,7 @@ export class Scoreboard extends React.Component {
         if (throneChoiceCorrect) {
           throneChoicePoints = this.scoreService.getThroneChoicePoints(throneChoice, characters);
         }
-  
+
       }
 
       let overallTotal = 0;
@@ -256,7 +256,7 @@ export class Scoreboard extends React.Component {
     const scoresByEpisode = <ScoresByEpisode {...scoreProps} />
     const surviversList = <Survivers {...scoreProps} />
     const throneList = <Throne {...scoreProps} />
-    
+
     const scoreboardTabs = {
       scoresTable,
       scoresByEpisode,
@@ -265,9 +265,7 @@ export class Scoreboard extends React.Component {
     };
 
     return (
-      <>
-        <ScoreboardTabs {...scoreboardTabs} />
-      </>
+      <ScoreboardTabs {...scoreboardTabs} />
     );
   }
 }
