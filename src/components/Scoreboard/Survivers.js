@@ -45,7 +45,7 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
     <PageContainerStyled>
 
       <PageHeadingRow>
-        <h2>Survivers</h2>
+        <h2>Survivors</h2>
       </PageHeadingRow>
 
       {seriesFinished && <EpisodeResultsRow>

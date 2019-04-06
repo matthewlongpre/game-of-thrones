@@ -62,7 +62,7 @@ export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPo
       <h2>{name}</h2> <PointsBadgeLarge topRight points={seriesFinished ? survivingCharacterPoints : `--`} />
 
       {!seriesFinished && <>
-        <ListLabel>Surviver Choices</ListLabel>
+        <ListLabel>Survivor Choices</ListLabel>
         <CharactersStyle>
           {surviverChoices}
         </CharactersStyle>

@@ -23,7 +23,7 @@ export class ScoreboardTabs extends React.Component {
               <Tabs variant="scrollable" value={value} onChange={this.handleChange}>
                 <Tab label="Scoreboard" />
                 <Tab label="By Episode" />
-                <Tab label="Survivers" />
+                <Tab label="Survivors" />
                 <Tab label="Throne" />
               </Tabs>
             </PageContainerStyled>

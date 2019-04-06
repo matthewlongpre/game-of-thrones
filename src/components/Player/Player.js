@@ -150,7 +150,7 @@ export class Player extends React.Component {
         {episodeCards}
 
         <CardStyle>
-          <h2>Surviver predictions</h2>
+          <h2>Survivor predictions</h2>
           <CharactersStyle className="player-character-list">
             {survivingCharacters}
           </CharactersStyle>
