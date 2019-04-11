@@ -1,27 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel } from "../Player/Card";
 import { PlayerCardThrone } from "./PlayerCardThrone";
-import { PageContainerStyled, PageHeadingRow } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled } from "./Styles";
 
-const EpisodeRowStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -10px;
-`;
-
-const EpisodeResultsRow = styled.div`
-  h3 {
-    text-align: center;
-  }
-
-  ul {
-    justify-content: center;
-  }
-`;
-
-export const Throne = ({ episode, seriesFinished, entries, characters, players, actualThroneCharacter }) => {
+export const Throne = ({ episode, seriesFinished, entries, characters, players, actualThroneCharacter, filters }) => {
 
   let throneHasCharacter = true;
   if (actualThroneCharacter === "nobodyInList" || actualThroneCharacter === "nobodyAtAll") {
@@ -55,6 +38,8 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
       <PageHeadingRow>
         <h2>The Throne</h2>
       </PageHeadingRow>
+
+      {filters}
 
       {seriesFinished && <EpisodeResultsRow>
         <ListLabel>Sitting the Iron Throne</ListLabel>

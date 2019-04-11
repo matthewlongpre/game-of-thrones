@@ -7,6 +7,7 @@ import { ScoreService } from "./ScoreService";
 import { ScoresTable } from "./ScoresTable";
 import { Survivers } from "./Survivers";
 import { Throne } from "./Throne";
+import { Filters } from "./Filters";
 
 export class Scoreboard extends React.Component {
 
@@ -19,7 +20,11 @@ export class Scoreboard extends React.Component {
     this.betsRef = this.databaseRef.ref('bets');
 
     this.state = {
-      entries: null
+      entries: null,
+      showFilters: false,
+      filter: `showAll`,
+      compareOne: ``,
+      compareTwo: ``
     }
 
     this.scoreService = ScoreService;
@@ -37,7 +42,8 @@ export class Scoreboard extends React.Component {
 
       const entries = Object.values(item.val());
       this.setState({
-        entries
+        entries,
+        allEntries: entries
       });
     });
 
@@ -72,9 +78,70 @@ export class Scoreboard extends React.Component {
     });
   }
 
+  filterEntries = (selectedFilter, comparisons) => {
+    const { allEntries } = this.state;
+    const { user: { uid } } = this.props;
+
+    if (selectedFilter === `onlyMe`) {
+      const filteredEntries = allEntries.filter(item => item.userId === uid);
+      this.setState({
+        filter: `onlyMe`,
+        entries: filteredEntries,
+        compareOne: ``,
+        compareTwo: ``
+      });
+    }
+
+    if (selectedFilter === `showAll`) {
+      this.setState({
+        filter: `showAll`,
+        entries: allEntries,
+        compareOne: ``,
+        compareTwo: ``
+      });
+    }
+
+    if (selectedFilter === `compare`) {
+      const entryOne = allEntries.filter(item => item.userId === comparisons.compareOne);
+      const entryTwo = allEntries.filter(item => item.userId === comparisons.compareTwo);
+      const comparedEntries = [
+        ...entryOne,
+        ...entryTwo
+      ];
+      this.setState({
+        filter: `compare`,
+        entries: comparedEntries
+      });
+    }
+  }
+
+  handleCompareChange = (e, name) => {
+    this.setState({
+      [name]: e.target.value
+    });
+  }
+
+  handleCompareClick = () => {
+    const { compareOne, compareTwo } = this.state;
+    if (compareOne && compareTwo) {
+      const comparisons = {
+        compareOne,
+        compareTwo
+      }
+      this.filterEntries(`compare`, comparisons);
+    }
+  }
+
+  expandFilters = () => {
+    const { showFilters } = this.state;
+    this.setState({
+      showFilters: !showFilters
+    });
+  }
+
   render() {
 
-    const { entries, episodeResults, characters, bets } = this.state;
+    const { entries, allEntries, episodeResults, characters, bets, filter, showFilters } = this.state;
 
     if (!entries || !episodeResults || !characters || !bets) return <></>;
 
@@ -233,6 +300,8 @@ export class Scoreboard extends React.Component {
       }
     });
 
+    const filters = <Filters filter={filter} entries={entries} allEntries={allEntries} expandFilters={this.expandFilters} showFilters={showFilters} handleCompareChange={(e, name) => this.handleCompareChange(e, name)} handleCompare={comparisons => this.filterEntries(`compare`, comparisons)} handleCompareClick={this.handleCompareClick} handleFilterClick={filter => this.filterEntries(filter)} compareOne={this.state.compareOne} compareTwo={this.state.compareTwo} />
+
     const scoreProps = {
       scoreService: this.scoreService,
       episodeResults,
@@ -249,7 +318,9 @@ export class Scoreboard extends React.Component {
       deadCharactersForDisplay,
       actualThroneCharacter,
       actualThronePoints,
-      gameId: this.props.gameId
+      gameId: this.props.gameId,
+      filters,
+      filter
     };
 
     const scoresTable = <ScoresTable {...scoreProps} />

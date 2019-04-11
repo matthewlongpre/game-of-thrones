@@ -4,7 +4,7 @@ import { CardStyle } from "../Player/Card";
 import { PageContainerStyled, PageHeadingRow } from "./Styles";
 
 export const ScoresTable = props => {
-  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players } = props;
+  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters } = props;
 
   const sortedPlayers = players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
 
@@ -56,6 +56,8 @@ export const ScoresTable = props => {
       <PageHeadingRow>
         <h2>Scoreboard</h2>
       </PageHeadingRow>
+
+      {filters}
 
       <CardStyle fullWidth>
         <div className="scoreboard-container">

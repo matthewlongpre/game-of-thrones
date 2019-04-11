@@ -177,12 +177,6 @@ th.heading--episode-number {
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
-  .scoreboard {
-    font-size: 0.75rem;
-  }
-}
-
 .scoreboard-container {
   overflow-x: auto;
   max-width: 1080px;
@@ -193,6 +187,11 @@ th.heading--episode-number {
   width: 100%;
   margin: auto;
   margin-top: 20px;
+}
+
+.scoreboard th, 
+.scoreboard td {
+  padding: 6px;
 }
 
 @media (max-width: 480px) {

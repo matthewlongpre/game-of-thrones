@@ -1,27 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { PlayerCardSurvivers } from "./PlayerCardSurvivers";
-import { PageContainerStyled, PageHeadingRow } from "./Styles";
+import { EpisodeResultsRow, PageContainerStyled, PageHeadingRow, EpisodeRowStyled } from "./Styles";
 
-const EpisodeRowStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -10px;
-`;
-
-const EpisodeResultsRow = styled.div`
-  h3 {
-    text-align: center;
-  }
-
-  ul {
-    justify-content: center;
-  }
-`;
-
-export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometimeChoices, entries, characters, bets, allSurvivers, players }) => {
+export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometimeChoices, entries, characters, bets, allSurvivers, players, filters }) => {
 
   let aliveCharacterItems;
   if (allSurvivers && allSurvivers.length !== 0) {
@@ -47,6 +30,8 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
       <PageHeadingRow>
         <h2>Survivors</h2>
       </PageHeadingRow>
+
+      {filters}
 
       {seriesFinished && <EpisodeResultsRow>
         <ListLabel>Confirmed alive</ListLabel>

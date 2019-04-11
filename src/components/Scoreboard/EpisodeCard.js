@@ -1,26 +1,9 @@
 import React from "react";
-import styled from "styled-components";
 import { episodes } from "../../shared/constants";
-import { CharacterStyle, ListLabel, CharactersStyle, NoPredictions } from "../Player/Card";
 import { CharacterBadge } from "../Character/CharacterBadge";
+import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { PlayerCard } from "./PlayerCard";
-import { PageContainerStyled, PageHeadingRow } from "./Styles";
-
-const EpisodeRowStyled = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  margin: -10px;
-`;
-
-const EpisodeResultsRow = styled.div`
-  h3 {
-    text-align: center;
-  }
-
-  ul {
-    justify-content: center;
-  }
-`;
+import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled } from "./Styles";
 
 const getChoicesByEpisode = choices => {
   return episodes.map(episode => {
@@ -40,7 +23,7 @@ const getDataByEpisode = (choicesByEpisode, characters) => {
   });
 }
 
-export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets, deadCharactersForDisplay, players }) => {
+export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets, deadCharactersForDisplay, players, filters }) => {
 
   let deadCharacterItems;
   if (deadCharactersForDisplay && deadCharactersForDisplay.length !== 0) {
@@ -82,6 +65,8 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
       <PageHeadingRow>
         <h2>Episode {episode}</h2>
       </PageHeadingRow>
+
+      {filters}
 
       {episodeHasResults && <EpisodeResultsRow>
         <ListLabel>Confirmed dead</ListLabel>
