@@ -37,8 +37,8 @@ const getCorrectBetsByEpisode = (actualBetsThisEpisode, betChoicesByEpisode) => 
   return correctBets;
 }
 
-const getCorrectBetPoints = correctBet => {
-  const correctBetPoints = correctBet.map(() => POINTS.BONUS_PREDICTION_VALUE);
+const getCorrectBetPoints = correctBets => {
+  const correctBetPoints = correctBets.map(() => POINTS.BONUS_PREDICTION_VALUE);
   return correctBetPoints.reduce(sumPoints, 0);
 };
 
@@ -221,6 +221,51 @@ const getActualThronePoints = (episodeResults, characters) => {
   return getThroneChoicePoints(episodeResults[5].throne, characters);
 }
 
+const getBetsNeverOccurred = (episodeResults, bets) => {
+  const allBets = bets.map(bet => bet.id);
+  const betsOccurred = [];
+  episodeResults.forEach(episode => {
+    if (episode.bets.length !== 0) {
+      episode.bets.forEach(bet => {
+        betsOccurred.push(bet.id);
+      });
+    }
+  });
+  const betsNeverOccurred = allBets.filter(item => {
+    return !betsOccurred.includes(item);
+  });
+  return betsNeverOccurred;
+}
+
+const getBetsNeverOccurChoices = playerBetChoices => {
+  const neverOccurChoices = [];
+  for (const key in playerBetChoices) {
+    if (playerBetChoices[key] === "0") {
+      neverOccurChoices.push(key);
+    }
+  }
+  return neverOccurChoices;
+}
+
+const getBetsNeverOccurChoicesWithData = (betsNeverOccurChoices, bets) => {
+  const neverOcurredBetData = betsNeverOccurChoices.map(choice => {
+    return bets.find(bet => bet.id === choice);
+  });
+  return neverOcurredBetData;
+}
+
+const getCorrectBetsNeverOccurred = (betsNeverOccurChoices, betsNeverOccurred) => {
+  return betsNeverOccurChoices.filter(item => betsNeverOccurred.includes(item));
+}
+
+const getBetsNeverOccurredPoints = (correctBetsNeverOccurred) => {
+  return getCorrectBetPoints(correctBetsNeverOccurred);
+}
+
+const getPossibleBetsNeverOccurredPoints = betsNeverOccurred => {
+  return getCorrectBetPoints(betsNeverOccurred);
+}
+
 const ScoreService = {};
 
 ScoreService.getBetChoicesByEpisode = getBetChoicesByEpisode;
@@ -248,5 +293,11 @@ ScoreService.checkIfThroneChoiceCorrect = checkIfThroneChoiceCorrect;
 ScoreService.getActualThronePoints = getActualThronePoints;
 ScoreService.getIncorrectCharacterSurvivers = getIncorrectCharacterSurvivers;
 ScoreService.getDieSometimeChoices = getDieSometimeChoices;
+ScoreService.getBetsNeverOccurred = getBetsNeverOccurred;
+ScoreService.getBetsNeverOccurChoices = getBetsNeverOccurChoices;
+ScoreService.getCorrectBetsNeverOccurred = getCorrectBetsNeverOccurred;
+ScoreService.getBetsNeverOccurredPoints = getBetsNeverOccurredPoints;
+ScoreService.getBetsNeverOccurChoicesWithData = getBetsNeverOccurChoicesWithData;
+ScoreService.getPossibleBetsNeverOccurredPoints = getPossibleBetsNeverOccurredPoints;
 
 export { ScoreService };

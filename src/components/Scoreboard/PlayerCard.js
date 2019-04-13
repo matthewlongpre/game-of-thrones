@@ -5,7 +5,7 @@ import { POINTS } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
 
-export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode }) => {
+export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode, betsNeverOccurChoices, correctBetsNeverOccurred }) => {
 
   let characterItems;
   if (characterDeathChoices.length !== 0) {
@@ -72,6 +72,29 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
     });
   }
 
+  let neverOccurred;
+  if (betsNeverOccurChoices.length !== 0) {
+    console.log(episodeHasResults)
+    console.log(episode)
+
+    neverOccurred = betsNeverOccurChoices.map(bet => {
+
+      let betResults = `undetermined`;
+      if (episodeHasResults && episode === "6") {
+        console.log(correctBetsNeverOccurred)
+        const isBetCorrect = correctBetsNeverOccurred.some(correctBet => correctBet === bet.id);
+        betResults = isBetCorrect ? `correct` : `incorrect`
+      }
+
+      return (
+        <BetStyle key={bet.id} result={betResults}>
+          <PointsBadge margin="auto" marginLeft="0" marginRight points="1" />
+          <span>{bet.description}</span>
+        </BetStyle>
+      );
+    });
+  }
+
   return (
     <CardStyle grid>
       <h2>{name}</h2> <PointsBadgeLarge topRight points={pointsThisEpisode} />
@@ -101,6 +124,16 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
         {betItems}
       </BetsStyle>
       {betChoices.length === 0 && <NoPredictions>No plot predictions for this episode.</NoPredictions>}
+
+      {(episode === "6" && betsNeverOccurChoices.length !== 0) && <>
+      <ListLabel>
+        {episodeHasResults ? `Never Occurred` : `Will Never Occur`}
+      </ListLabel>
+      <BetsStyle>
+        {neverOccurred}
+      </BetsStyle>
+      </>}
+
 
     </CardStyle>
   );

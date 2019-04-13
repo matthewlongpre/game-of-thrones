@@ -23,6 +23,7 @@ export const ScoresTable = props => {
     } else {
       currentRank++;
       result.rank = currentRank;
+      currentHighScore = result.overallTotal;
       return result;
     }
   });

@@ -151,6 +151,9 @@ export class Scoreboard extends React.Component {
     let actualThronePoints;
     let allSurvivers;
     let actualThroneCharacter;
+    let betsNeverOccurred;
+    let betsNeverOccurredPoints;
+    let betsNeverOccurChoices;
 
     if (seriesFinished) {
       deadCharacters = this.scoreService.getDeadCharacters(episodeResults);
@@ -158,6 +161,7 @@ export class Scoreboard extends React.Component {
       allActualCharacterSurviversPoints = this.scoreService.getAllActualCharacterSurviversPoints(allSurvivers);
       actualThronePoints = this.scoreService.getActualThronePoints(episodeResults, characters);
       actualThroneCharacter = episodeResults[5].throne;
+      betsNeverOccurred = this.scoreService.getBetsNeverOccurred(episodeResults, bets);
     }
 
     const players = entries.map(entry => {
@@ -174,6 +178,11 @@ export class Scoreboard extends React.Component {
       const playerSurviverChoices = this.scoreService.getCharacterSurviverChoices(playerDeathChoices);
       const playerDieSometimeChoices = this.scoreService.getDieSometimeChoices(playerDeathChoices);
 
+      betsNeverOccurChoices = this.scoreService.getBetsNeverOccurChoices(playerBetChoices);
+      betsNeverOccurChoices = this.scoreService.getBetsNeverOccurChoicesWithData(betsNeverOccurChoices, bets);
+
+      let correctBetsNeverOccurred;
+
       if (seriesFinished) {
         actualCharacterSurvivers = this.scoreService.getActualCharacterSurvivers(playerSurviverChoices, deadCharacters);
         incorrectCharacterSurvivers = this.scoreService.getIncorrectCharacterSurvivers(playerSurviverChoices, deadCharacters);
@@ -184,6 +193,8 @@ export class Scoreboard extends React.Component {
           throneChoicePoints = this.scoreService.getThroneChoicePoints(throneChoice, characters);
         }
 
+        correctBetsNeverOccurred = this.scoreService.getCorrectBetsNeverOccurred(betsNeverOccurChoices, betsNeverOccurred);
+        betsNeverOccurredPoints = this.scoreService.getBetsNeverOccurredPoints(correctBetsNeverOccurred);
       }
 
       let overallTotal = 0;
@@ -228,6 +239,9 @@ export class Scoreboard extends React.Component {
 
         if (episodeResults[episode - 1]) {
           episodePointsTotal = this.scoreService.getEpisodePointsTotal(episodeExactDeathPoints, correctDiedSometimePoints, diedInDifferentEpisodePoints, correctBetPoints);
+          if (episode === "6") {
+            episodePointsTotal += betsNeverOccurredPoints;
+          }
           overallTotals.push(episodePointsTotal);
         }
 
@@ -256,7 +270,9 @@ export class Scoreboard extends React.Component {
         throneChoicePoints,
         overallTotal,
         userId: entry.userId,
-        playerSurviverChoices
+        playerSurviverChoices,
+        betsNeverOccurChoices,
+        correctBetsNeverOccurred
       }
 
     });
@@ -269,16 +285,25 @@ export class Scoreboard extends React.Component {
       if (episodeResults[episode - 1]) {
         const deaths = episodeResults[episode - 1].deaths;
 
-        const points = deaths.map(death => {
-          const result = characters.find(item => item.id === death.id);
-          return result.pointsPerEpisode[episode];
-        });
+        let points = [];
+        if (deaths.length !== 0) {
+          points = deaths.map(death => {
+            const result = characters.find(item => item.id === death.id);
+            return result.pointsPerEpisode[episode];
+          });
+        }
 
         const actualBetsThisEpisode = this.scoreService.getActualBetsThisEpisode(episode, episodeResults);
-        let actualBetPoints = this.scoreService.getCorrectBetPoints(actualBetsThisEpisode);
+        const actualBetPoints = this.scoreService.getCorrectBetPoints(actualBetsThisEpisode);
+
 
         possiblePoints = points.reduce(this.scoreService.sumPoints, 0);
         possiblePoints += actualBetPoints;
+
+        if (episode === "6") {
+          const actualBetNeverOccurredPoints = this.scoreService.getPossibleBetsNeverOccurredPoints(betsNeverOccurred);
+          possiblePoints += actualBetNeverOccurredPoints;
+        }
       }
 
       return possiblePoints;

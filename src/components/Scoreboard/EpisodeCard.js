@@ -51,11 +51,13 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
     const playerCorrectDeathsThisEpisode = playerPoints.correctDeathsPerEpisode[episode - 1];
     const playerCorrectBetsThisEpisode = playerPoints.correctBetsPerEpisode[episode - 1];
 
+    const playerBetsNeverOccurChoices = playerPoints.betsNeverOccurChoices;
+    const playerCorrectBetsNeverOccurred = playerPoints.correctBetsNeverOccurred;
     const playerDiedInDifferentEpisodePerEpisode = playerPoints.diedInDifferentEpisodePerEpisode[episode - 1];
     const playerCorrectDiedSometimePerEpisode = playerPoints.correctDiedSometimePerEpisode[episode - 1];
 
     return (
-      <PlayerCard key={entry.userId} {...entry} episode={episode} episodeHasResults={episodeHasResults} pointsThisEpisode={playerPointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
+      <PlayerCard key={entry.userId} {...entry} correctBetsNeverOccurred={playerCorrectBetsNeverOccurred} betsNeverOccurChoices={playerBetsNeverOccurChoices} episode={episode} episodeHasResults={episodeHasResults} pointsThisEpisode={playerPointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
     );
   });
 

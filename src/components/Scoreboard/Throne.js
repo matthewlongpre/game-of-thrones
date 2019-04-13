@@ -28,7 +28,7 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
     const playerPoints = players.find(player => player.userId === entry.userId);
 
     return (
-      <PlayerCardThrone key={entry.userId} {...entry} {...playerPoints} seriesFinished={seriesFinished} characters={characters} />
+      <PlayerCardThrone key={entry.userId} {...entry} actualThroneCharacter={actualThroneCharacter} {...playerPoints} seriesFinished={seriesFinished} characters={characters} />
     );
   });
 
@@ -48,7 +48,7 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
             <CharacterBadge name={throneCharacterData.name} id={throneCharacterData.id} points={throneCharacterData.pointsForThrone.toString()} />
           </CharacterStyle>
           }
-          {!throneHasCharacter && <div style={{ marginBottom: `40px` }}><strong>{throneResultNonCharacter}</strong> is sitting on the Iron Throne.</div>}
+          {!throneHasCharacter && <div style={{ marginBottom: `40px` }}><strong>{throneResultNonCharacter}</strong> is sitting the Iron Throne.</div>}
 
 
         </CharactersStyle>
