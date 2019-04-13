@@ -26,10 +26,10 @@ const PointsBadgeStyle = styled.span`
 `;
 
 export const PointsBadge = props => {
-  const { points } = props;
+  const { points, hidePts } = props;
   return (
     <PointsBadgeStyle {...props}>
-      {points} {points === `1` ? `pt` : `pts`}
+      {points} {!hidePts ? (points === `1`) ? `pt` : `pts` : ``}
     </PointsBadgeStyle>
   );
 }

@@ -32,14 +32,17 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
     );
   });
 
+  playerCards.sort((a, b) => a.props.throneChoicePoints > b.props.throneChoicePoints ? -1 : 1);
+
   return (
     <PageContainerStyled>
+
+      {filters}
 
       <PageHeadingRow>
         <h2>The Throne</h2>
       </PageHeadingRow>
 
-      {filters}
 
       {seriesFinished && <EpisodeResultsRow>
         <ListLabel>Sitting the Iron Throne</ListLabel>

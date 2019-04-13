@@ -1,38 +1,17 @@
 import React from "react";
 import { airdates, episodes } from "../../shared/constants";
+import { PointsBadge } from "../Character/PointsBadge";
 import { CardStyle } from "../Player/Card";
 import { PageContainerStyled, PageHeadingRow } from "./Styles";
 
 export const ScoresTable = props => {
   const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters } = props;
 
-  const sortedPlayers = players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
-
-  let currentRank = 0;
-  let currentHighScore = 0;
-  
-  const rankedResults = sortedPlayers.map(result => {
-    if (currentRank === 0) {
-      currentRank++;
-      result.rank = currentRank;
-      currentHighScore = result.overallTotal;
-      return result;
-    } else if (result.overallTotal === currentHighScore) {
-      result.rank = currentRank;
-      return result;
-    } else {
-      currentRank++;
-      result.rank = currentRank;
-      currentHighScore = result.overallTotal;
-      return result;
-    }
-  });
-
-  const playerRows = rankedResults.map((player, index) => {
-    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}</td>)
+  const playerRows = players.map(player => {
+    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}{points === possiblePointsPerEpisode[index] && possiblePointsPerEpisode[index] !== 0 ? <MaxPointsIcon /> : ``}</td>)
     return (
       <tr key={player.userId}>
-        <td className="text-center rank">{player.rank}</td>
+        <td className="text-center rank"><PointsBadge hidePts size="small" points={player.rank}></PointsBadge></td>
         <td className="player-name sticky-left">{player.name}</td>
         {playerCells}
         {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}
@@ -54,11 +33,11 @@ export const ScoresTable = props => {
   return (
     <PageContainerStyled>
 
+      {filters}
+
       <PageHeadingRow>
         <h2>Scoreboard</h2>
       </PageHeadingRow>
-
-      {filters}
 
       <CardStyle fullWidth>
         <div className="scoreboard-container">

@@ -24,14 +24,17 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
     );
   });
 
+  playerCards.sort((a, b) => a.props.survivingCharacterPoints > b.props.survivingCharacterPoints ? -1 : 1);
+
   return (
     <PageContainerStyled>
+
+      {filters}
 
       <PageHeadingRow>
         <h2>Survivors</h2>
       </PageHeadingRow>
 
-      {filters}
 
       {seriesFinished && <EpisodeResultsRow>
         <ListLabel>Confirmed alive</ListLabel>

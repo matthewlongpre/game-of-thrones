@@ -164,7 +164,38 @@ export class Scoreboard extends React.Component {
       betsNeverOccurred = this.scoreService.getBetsNeverOccurred(episodeResults, bets);
     }
 
-    const players = entries.map(entry => {
+    const possiblePointsPerEpisode = episodes.map(episode => {
+
+      let possiblePoints = `--`;
+
+      if (episodeResults[episode - 1]) {
+        const deaths = episodeResults[episode - 1].deaths;
+
+        let points = [];
+        if (deaths.length !== 0) {
+          points = deaths.map(death => {
+            const result = characters.find(item => item.id === death.id);
+            return result.pointsPerEpisode[episode];
+          });
+        }
+
+        const actualBetsThisEpisode = this.scoreService.getActualBetsThisEpisode(episode, episodeResults);
+        const actualBetPoints = this.scoreService.getCorrectBetPoints(actualBetsThisEpisode);
+
+
+        possiblePoints = points.reduce(this.scoreService.sumPoints, 0);
+        possiblePoints += actualBetPoints;
+
+        if (episode === "6") {
+          const actualBetNeverOccurredPoints = this.scoreService.getPossibleBetsNeverOccurredPoints(betsNeverOccurred);
+          possiblePoints += actualBetNeverOccurredPoints;
+        }
+      }
+
+      return possiblePoints;
+    });
+
+    let players = entries.map(entry => {
 
       const playerDeathChoices = entry.characterDeathChoices;
       const playerBetChoices = entry.betChoices;
@@ -245,6 +276,10 @@ export class Scoreboard extends React.Component {
           overallTotals.push(episodePointsTotal);
         }
 
+        if (episodePointsTotal === possiblePointsPerEpisode[episode - 1] && possiblePointsPerEpisode[episode - 1] !== 0) {
+          console.log(entry.name, episodePointsTotal, possiblePointsPerEpisode[episode - 1])
+        }
+
         return episodePointsTotal;
 
       });
@@ -277,37 +312,31 @@ export class Scoreboard extends React.Component {
 
     });
 
+    players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
 
-    const possiblePointsPerEpisode = episodes.map(episode => {
-
-      let possiblePoints = `--`;
-
-      if (episodeResults[episode - 1]) {
-        const deaths = episodeResults[episode - 1].deaths;
-
-        let points = [];
-        if (deaths.length !== 0) {
-          points = deaths.map(death => {
-            const result = characters.find(item => item.id === death.id);
-            return result.pointsPerEpisode[episode];
-          });
-        }
-
-        const actualBetsThisEpisode = this.scoreService.getActualBetsThisEpisode(episode, episodeResults);
-        const actualBetPoints = this.scoreService.getCorrectBetPoints(actualBetsThisEpisode);
-
-
-        possiblePoints = points.reduce(this.scoreService.sumPoints, 0);
-        possiblePoints += actualBetPoints;
-
-        if (episode === "6") {
-          const actualBetNeverOccurredPoints = this.scoreService.getPossibleBetsNeverOccurredPoints(betsNeverOccurred);
-          possiblePoints += actualBetNeverOccurredPoints;
-        }
+    let currentRank = 0;
+    let currentHighScore = 0;
+    
+    const rankedPlayers = players.map((result, index) => {
+      if (currentRank === 0) {
+        currentRank++;
+        result.rank = currentRank;
+        currentHighScore = result.overallTotal;
+        return result;
+      } else if (result.overallTotal === currentHighScore) {
+        result.rank = currentRank;
+        result.rank = `T - ${currentRank}`
+        players[index - 1].rank = `T - ${currentRank}`
+        return result;
+      } else {
+        currentRank++;
+        result.rank = currentRank;
+        currentHighScore = result.overallTotal;
+        return result;
       }
-
-      return possiblePoints;
     });
+
+    players = rankedPlayers;
 
     const deadCharacterByEpisode = episodes.map(episode => {
       if (episodeResults[episode - 1]) {

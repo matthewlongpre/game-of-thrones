@@ -74,14 +74,11 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
 
   let neverOccurred;
   if (betsNeverOccurChoices.length !== 0) {
-    console.log(episodeHasResults)
-    console.log(episode)
 
     neverOccurred = betsNeverOccurChoices.map(bet => {
 
       let betResults = `undetermined`;
       if (episodeHasResults && episode === "6") {
-        console.log(correctBetsNeverOccurred)
         const isBetCorrect = correctBetsNeverOccurred.some(correctBet => correctBet === bet.id);
         betResults = isBetCorrect ? `correct` : `incorrect`
       }

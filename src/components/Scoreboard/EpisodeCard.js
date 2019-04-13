@@ -61,14 +61,17 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
     );
   });
 
+  playerCards.sort((a, b) => a.props.pointsThisEpisode > b.props.pointsThisEpisode ? -1 : 1);
+
   return (
     <PageContainerStyled>
+      
+      {filters}
 
       <PageHeadingRow>
         <h2>Episode {episode}</h2>
       </PageHeadingRow>
 
-      {filters}
 
       {episodeHasResults && <EpisodeResultsRow>
         <ListLabel>Confirmed dead</ListLabel>

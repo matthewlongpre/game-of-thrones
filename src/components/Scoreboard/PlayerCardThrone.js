@@ -10,9 +10,7 @@ export const PlayerCardThrone = ({ name, throneChoice, seriesFinished, character
   let throneChoiceCharacter;
 
   let throneResults = `undetermined`;
-  console.log(actualThroneCharacter === throneChoice);
   (actualThroneCharacter === throneChoice) ? throneResults = `correct` : throneResults = `incorrect`;
-  console.log(throneResults)
 
   if (throneChoice === "nobodyInList") {
     throneChoiceCharacter = <div style={{marginTop: `20px`}}><BetStyle result={throneResults}><PointsBadge marginRight points={POINTS.THRONE_NOBODY_LIST} /><strong>Nobody in the list</strong></BetStyle></div>;
