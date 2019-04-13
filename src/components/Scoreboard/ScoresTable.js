@@ -2,21 +2,22 @@ import React from "react";
 import { airdates, episodes } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { CardStyle } from "../Player/Card";
-import { PageContainerStyled, PageHeadingRow } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, Legend } from "./Styles";
+import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
 
 export const ScoresTable = props => {
   const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters } = props;
 
   const playerRows = players.map(player => {
-    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}{points === possiblePointsPerEpisode[index] && possiblePointsPerEpisode[index] !== 0 ? <MaxPointsIcon /> : ``}</td>)
+    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}<MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
     return (
       <tr key={player.userId}>
         <td className="text-center rank"><PointsBadge hidePts size="small" points={player.rank}></PointsBadge></td>
         <td className="player-name sticky-left">{player.name}</td>
         {playerCells}
-        {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}</td>}
-        {seriesFinished && <td className="text-center">{player.throneChoicePoints}</td>}
-        <td className="text-center sticky-right">{player.overallTotal}</td>
+        {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
+        {seriesFinished && <td className="text-center">{player.throneChoicePoints}<MaxPoints points={player.throneChoicePoints} possiblePoints={actualThronePoints} /></td>}
+        <td className="text-center sticky-right">{player.overallTotal}<MaxPoints points={player.overallTotal} possiblePoints={overallPossiblePointsTotal} /></td>
       </tr>
     );
   });
@@ -76,6 +77,9 @@ export const ScoresTable = props => {
             </tbody>
           </table>
         </div>
+        <Legend>
+          <li><MaxPointsIcon /> Scored maximum possible points</li>
+        </Legend>
       </CardStyle>
     </PageContainerStyled>
   );

@@ -7,6 +7,7 @@ const PointsBadgeLargeStyle = styled.span`
   flex-direction: column;
   font-weight: 700;
   font-size: 32px;
+  min-width: 75px;
 
   padding: 14px 20px;
 
@@ -27,15 +28,22 @@ const PointsBadgeLargeStyle = styled.span`
     top: 0;
     right: 0;
   `}
+
+  .max-points {
+    position: relative;
+    top: -67px;
+    right: -23px;
+  }
   
 `;
 
 export const PointsBadgeLarge = props => {
-  const { points } = props;
+  const { points, maxPoints } = props;
   return (
     <PointsBadgeLargeStyle {...props}>
       {points}
       <span className="pts">{points === 1 ? `pt` : `pts`}</span>
+      {maxPoints && <span className="max-points">{maxPoints}</span>}
     </PointsBadgeLargeStyle>
   );
 }

@@ -23,7 +23,7 @@ const getDataByEpisode = (choicesByEpisode, characters) => {
   });
 }
 
-export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets, deadCharactersForDisplay, players, filters }) => {
+export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets, deadCharactersForDisplay, players, filters, possiblePointsThisEpisode }) => {
 
   let deadCharacterItems;
   if (deadCharactersForDisplay && deadCharactersForDisplay.length !== 0) {
@@ -57,7 +57,7 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
     const playerCorrectDiedSometimePerEpisode = playerPoints.correctDiedSometimePerEpisode[episode - 1];
 
     return (
-      <PlayerCard key={entry.userId} {...entry} correctBetsNeverOccurred={playerCorrectBetsNeverOccurred} betsNeverOccurChoices={playerBetsNeverOccurChoices} episode={episode} episodeHasResults={episodeHasResults} pointsThisEpisode={playerPointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
+      <PlayerCard key={entry.userId} {...entry} correctBetsNeverOccurred={playerCorrectBetsNeverOccurred} betsNeverOccurChoices={playerBetsNeverOccurChoices} episode={episode} episodeHasResults={episodeHasResults} pointsThisEpisode={playerPointsThisEpisode} possiblePointsThisEpisode={possiblePointsThisEpisode} correctBetsThisEpisode={playerCorrectBetsThisEpisode} diedInDifferentEpisodeThisEpisode={playerDiedInDifferentEpisodePerEpisode} correctDiedSometimeThisEpisode={playerCorrectDiedSometimePerEpisode} correctDeathsThisEpisode={playerCorrectDeathsThisEpisode} characters={characters} characterDeathChoices={charactersByEpisode[episode - 1]} betChoices={betsByEpisode[episode - 1]} />
     );
   });
 

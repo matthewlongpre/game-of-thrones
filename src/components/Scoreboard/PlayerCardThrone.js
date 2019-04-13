@@ -4,6 +4,7 @@ import { CharacterBadge } from "../Character/CharacterBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
 import { POINTS } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
+import { MaxPoints } from "./MaxPoints";
 
 export const PlayerCardThrone = ({ name, throneChoice, seriesFinished, characters, throneChoicePoints, actualThroneCharacter }) => {
 
@@ -23,9 +24,11 @@ export const PlayerCardThrone = ({ name, throneChoice, seriesFinished, character
     </CharacterStyle>
   }
 
+  const maxPoints = (throneResults === `correct`) ? <MaxPoints points={throneChoicePoints} possiblePoints={throneChoicePoints} /> : null;
+
   return (
       <CardStyle grid>
-        <h2>{name}</h2> <PointsBadgeLarge topRight points={seriesFinished ? throneChoicePoints : `--`} />
+        <h2>{name}</h2> <PointsBadgeLarge maxPoints={maxPoints} topRight points={seriesFinished ? throneChoicePoints : `--`} />
   
         <ListLabel>Throne Choice</ListLabel>
         <CharactersStyle>

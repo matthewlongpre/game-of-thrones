@@ -3,8 +3,9 @@ import { CharacterBadge } from "../Character/CharacterBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
 import { CardStyle, CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { POINTS } from "../../shared/constants";
+import { MaxPoints } from "./MaxPoints";
 
-export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPoints, actualCharacterSurvivers, incorrectCharacterSurvivers, playerSurviverChoices, playerDieSometimeChoices, characters }) => {
+export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPoints, actualCharacterSurvivers, incorrectCharacterSurvivers, playerSurviverChoices, playerDieSometimeChoices, characters, allActualCharacterSurviversPoints }) => {
   
   const surviverChoices = playerSurviverChoices.map(surviver => {
 
@@ -57,9 +58,11 @@ export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPo
     })
   }
 
+  const maxPoints = <MaxPoints points={survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} />;
+
   return (
     <CardStyle grid>
-      <h2>{name}</h2> <PointsBadgeLarge topRight points={seriesFinished ? survivingCharacterPoints : `--`} />
+      <h2>{name}</h2> <PointsBadgeLarge maxPoints={maxPoints} topRight points={seriesFinished ? survivingCharacterPoints : `--`} />
 
       {!seriesFinished && <>
         <ListLabel>Survivor Choices</ListLabel>

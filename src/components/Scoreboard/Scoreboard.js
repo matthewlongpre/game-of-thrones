@@ -276,10 +276,6 @@ export class Scoreboard extends React.Component {
           overallTotals.push(episodePointsTotal);
         }
 
-        if (episodePointsTotal === possiblePointsPerEpisode[episode - 1] && possiblePointsPerEpisode[episode - 1] !== 0) {
-          console.log(entry.name, episodePointsTotal, possiblePointsPerEpisode[episode - 1])
-        }
-
         return episodePointsTotal;
 
       });

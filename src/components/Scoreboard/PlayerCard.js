@@ -4,8 +4,9 @@ import { CharacterBadge } from "../Character/CharacterBadge";
 import { POINTS } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
+import { MaxPoints } from "./MaxPoints";
 
-export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode, betsNeverOccurChoices, correctBetsNeverOccurred }) => {
+export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode, betsNeverOccurChoices, correctBetsNeverOccurred, possiblePointsThisEpisode }) => {
 
   let characterItems;
   if (characterDeathChoices.length !== 0) {
@@ -92,9 +93,11 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
     });
   }
 
+  const maxPoints = <MaxPoints points={pointsThisEpisode} possiblePoints={possiblePointsThisEpisode} />
+
   return (
     <CardStyle grid>
-      <h2>{name}</h2> <PointsBadgeLarge topRight points={pointsThisEpisode} />
+      <h2>{name}</h2> <PointsBadgeLarge topRight points={pointsThisEpisode} maxPoints={maxPoints} />
 
       <ListLabel>Expert Level Predictions</ListLabel>
       <CharactersStyle>
