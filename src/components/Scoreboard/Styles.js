@@ -187,3 +187,27 @@ export const StickyControls = styled.div`
   position: sticky;
   z-index: 1;
 `;
+
+export const EpisodeResultsSelection = styled.div`
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  padding: 5px;
+  font-size: 0.75rem;
+  background: #f0f0f0;
+
+  span {
+    display: inline-block;
+    margin: 5px 10px;
+  }
+
+  button {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 0.66rem;
+  }
+`;

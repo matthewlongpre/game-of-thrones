@@ -8,6 +8,11 @@ export const muiTheme = createMuiTheme({
         color: "#fff"
       }
     },
+    MuiDialog: {
+      paper: {
+        margin: `20px`
+      }
+    },
     MuiTooltip: {
       tooltip: {
         backgroundColor: "#131312"

@@ -6,7 +6,7 @@ import { PageContainerStyled, PageHeadingRow, Legend, StickyControls } from "./S
 import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
 
 export const ScoresTable = props => {
-  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters, episodeResults } = props;
+  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters, episodeResults, episodesWatched } = props;
 
   const playerRows = players.map(player => {
     const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}<MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
@@ -43,7 +43,6 @@ export const ScoresTable = props => {
       </StickyControls>
 
       <PageContainerStyled>
-
 
         <PageHeadingRow>
           <h2>Scoreboard</h2>

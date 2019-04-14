@@ -1,5 +1,5 @@
 import React from "react";
-import { episodes } from "../../shared/constants";
+import { episodes, episodesWithLabels } from "../../shared/constants";
 import { firebase } from "../../shared/firebase";
 import { ScoreboardTabs } from "./ScoreboardTabs";
 import { ScoresByEpisode } from "./ScoresByEpisode";
@@ -8,6 +8,9 @@ import { ScoresTable } from "./ScoresTable";
 import { Survivers } from "./Survivers";
 import { Throne } from "./Throne";
 import { Filters } from "./Filters";
+import { EpisodesWatched } from "./EpisodesWatched";
+import { Button } from "@material-ui/core";
+import { EpisodeResultsSelection } from "./Styles";
 
 export class Scoreboard extends React.Component {
 
@@ -15,9 +18,11 @@ export class Scoreboard extends React.Component {
     super(props);
     this.databaseRef = firebase.database();
     this.entriesRef = this.databaseRef.ref(`games/${props.gameId}/entries`);
-    this.episodesRef = this.databaseRef.ref('episodes');
-    this.charactersRef = this.databaseRef.ref('characters');
-    this.betsRef = this.databaseRef.ref('bets');
+    this.episodesRef = this.databaseRef.ref(`episodes`);
+    this.charactersRef = this.databaseRef.ref(`characters`);
+    this.betsRef = this.databaseRef.ref(`bets`);
+    this.usersRef = this.databaseRef.ref(`users/${props.user.uid}`);
+
 
     this.state = {
       entries: null,
@@ -26,7 +31,10 @@ export class Scoreboard extends React.Component {
       compareOne: ``,
       compareTwo: ``,
       compareOneName: ``,
-      compareTwoName: ``
+      compareTwoName: ``,
+      showSpoilerWarning: true,
+      episodesWatched: 0,
+      newResultsAvailable: false
     }
 
     this.scoreService = ScoreService;
@@ -49,9 +57,22 @@ export class Scoreboard extends React.Component {
       });
     });
 
+    this.usersRef.once('value', item => {
+      const results = item.val();
+      let { episodesWatched } = results;
+
+      if (!episodesWatched) {
+        episodesWatched = 0;
+      }
+
+      this.setState({
+        episodesWatched
+      });
+    });
+
     this.episodesRef.on('value', item => {
       const episodes = Object.values(item.val());
-      const episodeResults = episodes.map(episode => {
+      const allEpisodeResults = episodes.map(episode => {
         if (!episode.deaths) {
           episode.deaths = [];
         }
@@ -60,9 +81,25 @@ export class Scoreboard extends React.Component {
         }
         return episode;
       });
+
+      let showSpoilerWarning;
+      if (allEpisodeResults.length === 0) {
+        showSpoilerWarning = false;
+      } else {
+        showSpoilerWarning = true;
+      }
+
+      const { episodesWatched } = this.state;
+      const newResultsAvailable = this.checkIfNewResultsAvailable(allEpisodeResults, episodesWatched);
+      const episodeResultsForDisplay = this.trimEpisodeResults(allEpisodeResults, episodesWatched);
+
       this.setState({
-        episodeResults
+        episodeResults: episodeResultsForDisplay,
+        allEpisodeResults,
+        showSpoilerWarning,
+        newResultsAvailable
       });
+
     });
 
     this.charactersRef.once('value', item => {
@@ -150,9 +187,57 @@ export class Scoreboard extends React.Component {
     });
   }
 
+  checkIfNewResultsAvailable = (allEpisodeResults, selectedEpisodeWatched) => {
+    let newResultsAvailable = false;
+    if (allEpisodeResults.length > selectedEpisodeWatched) {
+      newResultsAvailable = true;
+    }
+    return newResultsAvailable;
+  }
+
+  trimEpisodeResults = (allEpisodeResults, episodesWatched) => {
+    return allEpisodeResults.slice(0, episodesWatched);
+  }
+
+  handleEpisodesWatchedChange = e => {
+    const selectedEpisodeWatched = e.target.value;
+    const { allEpisodeResults } = this.state;
+
+    const newResultsAvailable = this.checkIfNewResultsAvailable(allEpisodeResults, selectedEpisodeWatched);
+
+    const episodeResultsForDisplay = this.trimEpisodeResults(allEpisodeResults, selectedEpisodeWatched);
+
+    this.setState({
+      episodesWatched: selectedEpisodeWatched,
+      episodeResults: episodeResultsForDisplay,
+      newResultsAvailable
+    });
+
+    this.updateEpisodesWatched(selectedEpisodeWatched);
+  }
+
+  handleEpisodesWatchedDialog = () => {
+    const { showSpoilerWarning } = this.state;
+    this.setState({
+      showSpoilerWarning: !showSpoilerWarning
+    });
+  }
+
+  updateEpisodesWatched = (selectedEpisodeWatched) => {
+    const updates = {
+      episodesWatched: selectedEpisodeWatched
+    };
+    this.usersRef.update(updates, error => {
+      if (error) {
+        alert(error)
+        console.error('Failed', error);
+      }
+    });
+  }
+
   render() {
 
-    const { entries, allEntries, episodeResults, characters, bets, filter, showFilters, compareOneName, compareTwoName } = this.state;
+    const { entries, allEntries, episodeResults, allEpisodeResults, newResultsAvailable, episodesWatched, showSpoilerWarning, characters, bets, filter, showFilters, compareOneName, compareTwoName } = this.state;
 
     if (!entries || !episodeResults || !characters || !bets) return <></>;
 
@@ -323,7 +408,7 @@ export class Scoreboard extends React.Component {
 
     let currentRank = 0;
     let currentHighScore = 0;
-    
+
     const rankedPlayers = players.map((result, index) => {
       if (currentRank === 0) {
         currentRank++;
@@ -381,7 +466,8 @@ export class Scoreboard extends React.Component {
       actualThronePoints,
       gameId: this.props.gameId,
       filters,
-      filter
+      filter,
+      allEpisodeResults
     };
 
     const scoresTable = <ScoresTable {...scoreProps} />
@@ -397,7 +483,23 @@ export class Scoreboard extends React.Component {
     };
 
     return (
-      <ScoreboardTabs {...scoreboardTabs} />
+      <>
+        {!showSpoilerWarning && newResultsAvailable &&
+          <EpisodeResultsSelection>
+            <div className="container">
+              {episodesWatched === 0 && <span>Not showing any results yet</span>}
+              {episodesWatched !== 0 && <span>Showing results up to <strong>{episodesWithLabels[episodesWatched - 1].label}</strong></span>}
+
+              <Button size="small" variant="contained" color="primary" onClick={this.handleEpisodesWatchedDialog}>
+                Update
+            </Button>
+            </div>
+          </EpisodeResultsSelection>}
+
+          <EpisodesWatched showSpoilerWarning={showSpoilerWarning} episodesWatched={episodesWatched} allEpisodeResults={allEpisodeResults} handleChange={this.handleEpisodesWatchedChange} handleClose={this.handleEpisodesWatchedDialog} />
+
+        <ScoreboardTabs {...scoreboardTabs} />
+      </>
     );
   }
 }
