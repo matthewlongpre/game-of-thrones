@@ -1,6 +1,32 @@
 {
   "rules": {
     ".read": "auth != null",
-    ".write": "auth != null"
+    "bets": {
+      ".read": "auth != null",
+      ".write": false
+    },
+    "characters": {
+      ".read": "auth != null",
+      ".write": false
+    },
+    "games": {
+      ".read": "auth != null",
+      ".write": false,
+      "$game_id": {
+        "entries": {
+          "$user_id": {
+            ".write": "$user_id === auth.uid"
+          }
+        }
+      }
+    },
+    "users": {
+      "$user_id": {
+        ".write": "$user_id === auth.uid"
+      }
+    },
+    "episodes": {
+      ".write": "auth.token.email === 'matthew.longpre@gmail.com'"
+    }
   }
 }
