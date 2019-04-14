@@ -17,66 +17,6 @@ import { CardStyle } from '../Player/Card';
 import formSchema from './FormSchema';
 
 
-const MOCK_ENTRY = {
-  "betChoices": {
-    "branJaime": "1",
-    "brienneJaime": "2",
-    "brienneTormond": "6",
-    "cleganeBowl": "4",
-    "danyPregnant": "5",
-    "goldenCompanyArrives": "4",
-    "jonArya": "1",
-    "jonDragon": "3",
-    "jonIsAegon": "1",
-    "nightKingDefeated": "5",
-    "nymeriaReappears": "5",
-    "tridentBattle": "3",
-    "tyrionBronn": "2"
-  },
-  "characterDeathChoices": {
-    "astark": "0",
-    "babysam": "0",
-    "bdondarrion": "5",
-    "bronn": "5",
-    "bstark": "0",
-    "btarth": "0",
-    "clannister": "6",
-    "dedd": "3",
-    "dnaharis": "0",
-    "drogon": "0",
-    "dseaworth": "0",
-    "dtargaryen": "0",
-    "egreyjoy": "5",
-    "etully": "3",
-    "gclegane": "4",
-    "gendry": "3",
-    "ghost": "0",
-    "gilly": "0",
-    "greyworm": "3",
-    "jlannister": "0",
-    "jmormont": "3",
-    "jsnow": "0",
-    "lyanna": "0",
-    "melisandre": "4",
-    "missandei": "0",
-    "nightking": "3",
-    "nymeria": "0",
-    "ppayne": "3",
-    "qyburn": "5",
-    "rarryn": "0",
-    "rhaegal": "0",
-    "sclegane": "5",
-    "sstark": "0",
-    "starly": "0",
-    "tgiantsbane": "3",
-    "tgreyjoy": "5",
-    "tlannister": "0",
-    "varys": "5",
-    "ygreyjoy": "5"
-  },
-  "throneChoice": "nobodyAtAll"
-};
-
 export class Submission extends Component {
 
   constructor(props) {
@@ -309,7 +249,6 @@ export class Submission extends Component {
             betChoices: this.initialBetChoices,
             throneChoice: ``
           }}
-          // initialValues={MOCK_ENTRY}
           onSubmit={(values, { setSubmitting }) => {
             this.handleSubmit(values, setSubmitting);
           }}
