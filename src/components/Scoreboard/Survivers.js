@@ -2,7 +2,7 @@ import React from "react";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { PlayerCardSurvivers } from "./PlayerCardSurvivers";
-import { EpisodeResultsRow, PageContainerStyled, PageHeadingRow, EpisodeRowStyled } from "./Styles";
+import { EpisodeResultsRow, PageContainerStyled, PageHeadingRow, EpisodeRowStyled, StickyControls } from "./Styles";
 
 export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometimeChoices, entries, characters, bets, allSurvivers, players, filters, allActualCharacterSurviversPoints }) => {
 
@@ -29,7 +29,14 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
   return (
     <PageContainerStyled>
 
+      <StickyControls style={{
+        top: `56px`,
+        zIndex: `4`,
+      }}>
+
       {filters}
+
+      </StickyControls>
 
       <PageHeadingRow>
         <h2>Survivors</h2>
