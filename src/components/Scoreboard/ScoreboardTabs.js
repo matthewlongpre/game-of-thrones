@@ -1,6 +1,6 @@
 import { AppBar, Tab, Tabs } from "@material-ui/core";
 import React from "react";
-import { PageContainerStyled } from "./Styles";
+import { PageContainerStyled, StickyControls } from "./Styles";
 
 export class ScoreboardTabs extends React.Component {
   state = {
@@ -17,7 +17,7 @@ export class ScoreboardTabs extends React.Component {
 
     return (
       <>
-        <div style={{ maxWidth: `100%`, overflow: `hidden` }}>
+        <StickyControls style={{ maxWidth: `100%`, overflow: `hidden`, top: `0` }}>
           <AppBar position="static">
             <PageContainerStyled noPadding style={{ marginLeft: `auto`, marginRight: `auto` }}>
               <Tabs variant="scrollable" value={value} onChange={this.handleChange}>
@@ -28,7 +28,7 @@ export class ScoreboardTabs extends React.Component {
               </Tabs>
             </PageContainerStyled>
           </AppBar>
-        </div>
+        </StickyControls>
 
         {value === 0 && scoresTable}
         {value === 1 && scoresByEpisode}

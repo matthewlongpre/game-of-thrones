@@ -2,7 +2,7 @@ import React from "react";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel } from "../Player/Card";
 import { PlayerCardThrone } from "./PlayerCardThrone";
-import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled, StickyControls } from "./Styles";
 
 export const Throne = ({ episode, seriesFinished, entries, characters, players, actualThroneCharacter, filters }) => {
 
@@ -37,7 +37,12 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
   return (
     <PageContainerStyled>
 
-      {filters}
+      <StickyControls style={{
+        top: `56px`,
+        zIndex: `4`,
+      }}>
+        {filters}
+      </StickyControls>
 
       <PageHeadingRow>
         <h2>The Throne</h2>

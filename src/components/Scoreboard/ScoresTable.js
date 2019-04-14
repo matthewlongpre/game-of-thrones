@@ -2,17 +2,17 @@ import React from "react";
 import { airdates, episodes } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { CardStyle } from "../Player/Card";
-import { PageContainerStyled, PageHeadingRow, Legend } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, Legend, StickyControls } from "./Styles";
 import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
 
 export const ScoresTable = props => {
-  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters } = props;
+  const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters, episodeResults } = props;
 
   const playerRows = players.map(player => {
     const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}<MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
     return (
       <tr key={player.userId}>
-        <td className="text-center rank"><PointsBadge hidePts size="small" points={player.rank}></PointsBadge></td>
+        <td className="text-center rank">{episodeResults.length !== 0 ? <PointsBadge hidePts size="small" points={player.rank}></PointsBadge> : `--`}</td>
         <td className="player-name sticky-left">{player.name}</td>
         {playerCells}
         {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
@@ -34,7 +34,14 @@ export const ScoresTable = props => {
   return (
     <PageContainerStyled>
 
+      <StickyControls style={{
+        top: `56px`,
+        zIndex: `4`,
+      }}>
+
       {filters}
+
+      </StickyControls>
 
       <PageHeadingRow>
         <h2>Scoreboard</h2>

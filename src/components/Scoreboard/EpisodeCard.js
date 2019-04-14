@@ -3,7 +3,7 @@ import { episodes } from "../../shared/constants";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { PlayerCard } from "./PlayerCard";
-import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled, StickyControls } from "./Styles";
 
 const getChoicesByEpisode = choices => {
   return episodes.map(episode => {
@@ -65,8 +65,13 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
 
   return (
     <PageContainerStyled>
-      
-      {filters}
+
+      <StickyControls style={{
+        top: `104px`,
+        zIndex: `4`,
+      }}>
+        {filters}
+      </StickyControls>
 
       <PageHeadingRow>
         <h2>Episode {episode}</h2>

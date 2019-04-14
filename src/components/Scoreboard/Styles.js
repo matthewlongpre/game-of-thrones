@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const PageContainerStyled = styled.div`
-  overflow: hidden;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 60px;
@@ -46,13 +45,20 @@ export const EpisodeResultsRow = styled.div`
 
 export const FiltersStyled = styled.div`
 
+  background: #fff;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+  border-radius: 4px;
   margin-top: 10px;
-  margin-bottom: 10px;
+
+  .filter-buttons {
+    padding: 0 10px;
+  }
 
   .filter-row {
     max-width: 1080px;
-    margin: 0 auto 20px;
-    background: #ededed;
+    margin: 0 auto;
+    background: #fff;
     border-radius: 4px;
   
     button {
@@ -65,6 +71,7 @@ export const FiltersStyled = styled.div`
   }
 
   .filters-heading {
+    padding: 10px 18px;
     justify-content: flex-start;
   }
 
@@ -141,4 +148,9 @@ export const Legend = styled.ul`
   margin: 0;
   padding: 20px 20px 20px 60px;
   font-size: 0.8em;
+`;
+
+export const StickyControls = styled.div`
+  position: sticky;
+  z-index: 1;
 `;

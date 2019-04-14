@@ -1,12 +1,8 @@
+import { Button, MenuItem, Select } from "@material-ui/core";
 import React from "react";
-import { Button, Select, MenuItem } from "@material-ui/core";
-import { FiltersStyled, CompareFilterStyled } from "./Styles";
+import { CompareFilterStyled, FiltersStyled } from "./Styles";
 
 export class Filters extends React.Component {
-
-  state = {
-    showFilters: false
-  }
 
   handleChange = (e, name) => {
     this.props.handleCompareChange(e, name);
@@ -22,7 +18,7 @@ export class Filters extends React.Component {
 
   render() {
 
-    const { handleFilterClick, filter, allEntries, compareOne, compareTwo, showFilters } = this.props;
+    const { handleFilterClick, filter, allEntries, compareOne, compareTwo, compareOneName, compareTwoName, showFilters } = this.props;
 
     const buttonProps = {
       selected: {
@@ -61,7 +57,7 @@ export class Filters extends React.Component {
     return (
       <FiltersStyled>
         <Button fullWidth onClick={this.expandFilters} className={`filters-heading ${filter !== `showAll` && `active`}`}>
-          Filters {filter !== `showAll` && ` ( 1 )`}
+          Filters {filter !== `showAll` && ` ( 1 ) : ${filter === `onlyMe` ? `Showing only me` : `Comparing ${compareOneName} and ${compareTwoName}`}`}
 
           {showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
           {!showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
@@ -70,7 +66,9 @@ export class Filters extends React.Component {
         {showFilters && <>
           <div className="filter-row">
 
-            {displayedButtons}
+            <div className="filter-buttons">
+              {displayedButtons}
+            </div>
 
             <CompareFilterStyled>
               <span className={`compare ${filter === `compare` && `active`}`}>
@@ -105,8 +103,6 @@ export class Filters extends React.Component {
             </CompareFilterStyled>
           </div>
         </>}
-
-
       </FiltersStyled>
     );
   }

@@ -18,5 +18,6 @@ export const MaxPointsIcon = () => (
 );
 
 export const MaxPoints = ({ points, possiblePoints }) => {
+  if (points === `--`) return null;
   return points === possiblePoints && possiblePoints !== 0 ? <MaxPointsIcon /> : null
 }

@@ -24,7 +24,9 @@ export class Scoreboard extends React.Component {
       showFilters: false,
       filter: `showAll`,
       compareOne: ``,
-      compareTwo: ``
+      compareTwo: ``,
+      compareOneName: ``,
+      compareTwoName: ``
     }
 
     this.scoreService = ScoreService;
@@ -90,6 +92,7 @@ export class Scoreboard extends React.Component {
         compareOne: ``,
         compareTwo: ``
       });
+      this.expandFilters();
     }
 
     if (selectedFilter === `showAll`) {
@@ -99,19 +102,26 @@ export class Scoreboard extends React.Component {
         compareOne: ``,
         compareTwo: ``
       });
+      this.expandFilters();
     }
 
     if (selectedFilter === `compare`) {
       const entryOne = allEntries.filter(item => item.userId === comparisons.compareOne);
       const entryTwo = allEntries.filter(item => item.userId === comparisons.compareTwo);
+
       const comparedEntries = [
         ...entryOne,
         ...entryTwo
       ];
+
       this.setState({
         filter: `compare`,
-        entries: comparedEntries
+        entries: comparedEntries,
+        compareOneName: entryOne[0].name,
+        compareTwoName: entryTwo[0].name
       });
+
+      this.expandFilters();
     }
   }
 
@@ -129,6 +139,7 @@ export class Scoreboard extends React.Component {
         compareTwo
       }
       this.filterEntries(`compare`, comparisons);
+      this.expandFilters();
     }
   }
 
@@ -141,7 +152,7 @@ export class Scoreboard extends React.Component {
 
   render() {
 
-    const { entries, allEntries, episodeResults, characters, bets, filter, showFilters } = this.state;
+    const { entries, allEntries, episodeResults, characters, bets, filter, showFilters, compareOneName, compareTwoName } = this.state;
 
     if (!entries || !episodeResults || !characters || !bets) return <></>;
 
@@ -350,7 +361,7 @@ export class Scoreboard extends React.Component {
       }
     });
 
-    const filters = <Filters filter={filter} entries={entries} allEntries={allEntries} expandFilters={this.expandFilters} showFilters={showFilters} handleCompareChange={(e, name) => this.handleCompareChange(e, name)} handleCompare={comparisons => this.filterEntries(`compare`, comparisons)} handleCompareClick={this.handleCompareClick} handleFilterClick={filter => this.filterEntries(filter)} compareOne={this.state.compareOne} compareTwo={this.state.compareTwo} />
+    const filters = <Filters filter={filter} entries={entries} allEntries={allEntries} expandFilters={this.expandFilters} showFilters={showFilters} handleCompareChange={(e, name) => this.handleCompareChange(e, name)} handleCompare={comparisons => this.filterEntries(`compare`, comparisons)} handleCompareClick={this.handleCompareClick} handleFilterClick={filter => this.filterEntries(filter)} compareOne={this.state.compareOne} compareTwo={this.state.compareTwo} compareOneName={compareOneName} compareTwoName={compareTwoName} />
 
     const scoreProps = {
       scoreService: this.scoreService,
