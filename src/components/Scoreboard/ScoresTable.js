@@ -32,62 +32,65 @@ export const ScoresTable = props => {
   const headings = episodes.map(episode => <th key={`heading--${episode}`} className="heading--episode-number text-center">{episode}</th>);
 
   return (
-    <PageContainerStyled>
-
+    <>
       <StickyControls style={{
-        top: `56px`,
+        top: `48px`,
         zIndex: `4`,
       }}>
 
-      {filters}
+        {filters}
 
       </StickyControls>
 
-      <PageHeadingRow>
-        <h2>Scoreboard</h2>
-      </PageHeadingRow>
+      <PageContainerStyled>
 
-      <CardStyle fullWidth>
-        <div className="scoreboard-container">
-          <table className="scoreboard">
-            <thead>
-              <tr>
-                <th colSpan="2" className="shaded"></th>
-                <th colSpan="6" className="heading--episodes">Episodes</th>
-                <th colSpan="3" className="shaded"></th>
-              </tr>
-              <tr className="heading--airdates">
-                <th className="rank"></th>
-                <th className="sticky-left"></th>
-                {airdatesRow}
-                <th className="sticky-right"></th>
-              </tr>
-              <tr className="headings">
-                <th className="rank">Rank</th>
-                <th className="sticky-left">Player</th>
-                {headings}
-                {seriesFinished && <th className="text-center">Surviver Pts</th>}
-                {seriesFinished && <th className="text-center">Throne Pts</th>}
-                <th className="text-center sticky-right">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {playerRows}
-              <tr className="possible-points">
-                <td></td>
-                <td className="sticky-left">Possible Points</td>
-                {possiblePointsRows}
-                {seriesFinished && <td className="text-center">{allActualCharacterSurviversPoints}</td>}
-                {seriesFinished && <td className="text-center">{actualThronePoints}</td>}
-                <td className="text-center sticky-right">{overallPossiblePointsTotal}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <Legend>
-          <li><MaxPointsIcon /> Scored maximum possible points</li>
-        </Legend>
-      </CardStyle>
-    </PageContainerStyled>
+
+        <PageHeadingRow>
+          <h2>Scoreboard</h2>
+        </PageHeadingRow>
+
+        <CardStyle fullWidth>
+          <div className="scoreboard-container">
+            <table className="scoreboard">
+              <thead>
+                <tr>
+                  <th colSpan="2" className="shaded"></th>
+                  <th colSpan="6" className="heading--episodes">Episodes</th>
+                  <th colSpan="3" className="shaded"></th>
+                </tr>
+                <tr className="heading--airdates">
+                  <th className="rank"></th>
+                  <th className="sticky-left"></th>
+                  {airdatesRow}
+                  <th className="sticky-right"></th>
+                </tr>
+                <tr className="headings">
+                  <th className="rank">Rank</th>
+                  <th className="sticky-left">Player</th>
+                  {headings}
+                  {seriesFinished && <th className="text-center">Surviver Pts</th>}
+                  {seriesFinished && <th className="text-center">Throne Pts</th>}
+                  <th className="text-center sticky-right">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {playerRows}
+                <tr className="possible-points">
+                  <td></td>
+                  <td className="sticky-left">Possible Points</td>
+                  {possiblePointsRows}
+                  {seriesFinished && <td className="text-center">{allActualCharacterSurviversPoints}</td>}
+                  {seriesFinished && <td className="text-center">{actualThronePoints}</td>}
+                  <td className="text-center sticky-right">{overallPossiblePointsTotal}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <Legend>
+            <li><MaxPointsIcon /> Scored maximum possible points</li>
+          </Legend>
+        </CardStyle>
+      </PageContainerStyled>
+    </>
   );
 };

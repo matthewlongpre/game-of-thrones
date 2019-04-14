@@ -12,7 +12,7 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
       <CharacterStyle key={character.id}>
         <CharacterBadge name={character.name} id={character.id} points={character.pointsPerEpisode[0]} />
       </CharacterStyle>
-    )); 
+    ));
   }
 
   const playerCards = entries.map(entry => {
@@ -27,34 +27,36 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
   playerCards.sort((a, b) => a.props.survivingCharacterPoints > b.props.survivingCharacterPoints ? -1 : 1);
 
   return (
-    <PageContainerStyled>
-
+    <>
       <StickyControls style={{
-        top: `56px`,
+        top: `48px`,
         zIndex: `4`,
       }}>
 
-      {filters}
+        {filters}
 
       </StickyControls>
 
-      <PageHeadingRow>
-        <h2>Survivors</h2>
-      </PageHeadingRow>
+      <PageContainerStyled>
+
+        <PageHeadingRow>
+          <h2>Survivors</h2>
+        </PageHeadingRow>
 
 
-      {seriesFinished && <EpisodeResultsRow>
-        <ListLabel>Confirmed alive</ListLabel>
-        <CharactersStyle className="player-character-list">
-          {aliveCharacterItems}
-        </CharactersStyle>
-        {allSurvivers.length === 0 && <NoPredictions>No deaths this episode.</NoPredictions>}
-      </EpisodeResultsRow>}
+        {seriesFinished && <EpisodeResultsRow>
+          <ListLabel>Confirmed alive</ListLabel>
+          <CharactersStyle className="player-character-list">
+            {aliveCharacterItems}
+          </CharactersStyle>
+          {allSurvivers.length === 0 && <NoPredictions>No deaths this episode.</NoPredictions>}
+        </EpisodeResultsRow>}
 
-      <EpisodeRowStyled>
-        {playerCards}
-      </EpisodeRowStyled>
+        <EpisodeRowStyled>
+          {playerCards}
+        </EpisodeRowStyled>
 
-    </PageContainerStyled>
+      </PageContainerStyled>
+    </>
   );
 };

@@ -57,52 +57,57 @@ export class Filters extends React.Component {
     return (
       <FiltersStyled>
         <Button fullWidth onClick={this.expandFilters} className={`filters-heading ${filter !== `showAll` && `active`}`}>
-          Filters {filter !== `showAll` && ` ( 1 ) : ${filter === `onlyMe` ? `Showing only me` : `Comparing ${compareOneName} and ${compareTwoName}`}`}
+          <div className="container-lg">
+            <span className="filters-heading-label">
+              Filters {filter !== `showAll` && ` ( 1 ) : ${filter === `onlyMe` ? `Showing only me` : `Comparing ${compareOneName} and ${compareTwoName}`}`}
+            </span>
+            {showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
+            {!showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
 
-          {showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 14l5-5 5 5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
-          {!showFilters && <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>}
-
-        </Button>
-        {showFilters && <>
-          <div className="filter-row">
-
-            <div className="filter-buttons">
-              {displayedButtons}
-            </div>
-
-            <CompareFilterStyled>
-              <span className={`compare ${filter === `compare` && `active`}`}>
-                {filter === `compare` ? `Comparing:` : `Compare:`}
-              </span>
-              <Select
-                onChange={e => this.handleChange(e, "compareOne")}
-                value={compareOne}
-                inputProps={{
-                  name: `compareOne`,
-                  id: `compareOne`
-                }}
-                className="select"
-              >
-                {compareSelectOne}
-              </Select>
-
-              <span className="to">to</span>
-
-              <Select
-                onChange={e => this.handleChange(e, "compareTwo")}
-                value={compareTwo}
-                inputProps={{
-                  name: `compareTwo`,
-                  id: `compareTwo`
-                }}
-                className="select"
-              >
-                {compareSelectTwo}
-              </Select>
-              <Button className="go-button" {...buttonProps[`${(compareOne && compareTwo) ? `selected` : `default`}`]} onClick={this.handleCompareClick}>Go</Button>
-            </CompareFilterStyled>
           </div>
-        </>}
+        </Button>
+        <div className="container-lg">
+          {showFilters && <>
+            <div className="filter-row">
+
+              <div className="filter-buttons">
+                {displayedButtons}
+              </div>
+
+              <CompareFilterStyled>
+                <span className={`compare ${filter === `compare` && `active`}`}>
+                  {filter === `compare` ? `Comparing:` : `Compare:`}
+                </span>
+                <Select
+                  onChange={e => this.handleChange(e, "compareOne")}
+                  value={compareOne}
+                  inputProps={{
+                    name: `compareOne`,
+                    id: `compareOne`
+                  }}
+                  className="select"
+                >
+                  {compareSelectOne}
+                </Select>
+
+                <span className="to">to</span>
+
+                <Select
+                  onChange={e => this.handleChange(e, "compareTwo")}
+                  value={compareTwo}
+                  inputProps={{
+                    name: `compareTwo`,
+                    id: `compareTwo`
+                  }}
+                  className="select"
+                >
+                  {compareSelectTwo}
+                </Select>
+                <Button className="go-button" {...buttonProps[`${(compareOne && compareTwo) ? `selected` : `default`}`]} onClick={this.handleCompareClick}>Go</Button>
+              </CompareFilterStyled>
+            </div>
+          </>}
+        </div>
       </FiltersStyled>
     );
   }

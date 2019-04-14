@@ -22,8 +22,18 @@ export const PageContainerStyled = styled.div`
 `;
 
 export const PageHeadingRow = styled.div`
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
   text-align: center;
   padding: 40px 20px 20px;
+
+  @media (max-width: 767px) {
+    padding: 0 20px;
+  }
+
 `;
 
 export const EpisodeRowStyled = styled.div`
@@ -48,14 +58,26 @@ export const FiltersStyled = styled.div`
   background: #fff;
   box-shadow: 0px 0px 20px rgba(0,0,0,0.1);
   border: 1px solid #eee;
-  border-radius: 4px;
-  margin-top: 10px;
+
+  .container-lg {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .container-lg {
+      padding: 0 20px;
+    }
+  }
 
   .filter-buttons {
     padding: 0 10px;
   }
 
   .filter-row {
+    width: 100%;
     max-width: 1080px;
     margin: 0 auto;
     background: #fff;
@@ -71,12 +93,23 @@ export const FiltersStyled = styled.div`
   }
 
   .filters-heading {
-    padding: 10px 18px;
+    font-size: 0.66rem;
+    padding: 5px 0px;
     justify-content: flex-start;
+    text-align: left;
+    border-radius: 0 !important;
+  }
+
+  .filters-heading-label {
+    margin-left: 10px;
   }
 
   .filters-heading.active {
     font-weight: 800;
+  }
+
+  .compare-name {
+    color: blue;
   }
 
 `;

@@ -64,14 +64,15 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
   playerCards.sort((a, b) => a.props.pointsThisEpisode > b.props.pointsThisEpisode ? -1 : 1);
 
   return (
-    <PageContainerStyled>
-
+    <>
       <StickyControls style={{
-        top: `104px`,
+        top: `96px`,
         zIndex: `4`,
       }}>
         {filters}
       </StickyControls>
+    <PageContainerStyled>
+
 
       <PageHeadingRow>
         <h2>Episode {episode}</h2>
@@ -91,5 +92,6 @@ export const EpisodeCard = ({ episode, episodeResults, entries, characters, bets
       </EpisodeRowStyled>
 
     </PageContainerStyled>
+    </>
   );
 };

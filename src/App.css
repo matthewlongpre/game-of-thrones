@@ -36,12 +36,17 @@ button:hover {
 }
 
 .logo {
-  max-width: 100%;
+  max-width: 66%;
+  margin: auto;
 }
 
 .header {
-  padding: 20px;
+  padding: 10px;
   background: #fff;
+}
+
+.header .container {
+  text-align: center;
 }
 
 .container {
@@ -275,6 +280,7 @@ th.shaded {
   text-transform: uppercase;
   text-align: center;
   letter-spacing: 10px;
+  font-size: 0.66rem;
 }
 
 .submission-success {

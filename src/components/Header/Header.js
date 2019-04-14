@@ -1,5 +1,6 @@
 import React from "react";
 import * as logo from "./../../assets/got-logo.jpg";
+
 export const Header = () => (
   <header className="header">
     <div className="container">

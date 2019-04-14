@@ -35,14 +35,17 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
   playerCards.sort((a, b) => a.props.throneChoicePoints > b.props.throneChoicePoints ? -1 : 1);
 
   return (
-    <PageContainerStyled>
+<>
+    <StickyControls style={{
+      top: `48px`,
+      zIndex: `4`,
+    }}>
 
-      <StickyControls style={{
-        top: `56px`,
-        zIndex: `4`,
-      }}>
-        {filters}
-      </StickyControls>
+      {filters}
+
+    </StickyControls>
+
+    <PageContainerStyled>
 
       <PageHeadingRow>
         <h2>The Throne</h2>
@@ -67,5 +70,6 @@ export const Throne = ({ episode, seriesFinished, entries, characters, players, 
       </EpisodeRowStyled>
 
     </PageContainerStyled>
+    </>
   );
 };
