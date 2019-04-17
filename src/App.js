@@ -14,6 +14,7 @@ import { Spinner } from "./components/Spinner/Spinner";
 import { Success } from "./components/Submission/Success";
 import { firebase } from "./shared/firebase";
 import { muiTheme } from "./shared/theme";
+import { Admin } from "./components/Admin/Admin";
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +36,13 @@ class App extends Component {
 
   handleAuthSuccess = async (user) => {
     this.resetLoginState();
+
+    if (window.location.pathname.includes("/admin")) {
+      this.setState({
+        loading: false
+      });
+      return;
+    }
 
     const inviteGameId = await this.checkForInvite(user);
 
@@ -285,6 +293,8 @@ class App extends Component {
               <Player path={`player/:playerId`} user={user} />
             </Game>
           </Games>
+
+          <Admin path="admin" />
 
           <NotFound default />
         </Router>

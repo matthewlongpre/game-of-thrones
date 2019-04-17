@@ -80,7 +80,7 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
 
       let betResults = `undetermined`;
       if (episodeHasResults && episode === "6") {
-        const isBetCorrect = correctBetsNeverOccurred.some(correctBet => correctBet === bet.id);
+        const isBetCorrect = correctBetsNeverOccurred.some(correctBet => correctBet.id === bet.id);
         betResults = isBetCorrect ? `correct` : `incorrect`
       }
 
@@ -126,12 +126,12 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
       {betChoices.length === 0 && <NoPredictions>No plot predictions for this episode.</NoPredictions>}
 
       {(episode === "6" && betsNeverOccurChoices.length !== 0) && <>
-      <ListLabel>
-        {episodeHasResults ? `Never Occurred` : `Will Never Occur`}
-      </ListLabel>
-      <BetsStyle>
-        {neverOccurred}
-      </BetsStyle>
+        <ListLabel>
+          {episodeHasResults ? `Never Occurred` : `Will Never Occur`}
+        </ListLabel>
+        <BetsStyle>
+          {neverOccurred}
+        </BetsStyle>
       </>}
 
 

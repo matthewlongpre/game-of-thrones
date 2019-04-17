@@ -278,7 +278,6 @@ export class Scoreboard extends React.Component {
         const actualBetsThisEpisode = this.scoreService.getActualBetsThisEpisode(episode, episodeResults);
         const actualBetPoints = this.scoreService.getCorrectBetPoints(actualBetsThisEpisode);
 
-
         possiblePoints = points.reduce(this.scoreService.sumPoints, 0);
         possiblePoints += actualBetPoints;
 

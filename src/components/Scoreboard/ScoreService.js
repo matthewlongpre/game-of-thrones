@@ -255,7 +255,7 @@ const getBetsNeverOccurChoicesWithData = (betsNeverOccurChoices, bets) => {
 }
 
 const getCorrectBetsNeverOccurred = (betsNeverOccurChoices, betsNeverOccurred) => {
-  return betsNeverOccurChoices.filter(item => betsNeverOccurred.includes(item));
+  return betsNeverOccurChoices.filter(item => betsNeverOccurred.includes(item.id));
 }
 
 const getBetsNeverOccurredPoints = (correctBetsNeverOccurred) => {
