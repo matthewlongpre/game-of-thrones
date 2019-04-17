@@ -6,7 +6,7 @@ import { PointsBadge } from "../Character/PointsBadge";
 import { PointsBadgeLarge } from "../Character/PointsBadgeLarge";
 import { MaxPoints } from "./MaxPoints";
 
-export const PlayerCard = ({ name, episode, episodeHasResults, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode, betsNeverOccurChoices, correctBetsNeverOccurred, possiblePointsThisEpisode }) => {
+export const PlayerCard = ({ name, episode, episodeHasResults, allPreviousEpisodeBets, allPreviousEpisodeDeaths, characters, characterDeathChoices, betChoices, pointsThisEpisode, correctBetsThisEpisode, correctDeathsThisEpisode, diedInDifferentEpisodeThisEpisode, correctDiedSometimeThisEpisode, betsNeverOccurChoices, correctBetsNeverOccurred, possiblePointsThisEpisode }) => {
 
   let characterItems;
   if (characterDeathChoices.length !== 0) {
@@ -16,6 +16,11 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
       if (episodeHasResults) {
         const isDeathCorrect = correctDeathsThisEpisode.some(correctDeath => correctDeath.character === choice.id);
         deathResults = isDeathCorrect ? `correct` : `incorrect`
+      } else {
+        const diedPreviousEpisode = allPreviousEpisodeDeaths.some(previousDeath => previousDeath.id === choice.id);
+        if (diedPreviousEpisode) {
+          deathResults = `incorrect`;
+        }
       }
 
       return (
@@ -28,6 +33,7 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
 
   let diedInDifferentEpisodeItems;
   if (diedInDifferentEpisodeThisEpisode.length !== 0) {
+
     diedInDifferentEpisodeItems = diedInDifferentEpisodeThisEpisode.map(died => {
 
       const deadCharacter = characters.find(character => character.id === died.id);
@@ -61,7 +67,12 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
       let betResults = `undetermined`;
       if (episodeHasResults) {
         const isBetCorrect = correctBetsThisEpisode.some(correctBet => correctBet.bet === bet.id);
-        betResults = isBetCorrect ? `correct` : `incorrect`
+        betResults = isBetCorrect ? `correct` : `incorrect`;
+      } else {
+        const betAlreadyOccurred = allPreviousEpisodeBets.some(previousBet => previousBet.id === bet.id);
+        if (betAlreadyOccurred) {
+          betResults = `incorrect`;
+        }
       }
 
       return (
@@ -82,6 +93,11 @@ export const PlayerCard = ({ name, episode, episodeHasResults, characters, chara
       if (episodeHasResults && episode === "6") {
         const isBetCorrect = correctBetsNeverOccurred.some(correctBet => correctBet.id === bet.id);
         betResults = isBetCorrect ? `correct` : `incorrect`
+      } else {
+        const betAlreadyOccurred = allPreviousEpisodeBets.some(previousBet => previousBet.id === bet.id);
+        if (betAlreadyOccurred) {
+          betResults = `incorrect`;
+        }
       }
 
       return (

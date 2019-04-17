@@ -12,6 +12,8 @@ export class Admin extends React.Component {
     this.charactersRef = this.databaseRef.ref('characters');
     this.betsRef = this.databaseRef.ref('bets');
     this.episodesRef = this.databaseRef.ref('episodes');
+    this.usersRef = this.databaseRef.ref('users');
+    this.gamesRef = this.databaseRef.ref('games');
 
     this.state = {
       characters: null,
@@ -24,6 +26,52 @@ export class Admin extends React.Component {
 
     const charactersPromise = this.charactersRef.once('value');
     const betsPromise = this.betsRef.once('value');
+
+    const games = this.gamesRef.once('value');
+    games.then(items => {
+      
+      let games = Object.values(items.val());
+      games = games.map(item => item.entries);
+      games = games.flat();
+      
+      const userGameData = {};
+      games.forEach(item => {
+        for (const key in item) {
+          userGameData[key] = item[key];
+        }
+
+      })
+
+      this.usersRef.on('value', item => {
+        let users = item.val();
+        let data = [];
+        for (const key in users) {
+          const gamesWatched = {};
+          const user = userGameData[key];
+          
+          gamesWatched[key] = userGameData[key];
+          if (user) {
+            gamesWatched.name = user.name;
+          }
+          if (users[key].episodesWatched) {
+            gamesWatched.episodesWatched = users[key].episodesWatched;
+          }
+          data.push(gamesWatched);
+        }
+
+        data = data.filter(item => item.name);
+
+        const hasWatched = data.filter(item => item.episodesWatched);
+        const hasNotWatched = data.filter(item => !item.episodesWatched);
+
+        console.table(hasWatched, ['name', 'episodesWatched']);
+        console.table(hasNotWatched, ['name'])
+
+      });
+
+    });
+
+
 
     this.episodesRef.on('value', item => {
 
@@ -193,8 +241,6 @@ export class Admin extends React.Component {
   render() {
     const { loading, bets, characters, episode } = this.state;
     if (loading) return <Spinner />;
-
-    console.log(this.state)
 
     return (
       <AdminContainer>
