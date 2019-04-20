@@ -2,17 +2,52 @@ import React from "react";
 import { airdates, episodes } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { CardStyle } from "../Player/Card";
-import { PageContainerStyled, PageHeadingRow, Legend, StickyControls } from "./Styles";
+import { PageContainerStyled, PageHeadingRow, Legend, StickyControls, RankDifference, Rank } from "./Styles";
 import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
+import { SvgIcon } from "@material-ui/core";
+
+const upArrow = <SvgIcon><path d="M7 14l5-5 5 5z"/><path d="M0 0h24v24H0z" fill="none"/></SvgIcon>;
+const downArrow = <SvgIcon><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
+
+const getRankDifference = (currentRank, rankLastWeek) => {
+  const results = {};
+  if (currentRank === rankLastWeek) {
+    results.display = null;
+    results.difference = `same`;
+    return results;
+  }
+  if (currentRank < rankLastWeek) {
+    results.display = <>{upArrow} {rankLastWeek - currentRank}</>;
+    results.difference = `increase`;
+    return results;
+  } else {
+    results.display = <>{downArrow} {currentRank - rankLastWeek}</>;
+    results.difference = `decrease`;
+    return results;
+  }
+}
 
 export const ScoresTable = props => {
   const { scoreService, possiblePointsPerEpisode, seriesFinished, allActualCharacterSurviversPoints, actualThronePoints, players, filters, episodeResults } = props;
 
   const playerRows = players.map(player => {
+
+    const rankDifference = getRankDifference(player.rank, player.rankLastWeek);
+
     const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}<MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
     return (
       <tr key={player.userId}>
-        <td className="text-center rank">{episodeResults.length !== 0 ? <PointsBadge hidePts size="small" points={player.rank}></PointsBadge> : `--`}</td>
+        <td className="text-center rank">
+          {episodeResults.length !== 0 ?
+            <Rank>
+              <PointsBadge hidePts size="small" points={player.rankDisplay}></PointsBadge>
+              {episodeResults.length > 1 &&
+                <RankDifference difference={rankDifference.difference}>{rankDifference.display}</RankDifference>
+              }
+            </Rank>
+            : <>{`--`}</>
+          }
+        </td>
         <td className="player-name sticky-left">{player.name}</td>
         {playerCells}
         {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
@@ -48,7 +83,7 @@ export const ScoresTable = props => {
           <h2>Scoreboard</h2>
         </PageHeadingRow>
 
-        <CardStyle fullWidth>
+        <CardStyle fullWidth noPadding>
           <div className="scoreboard-container">
             <table className="scoreboard">
               <thead>

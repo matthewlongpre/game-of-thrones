@@ -175,6 +175,18 @@ th.heading--episode-number {
   width: 50px;
 }
 
+@media (max-width: 767px) {
+  .rank {
+    padding-right: 0 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .rank {
+    padding-left: 20px !important;
+  }
+}
+
 .heading--airdates th {
   font-weight: normal;
   font-size: 66%;
@@ -191,7 +203,6 @@ th.heading--episode-number {
 .scoreboard {
   width: 100%;
   margin: auto;
-  margin-top: 20px;
 }
 
 .scoreboard th, 
@@ -217,6 +228,13 @@ th.heading--episode-number {
 
 .player-name {
   white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .player-name {
+    font-size: 80%;
+    vertical-align: middle;
+  }
 }
 
 .text-center {

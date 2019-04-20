@@ -211,3 +211,27 @@ export const EpisodeResultsSelection = styled.div`
     font-size: 0.66rem;
   }
 `;
+
+export const Rank = styled.div`
+  display: flex;
+`;
+
+export const RankDifference = styled.div`
+  display: flex;
+  font-size: 66%;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    padding: 0 0 0 5px;
+  }
+  
+  font-weight: 800;
+
+  ${({ difference }) => difference === `increase` && `color: #308e30;`}
+  ${({ difference }) => difference === `decrease` && `color: #d42a2a;`}
+
+  svg {
+    font-size: 1em;
+  }
+
+`;

@@ -325,6 +325,8 @@ export class Scoreboard extends React.Component {
 
       let overallTotal = 0;
       let overallTotals = [];
+      let lastWeekOverallTotal = 0;
+      let lastWeekOverallTotals = [];
 
       const correctDeathsPerEpisode = [];
       const correctBetsPerEpisode = [];
@@ -368,6 +370,11 @@ export class Scoreboard extends React.Component {
           if (episode === "6") {
             episodePointsTotal += betsNeverOccurredPoints;
           }
+          
+          if (parseInt(episode, 10) < episodeResults.length) {
+            lastWeekOverallTotals.push(episodePointsTotal);
+          }
+
           overallTotals.push(episodePointsTotal);
         }
 
@@ -381,6 +388,7 @@ export class Scoreboard extends React.Component {
       }
 
       overallTotal = overallTotals.reduce(this.scoreService.sumPoints, 0);
+      lastWeekOverallTotal = lastWeekOverallTotals.reduce(this.scoreService.sumPoints, 0);
 
       return {
         name: entry.name,
@@ -395,6 +403,7 @@ export class Scoreboard extends React.Component {
         survivingCharacterPoints,
         throneChoicePoints,
         overallTotal,
+        lastWeekOverallTotal,
         userId: entry.userId,
         playerSurviverChoices,
         betsNeverOccurChoices,
@@ -403,29 +412,59 @@ export class Scoreboard extends React.Component {
 
     });
 
-    players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
 
-    let currentRank = 0;
-    let currentHighScore = 0;
+    let currentRank;
+    let currentHighScore;
 
-    const rankedPlayers = players.map((result, index) => {
+    const getRank = (totalKey, rankKey, rankDisplayKey, playerResults, index) => {
+
+      if (index === 0) {
+        currentRank = 0;
+        currentHighScore = 0;
+      }
+
       if (currentRank === 0) {
         currentRank++;
-        result.rank = currentRank;
-        currentHighScore = result.overallTotal;
-        return result;
-      } else if (result.overallTotal === currentHighScore) {
-        result.rank = currentRank;
-        result.rank = `T - ${currentRank}`
-        players[index - 1].rank = `T - ${currentRank}`
-        return result;
+        playerResults[rankKey] = currentRank;
+        playerResults[rankDisplayKey] = currentRank;
+        currentHighScore = playerResults[totalKey];
+        return playerResults;
+      } else if (playerResults[totalKey] === currentHighScore) {
+        playerResults[rankKey] = currentRank;
+        playerResults[rankDisplayKey] = `T - ${currentRank}`;
+        players[index - 1][rankKey] = currentRank;
+        players[index - 1][rankDisplayKey] = `T - ${currentRank}`;
+        return playerResults;
       } else {
         currentRank++;
-        result.rank = currentRank;
-        currentHighScore = result.overallTotal;
-        return result;
+        playerResults[rankKey] = currentRank;
+        playerResults[rankDisplayKey] = currentRank;
+        currentHighScore = playerResults[totalKey];
+        return playerResults;
       }
-    });
+    }
+
+    const getRanksLastWeek = () => {
+
+      players.sort((a, b) => a.lastWeekOverallTotal > b.lastWeekOverallTotal ? -1 : 1);
+
+      return players.map((result, index) => {
+        return getRank(`lastWeekOverallTotal`, `rankLastWeek`, `rankLastWeekDisplay`, result, index);
+      });
+    }
+
+    getRanksLastWeek();
+
+    const getRanksOverall = () => {
+
+      players.sort((a, b) => a.overallTotal > b.overallTotal ? -1 : 1);
+  
+      return players.map((result, index) => {
+        return getRank(`overallTotal`, `rank`, `rankDisplay`, result, index);
+      });
+    }
+
+    const rankedPlayers = getRanksOverall();
 
     players = rankedPlayers;
 

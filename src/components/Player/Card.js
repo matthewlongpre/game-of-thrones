@@ -9,6 +9,8 @@ export const CardStyle = styled.div`
     padding: 40px;
   }
 
+  ${({ noPadding }) => noPadding && `padding: 0 !important;`}
+
   max-width: 600px;
 
   ${props => props.fullWidth && `max-width: 100%`}
