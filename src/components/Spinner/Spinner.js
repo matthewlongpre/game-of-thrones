@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import React from 'react';
 
 export const Spinner = (props) => {
   return (
