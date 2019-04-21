@@ -1,9 +1,10 @@
+import 'array-flat-polyfill';
 import React from "react";
 import { episodes } from "../../shared/constants";
 import { CharacterBadge } from "../Character/CharacterBadge";
 import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Player/Card";
 import { PlayerCard } from "./PlayerCard";
-import { PageContainerStyled, PageHeadingRow, EpisodeResultsRow, EpisodeRowStyled, StickyControls } from "./Styles";
+import { EpisodeResultsRow, EpisodeRowStyled, PageContainerStyled, PageHeadingRow, StickyControls } from "./Styles";
 
 const getChoicesByEpisode = choices => {
   return episodes.map(episode => {

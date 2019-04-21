@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@reach/router": "^1.2.1",
+    "array-flat-polyfill": "^1.0.1",
     "firebase": "^5.8.6",
     "formik": "^1.5.1",
     "react": "^16.8.4",

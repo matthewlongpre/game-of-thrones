@@ -1,9 +1,9 @@
+import { Button } from "@material-ui/core";
+import 'array-flat-polyfill';
 import React from "react";
 import { firebase } from "../../shared/firebase";
 import { Spinner } from "../Spinner/Spinner";
-import { Button } from "@material-ui/core";
 import { AdminContainer } from "./Styles";
-
 
 export class Admin extends React.Component {
   constructor(props) {
