@@ -251,8 +251,9 @@ export class Scoreboard extends React.Component {
     let betsNeverOccurredPoints;
     let betsNeverOccurChoices;
 
+    deadCharacters = this.scoreService.getDeadCharacters(episodeResults);
+
     if (seriesFinished) {
-      deadCharacters = this.scoreService.getDeadCharacters(episodeResults);
       allSurvivers = this.scoreService.getAllActualCharacterSurvivers(characters, deadCharacters);
       allActualCharacterSurviversPoints = this.scoreService.getAllActualCharacterSurviversPoints(allSurvivers);
       actualThronePoints = this.scoreService.getActualThronePoints(episodeResults, characters);
@@ -309,9 +310,10 @@ export class Scoreboard extends React.Component {
 
       let correctBetsNeverOccurred;
 
+      incorrectCharacterSurvivers = this.scoreService.getIncorrectCharacterSurvivers(playerSurviverChoices, deadCharacters);
+
       if (seriesFinished) {
         actualCharacterSurvivers = this.scoreService.getActualCharacterSurvivers(playerSurviverChoices, deadCharacters);
-        incorrectCharacterSurvivers = this.scoreService.getIncorrectCharacterSurvivers(playerSurviverChoices, deadCharacters);
         survivingCharacterPoints = this.scoreService.getSurvivingCharacterPoints(actualCharacterSurvivers, characters);
 
         const throneChoiceCorrect = this.scoreService.checkIfThroneChoiceCorrect(episodeResults, throneChoice);

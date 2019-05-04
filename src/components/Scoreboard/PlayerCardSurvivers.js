@@ -5,14 +5,20 @@ import { CardStyle, CharactersStyle, CharacterStyle, ListLabel, NoPredictions } 
 import { POINTS } from "../../shared/constants";
 import { MaxPoints } from "./MaxPoints";
 
-export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPoints, actualCharacterSurvivers, incorrectCharacterSurvivers, playerSurviverChoices, playerDieSometimeChoices, characters, allActualCharacterSurviversPoints }) => {
+export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPoints, actualCharacterSurvivers, incorrectCharacterSurvivers, playerSurviverChoices, playerDieSometimeChoices, characters, allActualCharacterSurviversPoints, deadCharacters }) => {
   
-  const surviverChoices = playerSurviverChoices.map(surviver => {
+  const surviverChoices = playerSurviverChoices.map(surviverChoice => {
 
-    const survivingCharacter = characters.find(character => character.id === surviver);
+    const survivingCharacter = characters.find(character => character.id === surviverChoice);
+    
+    let surviverResult = `undetermined`;
+    const incorrectSurviverChoice = incorrectCharacterSurvivers.find(deadCharacter => deadCharacter === surviverChoice);
+    if (incorrectSurviverChoice) {
+      surviverResult = `incorrect`;
+    }
 
     return (
-      <CharacterStyle key={survivingCharacter.id}>
+      <CharacterStyle result={surviverResult} key={survivingCharacter.id}>
         <CharacterBadge size="small" name={survivingCharacter.name} id={survivingCharacter.id} points={survivingCharacter.pointsPerEpisode[0]} />
       </CharacterStyle>
     )
@@ -22,8 +28,15 @@ export const PlayerCardSurvivers = ({ name, seriesFinished, survivingCharacterPo
 
     const sometimeDeath = characters.find(character => character.id === dieSometime);
 
+    const correctSometimeDeath = deadCharacters.find(deadCharacter => deadCharacter.id === dieSometime);
+
+    let dieSometimeResult = `incorrect`;
+    if (correctSometimeDeath) {
+      dieSometimeResult = `correct`;
+    }
+
     return (
-      <CharacterStyle key={sometimeDeath.id}>
+      <CharacterStyle result={dieSometimeResult} key={sometimeDeath.id}>
         <CharacterBadge size="small" name={sometimeDeath.name} id={sometimeDeath.id} points={POINTS.DIED_SOMETIME_VALUE.toString()} />
       </CharacterStyle>
     )

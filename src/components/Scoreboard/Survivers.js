@@ -4,7 +4,7 @@ import { CharactersStyle, CharacterStyle, ListLabel, NoPredictions } from "../Pl
 import { PlayerCardSurvivers } from "./PlayerCardSurvivers";
 import { EpisodeResultsRow, PageContainerStyled, PageHeadingRow, EpisodeRowStyled, StickyControls } from "./Styles";
 
-export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometimeChoices, entries, characters, bets, allSurvivers, players, filters, allActualCharacterSurviversPoints }) => {
+export const Survivers = ({ episode, seriesFinished, episodeResults, deadCharacters, dieSometimeChoices, entries, characters, bets, allSurvivers, players, filters, allActualCharacterSurviversPoints }) => {
 
   let aliveCharacterItems;
   if (allSurvivers && allSurvivers.length !== 0) {
@@ -20,7 +20,7 @@ export const Survivers = ({ episode, seriesFinished, episodeResults, dieSometime
     const playerPoints = players.find(player => player.userId === entry.userId);
 
     return (
-      <PlayerCardSurvivers key={entry.userId} {...entry} {...playerPoints} dieSometimeChoices={dieSometimeChoices} episode={episode} seriesFinished={seriesFinished} characters={characters} allActualCharacterSurviversPoints={allActualCharacterSurviversPoints} />
+      <PlayerCardSurvivers key={entry.userId} {...entry} {...playerPoints} dieSometimeChoices={dieSometimeChoices} episode={episode} seriesFinished={seriesFinished} characters={characters} allActualCharacterSurviversPoints={allActualCharacterSurviversPoints} deadCharacters={deadCharacters} />
     );
   });
 
