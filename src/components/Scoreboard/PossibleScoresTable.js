@@ -1,6 +1,6 @@
 import React from "react";
 import { CardStyle } from "../Player/Card";
-import { PageHeadingRow, PageContainerStyled } from "./Styles";
+import { PageHeadingRow } from "./Styles";
 
 export const PossibleScoresTable = ({ players }) => {
   const leaderPoints = players[0].overallTotal;
