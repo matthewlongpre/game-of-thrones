@@ -252,6 +252,8 @@ export class Scoreboard extends React.Component {
     let betsNeverOccurChoices;
 
     deadCharacters = this.scoreService.getDeadCharacters(episodeResults);
+    const betsAlreadyOccurred = this.scoreService.getBetsAlreadyOccurred(episodeResults);
+    const betsStillPossible = this.scoreService.getBetsStillPossible(betsAlreadyOccurred, bets);
 
     if (seriesFinished) {
       allSurvivers = this.scoreService.getAllActualCharacterSurvivers(characters, deadCharacters);
@@ -309,6 +311,35 @@ export class Scoreboard extends React.Component {
       betsNeverOccurChoices = this.scoreService.getBetsNeverOccurChoicesWithData(betsNeverOccurChoices, bets);
 
       let correctBetsNeverOccurred;
+
+      const playerBetsStillPossible = this.scoreService.getPlayerBetsStillPossible(betsStillPossible, playerBetChoices, episodeResults);
+      const playerBetsStillPossiblePoints = this.scoreService.getCorrectBetPoints(playerBetsStillPossible);
+
+      const playerDeathsStillPossible = this.scoreService.getPlayerDeathsStillPossible(deadCharacters, playerDeathChoices, episodeResults);
+      const playerSurvivorsStillPossible = this.scoreService.getPlayerSurvivorsStillPossible(deadCharacters, playerDeathChoices, episodeResults);
+      
+      const playerSurvivorsStillPossiblePoints = this.scoreService.getPlayerDeathsStillPossiblePoints(playerSurvivorsStillPossible, characters);
+
+      const playerDeathsStillPossiblePoints = this.scoreService.getPlayerDeathsStillPossiblePoints(playerDeathsStillPossible, characters);
+
+      const playerPossibleThronePoints = this.scoreService.getPlayerPossibleThronePoints(deadCharacters, throneChoice, characters);
+
+      let totalPossibleRemainingPoints = [
+        playerDeathsStillPossiblePoints,
+        playerBetsStillPossiblePoints,
+        playerSurvivorsStillPossiblePoints,
+        playerPossibleThronePoints
+      ];
+
+      totalPossibleRemainingPoints = totalPossibleRemainingPoints.reduce(this.scoreService.sumPoints, 0);
+
+      const playerPossiblePoints = {
+        playerDeathsStillPossiblePoints,
+        playerBetsStillPossiblePoints,
+        playerSurvivorsStillPossiblePoints,
+        playerPossibleThronePoints,
+        totalPossibleRemainingPoints
+      }
 
       incorrectCharacterSurvivers = this.scoreService.getIncorrectCharacterSurvivers(playerSurviverChoices, deadCharacters);
 
@@ -409,7 +440,8 @@ export class Scoreboard extends React.Component {
         userId: entry.userId,
         playerSurviverChoices,
         betsNeverOccurChoices,
-        correctBetsNeverOccurred
+        correctBetsNeverOccurred,
+        playerPossiblePoints
       }
 
     });

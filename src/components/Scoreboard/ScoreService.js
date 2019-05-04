@@ -266,6 +266,78 @@ const getPossibleBetsNeverOccurredPoints = betsNeverOccurred => {
   return getCorrectBetPoints(betsNeverOccurred);
 }
 
+const getBetsAlreadyOccurred = (episodeResults) => {
+  const betsAlreadyOccurred = [];
+  episodeResults.forEach(episode => {
+    episode.bets.forEach(bet => betsAlreadyOccurred.push(bet))
+  });
+  return betsAlreadyOccurred;
+}
+
+const getBetsStillPossible = (betsAlreadyOccurred, bets) => {
+  betsAlreadyOccurred = betsAlreadyOccurred.map(bet => bet.id);
+  return bets.filter(bet => !betsAlreadyOccurred.includes(bet.id))
+}
+
+const getPlayerBetsStillPossible = (betsStillPossible, playerBetChoices, episodeResults) => {
+  const episodesOccurred = episodeResults.length;
+  betsStillPossible = betsStillPossible.map(bet => bet.id);
+
+  let playerBetsStillPossible = [];
+  for (const key in playerBetChoices) {
+    if (playerBetChoices[key] > episodesOccurred) {
+      playerBetsStillPossible.push(key);
+    }
+  }
+  return playerBetsStillPossible.filter(bet => betsStillPossible.includes(bet));
+}
+
+const getPlayerDeathsStillPossible = (deadCharacters, playerDeathChoices, episodeResults) => {
+  const episodesOccurred = episodeResults.length;
+  deadCharacters = deadCharacters.map(character => character.id);
+
+  let playerDeathChoicesStillPossible = {};
+  for (const key in playerDeathChoices) {
+    if (playerDeathChoices[key] > episodesOccurred && !deadCharacters.includes(key)) {
+      playerDeathChoicesStillPossible[key] = playerDeathChoices[key];
+    }
+  }
+  return playerDeathChoicesStillPossible;
+}
+
+const getPlayerDeathsStillPossiblePoints = (playerDeathsStillPossible, characters) => {
+  const points = [];
+  for (const key in playerDeathsStillPossible) {
+    const characterChoice = characters.find(character => character.id === key);
+    if (playerDeathsStillPossible[key] === "7") {
+      points.push(POINTS.DIED_SOMETIME_VALUE);
+    } else {
+      points.push(parseInt(characterChoice.pointsPerEpisode[playerDeathsStillPossible[key]], 10));
+    }
+  }
+  return points.reduce(sumPoints, 0);
+}
+
+const getPlayerSurvivorsStillPossible = (deadCharacters, playerDeathChoices, episodeResults) => {
+  deadCharacters = deadCharacters.map(character => character.id);
+
+  let playerSurvivorChoicesStillPossible = {};
+  for (const key in playerDeathChoices) {
+    if (playerDeathChoices[key] === "0" && !deadCharacters.includes(key)) {
+      playerSurvivorChoicesStillPossible[key] = playerDeathChoices[key];
+    }
+  }
+  return playerSurvivorChoicesStillPossible;
+}
+
+const getPlayerPossibleThronePoints = (deadCharacters, throneChoice, characters) => {
+  deadCharacters = deadCharacters.map(character => character.id);
+
+  if (!deadCharacters.includes(throneChoice)) {
+    return getThroneChoicePoints(throneChoice, characters);
+  }
+}
+
 const ScoreService = {};
 
 ScoreService.getBetChoicesByEpisode = getBetChoicesByEpisode;
@@ -299,5 +371,12 @@ ScoreService.getCorrectBetsNeverOccurred = getCorrectBetsNeverOccurred;
 ScoreService.getBetsNeverOccurredPoints = getBetsNeverOccurredPoints;
 ScoreService.getBetsNeverOccurChoicesWithData = getBetsNeverOccurChoicesWithData;
 ScoreService.getPossibleBetsNeverOccurredPoints = getPossibleBetsNeverOccurredPoints;
+ScoreService.getBetsAlreadyOccurred = getBetsAlreadyOccurred;
+ScoreService.getBetsStillPossible = getBetsStillPossible;
+ScoreService.getPlayerBetsStillPossible = getPlayerBetsStillPossible;
+ScoreService.getPlayerDeathsStillPossible = getPlayerDeathsStillPossible;
+ScoreService.getPlayerDeathsStillPossiblePoints = getPlayerDeathsStillPossiblePoints;
+ScoreService.getPlayerSurvivorsStillPossible = getPlayerSurvivorsStillPossible;
+ScoreService.getPlayerPossibleThronePoints = getPlayerPossibleThronePoints;
 
 export { ScoreService };
