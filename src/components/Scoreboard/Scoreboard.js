@@ -107,7 +107,7 @@ export class Scoreboard extends React.Component {
         newResultsAvailable
       });
 
-      this.calculateResults()
+      this.calculateResults(episodeResultsForDisplay);
 
     });
 
@@ -209,6 +209,7 @@ export class Scoreboard extends React.Component {
       newResultsAvailable
     });
 
+    this.calculateResults(episodeResultsForDisplay);
     this.updateEpisodesWatched(selectedEpisodeWatched);
   }
 
@@ -231,8 +232,8 @@ export class Scoreboard extends React.Component {
     });
   }
 
-  calculateResults = () => {
-    const { episodeResults, characters, bets, allEntries } = this.state;
+  calculateResults = (episodeResults) => {
+    const { characters, bets, allEntries } = this.state;
     const calculatedPoints = calculatePoints(this.scoreService, episodeResults, characters, bets, episodes, allEntries);
     this.setState({
       calculatedPoints,

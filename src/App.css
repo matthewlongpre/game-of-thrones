@@ -449,32 +449,53 @@ th.shaded {
   margin-bottom: 20px;
 }
 
+.possible-points-scoreboard tr.heading-row th,
+.possible-points-scoreboard tr.player-row td {
+  padding: 10px;
+}
+
 .nested-table th,
 .nested-table td {
   padding: 0;
 }
 
 .nested-table td {
-  font-size: 66%;
+  font-size: 80%;
 }
 
 .nested-table th {
-  font-size: 50%;
+  font-size: 66%;
 }
 
-.heading-sm {
-  font-size: 50%;
-  letter-spacing: .66px;
-  vertical-align: middle;
+
+
+@media (max-width: 767px) {
+  .nested-table td {
+    font-size: 66%;
+  }
+  
+  .nested-table th {
+    font-size: 50%;
+  }
+
+  .heading-sm {
+    font-size: 50%;
+    letter-spacing: .66px;
+    vertical-align: middle;
+  }
 }
 
 .possible-points-details {
-  margin: 5px 0 0;
+  margin: 5px 0 0 -3px;
 }
 
 .possible-points-details td {
   background: #fafafa;
   letter-spacing: .66px;
+  font-weight: bold;
+}
+
+.possible-totals {
   font-weight: bold;
 }
 
