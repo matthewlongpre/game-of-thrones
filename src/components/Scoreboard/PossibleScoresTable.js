@@ -1,9 +1,8 @@
 import React from "react";
 import { CardStyle } from "../Player/Card";
-import { PageHeadingRow, PageContainerStyled } from "./Styles";
+import { PageHeadingRow } from "./Styles";
 
-export const PossibleScoresTable = ({ players }) => {
-  const leaderPoints = players[0].overallTotal;
+export const PossibleScoresTable = ({ players, leaderPoints }) => {
   const playersSortedByPossiblePoints = [...players];
   playersSortedByPossiblePoints.sort((a, b) => a.playerPossiblePoints.totalPossibleRemainingPoints < b.playerPossiblePoints.totalPossibleRemainingPoints ? 1 : -1);
 

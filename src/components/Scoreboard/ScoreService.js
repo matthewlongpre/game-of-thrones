@@ -207,8 +207,8 @@ const getThroneChoicePoints = (throneChoice, characters) => {
   if (throneChoice === "nobodyInList") {
     return points = POINTS.THRONE_NOBODY_LIST;
   }
-  const character = characters.find(character => character.id === throneChoice);
-  points = character.pointsForThrone;
+  const throneCharacter = characters.find(character => character.id === throneChoice);
+  points = throneCharacter.pointsForThrone;
   points = parseInt(points, 10);
   return points;
 }
