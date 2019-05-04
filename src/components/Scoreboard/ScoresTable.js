@@ -54,7 +54,6 @@ export const ScoresTable = props => {
         {seriesFinished && <td className="text-center">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
         {seriesFinished && <td className="text-center">{player.throneChoicePoints}<MaxPoints points={player.throneChoicePoints} possiblePoints={actualThronePoints} /></td>}
         <td className="text-center sticky-right">{player.overallTotal}<MaxPoints points={player.overallTotal} possiblePoints={overallPossiblePointsTotal} /></td>
-        <td className="text-center">{player.playerPossiblePoints.totalPossibleRemainingPoints}</td>
       </tr>
     );
   });
@@ -107,7 +106,6 @@ export const ScoresTable = props => {
                   {seriesFinished && <th className="text-center">Surviver Pts</th>}
                   {seriesFinished && <th className="text-center">Throne Pts</th>}
                   <th className="text-center sticky-right">Total</th>
-                  <th className="text-center">Possible</th>
                 </tr>
               </thead>
               <tbody>

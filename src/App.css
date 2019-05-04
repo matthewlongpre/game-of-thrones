@@ -449,4 +449,39 @@ th.shaded {
   margin-bottom: 20px;
 }
 
+.nested-table th,
+.nested-table td {
+  padding: 0;
+}
 
+.nested-table td {
+  font-size: 66%;
+}
+
+.nested-table th {
+  font-size: 50%;
+}
+
+.heading-sm {
+  font-size: 50%;
+  letter-spacing: .66px;
+  vertical-align: middle;
+}
+
+.possible-points-details {
+  margin: 5px 0 0;
+}
+
+.possible-points-details td {
+  background: #fafafa;
+  letter-spacing: .66px;
+  font-weight: bold;
+}
+
+.valign-middle {
+  vertical-align: middle;
+}
+
+.current-totals {
+  background: #fafafa;
+}
