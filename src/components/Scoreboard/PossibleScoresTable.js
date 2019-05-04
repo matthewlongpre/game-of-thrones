@@ -2,15 +2,14 @@ import React from "react";
 import { CardStyle } from "../Player/Card";
 import { PageHeadingRow } from "./Styles";
 
-export const PossibleScoresTable = ({ players }) => {
-  const leaderPoints = players[0].overallTotal;
+export const PossibleScoresTable = ({ players, leaderPoints }) => {
   const playersSortedByPossiblePoints = [...players];
   playersSortedByPossiblePoints.sort((a, b) => a.playerPossiblePoints.totalPossibleRemainingPoints < b.playerPossiblePoints.totalPossibleRemainingPoints ? 1 : -1);
 
   const playerRows = playersSortedByPossiblePoints.map(player => {
     const { name, overallTotal, playerPossiblePoints: { playerBetsStillPossiblePoints, playerDeathsStillPossiblePoints, playerPossibleThronePoints, playerSurvivorsStillPossiblePoints, totalPossibleRemainingPoints } } = player;
     return (
-      <tr key={player.userId}>
+      <tr className="player-row" key={player.userId}>
         <td className="player-name">
           {name}
           <table className="nested-table w-100 possible-points-details">
@@ -34,7 +33,7 @@ export const PossibleScoresTable = ({ players }) => {
 
 
         </td>
-        <td className="text-center valign-middle">{totalPossibleRemainingPoints}</td>
+        <td className="text-center valign-middle possible-totals">{totalPossibleRemainingPoints}</td>
         <td className="text-center valign-middle current-totals">{leaderPoints - overallTotal}</td>
       </tr>
     );
@@ -48,11 +47,11 @@ export const PossibleScoresTable = ({ players }) => {
   
         <CardStyle fullWidth noPadding>
           <div className="scoreboard-container">
-            <table className="scoreboard">
+            <table className="scoreboard possible-points-scoreboard">
               <thead>
-                <tr>
+                <tr className="heading-row">
                   <th className="player-name heading-sm">Player</th>
-                  <th className="text-center heading-sm">Possible</th>
+                  <th className="text-center heading-sm possible-totals">Possible</th>
                   <th className="text-center heading-sm current-totals">Behind Leader</th>
                 </tr>
               </thead>

@@ -7,7 +7,7 @@ import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
 import { SvgIcon } from "@material-ui/core";
 import { PossibleScoresTable } from "./PossibleScoresTable";
 
-const upArrow = <SvgIcon><path d="M7 14l5-5 5 5z"/><path d="M0 0h24v24H0z" fill="none"/></SvgIcon>;
+const upArrow = <SvgIcon><path d="M7 14l5-5 5 5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
 const downArrow = <SvgIcon><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
 
 const getRankDifference = (currentRank, rankLastWeek) => {
@@ -84,7 +84,7 @@ export const ScoresTable = props => {
           <h2>Scoreboard</h2>
         </PageHeadingRow>
 
-        <CardStyle fullWidth noPadding>
+        <CardStyle fullWidth noPadding style={{ marginBottom: `0px` }}>
           <div className="scoreboard-container">
             <table className="scoreboard">
               <thead>
