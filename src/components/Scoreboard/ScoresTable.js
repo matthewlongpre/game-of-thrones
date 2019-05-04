@@ -5,6 +5,7 @@ import { CardStyle } from "../Player/Card";
 import { PageContainerStyled, PageHeadingRow, Legend, StickyControls, RankDifference, Rank } from "./Styles";
 import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
 import { SvgIcon } from "@material-ui/core";
+import { PossibleScoresTable } from "./PossibleScoresTable";
 
 const upArrow = <SvgIcon><path d="M7 14l5-5 5 5z"/><path d="M0 0h24v24H0z" fill="none"/></SvgIcon>;
 const downArrow = <SvgIcon><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
@@ -126,6 +127,8 @@ export const ScoresTable = props => {
             <li><MaxPointsIcon /> Scored maximum possible points</li>
           </Legend>
         </CardStyle>
+
+        <PossibleScoresTable {...props} />
       </PageContainerStyled>
     </>
   );

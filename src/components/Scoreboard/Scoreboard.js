@@ -11,6 +11,7 @@ import { Filters } from "./Filters";
 import { EpisodesWatched } from "./EpisodesWatched";
 import { Button } from "@material-ui/core";
 import { EpisodeResultsSelection } from "./Styles";
+import { PossibleScoresTable } from "./PossibleScoresTable";
 
 export class Scoreboard extends React.Component {
 
