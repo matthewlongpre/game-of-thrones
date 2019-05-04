@@ -13,7 +13,7 @@ export const PossibleScoresTable = ({ players }) => {
       <tr key={player.userId}>
         <td className="player-name">
           {name}
-          <table class="nested-table w-100 possible-points-details">
+          <table className="nested-table w-100 possible-points-details">
             <thead>
               <tr>
                 <th className="text-center">Plot</th>
