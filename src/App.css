@@ -449,7 +449,14 @@ th.shaded {
 
 .scoreboard tr.heading-row th,
 .scoreboard tr.player-row td {
-  padding: 10px;
+  padding: 10px 8px;
+}
+
+@media (min-width: 768px) {
+  .scoreboard tr.heading-row th,
+  .scoreboard tr.player-row td {
+    padding: 10px;
+  }
 }
 
 .nested-table th,
