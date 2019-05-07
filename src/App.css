@@ -196,13 +196,18 @@ th.heading--episode-number {
 
 .scoreboard-container {
   overflow-x: auto;
-  max-width: 1080px;
   margin: auto;
 }
 
 .scoreboard {
   width: 100%;
   margin: auto;
+}
+
+@media (min-width: 768px) {
+  .scoreboard {
+    font-size: 1.2rem;
+  }
 }
 
 .scoreboard th, 
@@ -228,13 +233,6 @@ th.heading--episode-number {
 
 .player-name {
   white-space: nowrap;
-}
-
-@media (max-width: 767px) {
-  .player-name {
-    font-size: 80%;
-    vertical-align: middle;
-  }
 }
 
 .text-center {
@@ -449,8 +447,8 @@ th.shaded {
   margin-bottom: 20px;
 }
 
-.possible-points-scoreboard tr.heading-row th,
-.possible-points-scoreboard tr.player-row td {
+.scoreboard tr.heading-row th,
+.scoreboard tr.player-row td {
   padding: 10px;
 }
 
@@ -505,4 +503,8 @@ th.shaded {
 
 .current-totals {
   background: #fafafa;
+}
+
+.text-bold {
+  font-weight: bold;
 }

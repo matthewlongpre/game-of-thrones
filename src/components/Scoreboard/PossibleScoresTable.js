@@ -30,8 +30,6 @@ export const PossibleScoresTable = ({ players, leaderPoints }) => {
               </tr>
             </tbody>
           </table>
-
-
         </td>
         <td className="text-center valign-middle possible-totals">{totalPossibleRemainingPoints}</td>
         <td className="text-center valign-middle current-totals">{leaderPoints - overallTotal}</td>
@@ -47,7 +45,7 @@ export const PossibleScoresTable = ({ players, leaderPoints }) => {
   
         <CardStyle fullWidth noPadding>
           <div className="scoreboard-container">
-            <table className="scoreboard possible-points-scoreboard">
+            <table className="scoreboard">
               <thead>
                 <tr className="heading-row">
                   <th className="player-name heading-sm">Player</th>

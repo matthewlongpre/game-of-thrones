@@ -23,6 +23,14 @@ const PointsBadgeStyle = styled.span`
     font-size: 0.66em;
   `}
 
+  ${({ variant }) => variant === `rank` && `
+    padding: 4px 9px;
+    min-width: 50px;
+    @media (min-width: 768px) {
+      min-width: 60px;
+    }
+  ` }
+
 `;
 
 export const PointsBadge = props => {

@@ -7,7 +7,7 @@ import { Filters } from "./Filters";
 import { ScoreboardTabs } from "./ScoreboardTabs";
 import { ScoresByEpisode } from "./ScoresByEpisode";
 import { ScoreService } from "./ScoreService";
-import { ScoresTable } from "./ScoresTable";
+import { ScoresTableUpdate } from "./ScoresTableUpdate";
 import { EpisodeResultsSelection } from "./Styles";
 import { Survivers } from "./Survivers";
 import { Throne } from "./Throne";
@@ -302,7 +302,7 @@ export class Scoreboard extends React.Component {
       allEpisodeResults
     };
 
-    const scoresTable = <ScoresTable {...scoreProps} />
+    const scoresTable = <ScoresTableUpdate {...scoreProps} />
     const scoresByEpisode = <ScoresByEpisode {...scoreProps} />
     const surviversList = <Survivers {...scoreProps} />
     const throneList = <Throne {...scoreProps} />
@@ -324,7 +324,7 @@ export class Scoreboard extends React.Component {
 
               <Button size="small" variant="contained" color="primary" onClick={this.handleEpisodesWatchedDialog}>
                 Update
-            </Button>
+              </Button>
             </div>
           </EpisodeResultsSelection>}
 
