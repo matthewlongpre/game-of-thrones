@@ -50,7 +50,7 @@ export const ScoresTableUpdate = props => {
           }
         </td>
         <td className="player-name">
-        {player.name}
+          {player.name}
           <table className="nested-table w-100 possible-points-details">
             <thead>
               <tr>
@@ -64,7 +64,7 @@ export const ScoresTableUpdate = props => {
             </thead>
             <tbody>
               <tr>
-              {playerCells}
+                {playerCells}
               </tr>
             </tbody>
           </table>
