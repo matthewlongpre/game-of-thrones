@@ -318,7 +318,7 @@ const getPlayerDeathsStillPossiblePoints = (playerDeathsStillPossible, character
   return points.reduce(sumPoints, 0);
 }
 
-const getPlayerSurvivorsStillPossible = (deadCharacters, playerDeathChoices, episodeResults) => {
+const getPlayerSurvivorsStillPossible = (deadCharacters, playerDeathChoices) => {
   deadCharacters = deadCharacters.map(character => character.id);
 
   let playerSurvivorChoicesStillPossible = {};
@@ -335,6 +335,8 @@ const getPlayerPossibleThronePoints = (deadCharacters, throneChoice, characters)
 
   if (!deadCharacters.includes(throneChoice)) {
     return getThroneChoicePoints(throneChoice, characters);
+  } else {
+    return 0;
   }
 }
 

@@ -89,7 +89,7 @@ export const calculatePoints = (scoreService, episodeResults, characters, bets, 
       playerSurvivorsStillPossiblePoints,
       playerPossibleThronePoints
     ];
-
+console.log(totalPossibleRemainingPoints)
     totalPossibleRemainingPoints = totalPossibleRemainingPoints.reduce(scoreService.sumPoints, 0);
 
     const playerPossiblePoints = {
