@@ -54,24 +54,27 @@ export const ScoresTableUpdate = props => {
           <table className="nested-table w-100 possible-points-details">
             <thead>
               <tr>
-                <th className="text-center">Ep 1</th>
-                <th className="text-center">Ep 2</th>
-                <th className="text-center">Ep 3</th>
-                <th className="text-center">Ep 4</th>
-                <th className="text-center">Ep 5</th>
-                <th className="text-center">Ep 6</th>
+                <th className="text-center text-muted">Ep 1</th>
+                <th className="text-center text-muted">Ep 2</th>
+                <th className="text-center text-muted">Ep 3</th>
+                <th className="text-center text-muted">Ep 4</th>
+                <th className="text-center text-muted">Ep 5</th>
+                <th className="text-center text-muted">Ep 6</th>
+                {seriesFinished && <th className="text-center text-muted">Survivors</th>}
+                {seriesFinished && <th className="text-center text-muted">Throne</th>}
               </tr>
             </thead>
             <tbody>
               <tr>
                 {playerCells}
+                {seriesFinished && <td className="text-center valign-middle current-totals">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
+                {seriesFinished && <td className="text-center valign-middle current-totals">{player.throneChoicePoints}<MaxPoints points={player.throneChoicePoints} possiblePoints={actualThronePoints} /></td>}
               </tr>
             </tbody>
           </table>
         </td>
-        {seriesFinished && <td className="text-center valign-middle sticky-right current-totals">{player.survivingCharacterPoints}<MaxPoints points={player.survivingCharacterPoints} possiblePoints={allActualCharacterSurviversPoints} /></td>}
-        {seriesFinished && <td className="text-center valign-middle sticky-right current-totals">{player.throneChoicePoints}<MaxPoints points={player.throneChoicePoints} possiblePoints={actualThronePoints} /></td>}
-        <td className="text-center valign-middle text-bold current-totals">{player.overallTotal}<MaxPoints points={player.overallTotal} possiblePoints={overallPossiblePointsTotal} /></td>
+
+        <td className="text-center valign-middle text-bold current-totals sticky-right">{player.overallTotal}<MaxPoints points={player.overallTotal} possiblePoints={overallPossiblePointsTotal} /></td>
       </tr>
     );
   });
@@ -109,7 +112,7 @@ export const ScoresTableUpdate = props => {
                 <tr className="heading-row">
                   <th className="rank">Rank</th>
                   <th className="player-name">Player</th>
-                  <th className="text-center current-totals">Total</th>
+                  <th className="text-center current-totals sticky-right">Total</th>
                 </tr>
               </thead>
               <tbody>

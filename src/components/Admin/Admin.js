@@ -135,7 +135,11 @@ export class Admin extends React.Component {
 
     let throneResult;
     if (episode === `episode6`) {
-      throneResult = episodeResults[episode].throne;
+      if (episodeResults[episode]) {
+        throneResult = episodeResults[episode].throne;
+      } else {
+        throneResult = ``
+      }
     }
 
     this.setState({

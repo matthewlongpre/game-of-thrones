@@ -508,3 +508,7 @@ th.shaded {
 .text-bold {
   font-weight: bold;
 }
+
+.text-muted {
+  opacity: .5;
+}
