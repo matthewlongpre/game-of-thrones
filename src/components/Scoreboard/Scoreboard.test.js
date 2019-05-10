@@ -1,12 +1,4 @@
-import React from "react";
-import Scoreboard from "./Scoreboard";
-import { shallow } from 'enzyme';
-
-import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import { ScoreService } from "./ScoreService";
-configure({ adapter: new Adapter() });
-
 
 const mockEpisodeResults = [
   {
@@ -82,19 +74,17 @@ const mockDeathChoicesByEpisodeString = `[{"character":"astark","episode":"1"},{
 const mockDeathChoicesByEpisode = JSON.parse(mockDeathChoicesByEpisodeString);
 
 describe("Scoreboard", () => {
-  // const wrapper = shallow(<Scoreboard />)
-  // const instance = wrapper.instance();
-  const instance = ScoreService;
+  const scoreService = new ScoreService();
   it("points should add up to zero", () => {
-    const results = instance.sumPoints(0, 0);
+    const results = scoreService.sumPoints(0, 0);
     expect(results).toBe(0);
   });
   it("points should add up to 2", () => {
-    const results = instance.sumPoints(0, 2);
+    const results = scoreService.sumPoints(0, 2);
     expect(results).toBe(2);
   });
   it("should be zero deaths in episode 1 (happened, nobody died)", () => {
-    const results = instance.getActualDeathsThisEpisode("1", [{
+    const results = scoreService.getActualDeathsThisEpisode("1", [{
       id: "episode1",
       deaths: []
     }]);
@@ -102,76 +92,76 @@ describe("Scoreboard", () => {
     expect(deaths).toBe(0);
   });
   it("should be zero deaths in episode 3 (not happened yet)", () => {
-    const results = instance.getActualDeathsThisEpisode("3", mockEpisodeResults);
+    const results = scoreService.getActualDeathsThisEpisode("3", mockEpisodeResults);
     const deaths = results.length;
     expect(deaths).toBe(0);
   });
   it("should be two deaths in episode 1", () => {
-    const results = instance.getActualDeathsThisEpisode("1", mockEpisodeResults);
+    const results = scoreService.getActualDeathsThisEpisode("1", mockEpisodeResults);
     const deaths = results.length;
     expect(deaths).toBe(2);
   });
 
   it("should be zero death choices episode 6", () => {
-    const results = instance.getDeathChoicesByEpisode(mockPlayerDeathChoices, "6");
+    const results = scoreService.getDeathChoicesByEpisode(mockPlayerDeathChoices, "6");
     const choices = results.length;
     expect(choices).toBe(0);
   });
   it("should be three death choices episode three", () => {
-    const results = instance.getDeathChoicesByEpisode(mockPlayerDeathChoices, "3");
+    const results = scoreService.getDeathChoicesByEpisode(mockPlayerDeathChoices, "3");
     const choices = results.length;
     expect(choices).toBe(3);
   });
   it("should be one correct death in episode one", () => {
-    const results = instance.getCorrectDeathsByEpisode(mockActualDeathsThisEpisodeOne, mockDeathChoicesByEpisode);
+    const results = scoreService.getCorrectDeathsByEpisode(mockActualDeathsThisEpisodeOne, mockDeathChoicesByEpisode);
     const correct = results.length;
     expect(correct).toBe(1);
   });
   it("should be zero correct deaths in episode two", () => {
-    const results = instance.getCorrectDeathsByEpisode(mockActualDeathsThisEpisodeTwo, mockDeathChoicesByEpisode);
+    const results = scoreService.getCorrectDeathsByEpisode(mockActualDeathsThisEpisodeTwo, mockDeathChoicesByEpisode);
     const correct = results.length;
     expect(correct).toBe(0);
   });
   it("should add up to 20 exact episode death points", () => {
-    const results = instance.getEpisodeExactDeathPoints([{ character: "jsnow" }, { character: "astark" }], mockCharacters, "1");
+    const results = scoreService.getEpisodeExactDeathPoints([{ character: "jsnow" }, { character: "astark" }], mockCharacters, "1");
     expect(results).toBe(20);
   });
   it("should be zero correct died sometime - episode three", () => {
-    const results = instance.getCorrectDiedSometime(mockActualDeathsThisEpisodeThree, mockPlayerDeathChoices);
+    const results = scoreService.getCorrectDiedSometime(mockActualDeathsThisEpisodeThree, mockPlayerDeathChoices);
     const correct = results.length;
     expect(correct).toBe(0);
   });
   it("should be one correct died sometime - episode one", () => {
-    const results = instance.getCorrectDiedSometime(mockActualDeathsThisEpisodeOne, mockPlayerDeathChoices);
+    const results = scoreService.getCorrectDiedSometime(mockActualDeathsThisEpisodeOne, mockPlayerDeathChoices);
     const correct = results.length;
     expect(correct).toBe(1);
   });
   it("should be two correct died sometime - episode two", () => {
-    const results = instance.getCorrectDiedSometime(mockActualDeathsThisEpisodeTwo, mockPlayerDeathChoices);
+    const results = scoreService.getCorrectDiedSometime(mockActualDeathsThisEpisodeTwo, mockPlayerDeathChoices);
     const correct = results.length;
     expect(correct).toBe(2);
   });
   it("should add up to 4 died sometime points", () => {
-    const results = instance.getCorrectDiedSometimePoints([{ egreyjoy: "7" }, { tlannister: "7" }]);
+    const results = scoreService.getCorrectDiedSometimePoints([{ egreyjoy: "7" }, { tlannister: "7" }]);
     expect(results).toBe(4);
   });
   it("should be zero correct deaths in a different episode", () => {
-    const results = instance.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, [{ egreyjoy: "3" }]);
+    const results = scoreService.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, [{ egreyjoy: "3" }]);
     const correct = results.length;
     expect(correct).toBe(0);
   });
   it("should be one correct death in a different episode", () => {
-    const results = instance.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, { astark: "3" });
+    const results = scoreService.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, { astark: "3" });
     const correct = results.length;
     expect(correct).toBe(1);
   });
   it("should be two correct deaths in a different episode", () => {
-    const results = instance.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, [{ astark: "3" }, { tlannister: "6" }]);
+    const results = scoreService.getDiedInDifferentEpisode(mockActualDeathsThisEpisodeOne, [{ astark: "3" }, { tlannister: "6" }]);
     const correct = results.length;
     expect(correct).toBe(0);
   });
   it("should add up to 2 died in different episode points", () => {
-    const results = instance.getDiedInDifferentEpisodePoints([{ egreyjoy: "3" }, { tlannister: "3" }]);
+    const results = scoreService.getDiedInDifferentEpisodePoints([{ egreyjoy: "3" }, { tlannister: "3" }]);
     expect(results).toBe(2);
   });
 });
