@@ -519,3 +519,8 @@ th.shaded {
 .text-muted {
   opacity: .5;
 }
+
+.scoreboard-points {
+  min-width: 1.3em;
+  display: inline-block;
+}

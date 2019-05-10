@@ -34,7 +34,8 @@ export const ScoresTableUpdate = props => {
 
     const rankDifference = getRankDifference(player.rank, player.rankLastWeek);
 
-    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center">{points}<MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
+    const playerCells = player.pointsPerEpisode.map((points, index) => <td key={`${player.name}--${index}`} className="text-center"><span className="scoreboard-points">{points}</span><MaxPoints points={points} possiblePoints={possiblePointsPerEpisode[index]} /></td>)
+    
     return (
       <tr className="player-row" key={player.userId}>
         <td className="text-center rank">
