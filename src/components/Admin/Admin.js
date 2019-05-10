@@ -258,8 +258,8 @@ export class Admin extends React.Component {
             <option value="episode5">Episode 5</option>
             <option value="episode6">Episode 6</option>
           </select>
-          <button onClick={this.handleDeleteClick}>Delete</button>
-          <button onClick={this.handleResetClick}>Reset</button>
+          <Button onClick={this.handleDeleteClick}>Delete</Button>
+          <Button onClick={this.handleResetClick}>Reset</Button>
         </div>
         <div className="main">
           <div>
