@@ -1,11 +1,10 @@
+import { SvgIcon } from "@material-ui/core";
 import React from "react";
-import { airdates, episodes } from "../../shared/constants";
 import { PointsBadge } from "../Character/PointsBadge";
 import { CardStyle } from "../Player/Card";
-import { PageContainerStyled, PageHeadingRow, Legend, StickyControls, RankDifference, Rank } from "./Styles";
 import { MaxPoints, MaxPointsIcon } from "./MaxPoints";
-import { SvgIcon } from "@material-ui/core";
 import { PossibleScoresTable } from "./PossibleScoresTable";
+import { Legend, PageContainerStyled, PageHeadingRow, Rank, RankDifference, StickyControls } from "./Styles";
 
 const upArrow = <SvgIcon><path d="M7 14l5-5 5 5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
 const downArrow = <SvgIcon><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></SvgIcon>;
@@ -81,12 +80,6 @@ export const ScoresTableUpdate = props => {
 
   const possiblePointsForTotal = possiblePointsPerEpisode.map(points => points === `--` ? 0 : points);
   const overallPossiblePointsTotal = possiblePointsForTotal.reduce(scoreService.sumPoints, 0);
-
-  const possiblePointsRows = possiblePointsPerEpisode.map((points, index) => <td key={`possible-${index}`} className="text-center">{points}</td>)
-
-  const airdatesRow = airdates.map(airdate => <th key={airdate} className="text-center">{airdate}</th>);
-
-  const headings = episodes.map(episode => <th key={`heading--${episode}`} className="heading--episode-number text-center">{episode}</th>);
 
   return (
     <>
