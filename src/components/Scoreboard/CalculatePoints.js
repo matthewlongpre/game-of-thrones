@@ -1,4 +1,9 @@
-export const calculatePoints = (scoreService, episodeResults, characters, bets, episodes, entries) => {
+import { ScoreService } from "./ScoreService";
+
+
+export const calculatePoints = (episodeResults, characters, bets, episodes, entries) => {
+
+  const scoreService = new ScoreService();
 
   const seriesFinished = episodeResults.length === 6;
   let deadCharacters;
@@ -89,7 +94,7 @@ export const calculatePoints = (scoreService, episodeResults, characters, bets, 
       playerSurvivorsStillPossiblePoints,
       playerPossibleThronePoints
     ];
-console.log(totalPossibleRemainingPoints)
+
     totalPossibleRemainingPoints = totalPossibleRemainingPoints.reduce(scoreService.sumPoints, 0);
 
     const playerPossiblePoints = {

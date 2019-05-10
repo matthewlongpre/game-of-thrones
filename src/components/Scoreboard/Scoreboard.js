@@ -37,7 +37,8 @@ export class Scoreboard extends React.Component {
       newResultsAvailable: false
     }
 
-    this.scoreService = ScoreService;
+    this.scoreService = new ScoreService();
+    
   }
 
   componentDidMount() {
@@ -234,7 +235,7 @@ export class Scoreboard extends React.Component {
 
   calculateResults = (episodeResults) => {
     const { characters, bets, allEntries } = this.state;
-    const calculatedPoints = calculatePoints(this.scoreService, episodeResults, characters, bets, episodes, allEntries);
+    const calculatedPoints = calculatePoints(episodeResults, characters, bets, episodes, allEntries);
     this.setState({
       calculatedPoints,
       allEntries: calculatedPoints.players,
