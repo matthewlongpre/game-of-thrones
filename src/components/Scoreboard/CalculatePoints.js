@@ -6,7 +6,6 @@ export const calculatePoints = (episodeResults, characters, bets, episodes, entr
   const scoreService = new ScoreService();
 
   const seriesFinished = episodeResults.length === 6;
-  let deadCharacters;
   let allActualCharacterSurviversPoints;
   let actualThronePoints;
   let allSurvivers;
@@ -15,7 +14,7 @@ export const calculatePoints = (episodeResults, characters, bets, episodes, entr
   let betsNeverOccurredPoints;
   let betsNeverOccurChoices;
 
-  deadCharacters = scoreService.getDeadCharacters(episodeResults);
+  const deadCharacters = scoreService.getDeadCharacters(episodeResults);
   const betsAlreadyOccurred = scoreService.getBetsAlreadyOccurred(episodeResults);
   const betsStillPossible = scoreService.getBetsStillPossible(betsAlreadyOccurred, bets);
 
